@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence  xmlns = "http://java.sun.com/xml/ns/persistence" 
+        xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation = "http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" 
+        version = "2.0" > 
+    <persistence-unit  name="com.api.easybpms" transaction-type="RESOURCE_LOCAL">
+    	
+    	<!-- provedor/implementacao do JPA -->
+   		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+   		<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+   		
+		<!--<non-jta-data-source>java:jboss/datasources/easybpmsDS</non-jta-data-source>-->
+	   	<!-- entidade mapeada -->
+	   	<class>com.easybpms.domain.Process</class>
+		<class>com.easybpms.domain.Activity</class>
+		<class>com.easybpms.domain.Property</class>
+		<class>com.easybpms.domain.UserGroup</class>
+		<class>com.easybpms.domain.Parameter</class>
+		<class>com.easybpms.domain.ProcessInstance</class>
+		<class>com.easybpms.domain.ActivityInstance</class>
+		<class>com.easybpms.domain.ParameterInstance</class>
+		<class>com.easybpms.domain.User</class>
+		
+   		<properties>
+  			<!-- dados da conexao -->
+ 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/easybpms"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value=""/>
+			
+			
+			<!--  propriedades do hibernate -->
+   			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+  			<!--<property name="hibernate.show_sql" value="true" />-->
+  			<property name="hibernate.format_sql" value="true" />
+
+  			<!--  atualiza o banco, gera as tabelas se for preciso -->
+  			<property name="hibernate.hbm2ddl.auto" value="update" />
+   		</properties>
+    </persistence-unit> 
+  	
+</persistence>
