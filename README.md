@@ -1,1 +1,1 @@
-# easybpms-github
+# easybpms
