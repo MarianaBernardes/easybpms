@@ -3,7 +3,6 @@ package com.bpms.jbpm;
 import java.util.List;
 import java.util.Map;
 
-import org.h2.tools.Server;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
@@ -21,10 +20,11 @@ import org.kie.internal.runtime.manager.context.EmptyContext;
 import bitronix.tm.resource.jdbc.PoolingDataSource;
 
 import com.easybpms.bpms.AbstractBpmsInterface;
+import com.easybpms.bpms.ServiceTask;
 
 public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
-	// RuntimeManager - combinaÁ„o do motor e do processo de serviÁo tarefa humana
+	// RuntimeManager - combinaÔøΩÔøΩo do motor e do processo de serviÔøΩo tarefa humana
 	private RuntimeManager manager;
 	private RuntimeEngine engine;
 	private KieSession ksession;
@@ -43,13 +43,10 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	}
 
 	/**
-	 * @param process
-	 *            - idBpms do processo registrado no BD da API
-	 * @param params
-	 *            - variaveis do processo (properties)
-	 * @return id da instancia processo criada no bpms listner - ouvinte do
-	 *         evento final adicionado a sessao que sera chamado quando o
-	 *         processo terminar
+	 * @param process - idBpms do processo registrado no BD da API
+	 * @param params - variaveis do processo (properties)
+	 * @return id da instancia processo criada no bpms listner - ouvinte do evento final adicionado a sessao 
+	 * que sera chamado quando o processo terminar
 	 */
 	public long startProcess(String process, Map<String, Object> params) {
 		EndEventListener listener = new EndEventListener();
@@ -72,13 +69,17 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 				new ManualTaskWorkItemHandler());
 	}
 
+	
+	public void addServiceTask(ServiceTask task) {
+		WorkItemHandler myWorkItemHandler = new JavaServiceTask(task);
+		ksession.getWorkItemManager().registerWorkItemHandler("Service Task",
+				myWorkItemHandler);
+	}
+
 	/**
-	 * @param taskId
-	 *            - idBpms da tarefa registrado no BD da API
-	 * @param user
-	 *            - usuario Administrador do bpms que executara a tarefa
-	 * @param params
-	 *            - parametros de saida necessarios para executar a tarefa
+	 * @param taskId - idBpms da tarefa registrado no BD da API
+	 * @param user - usuario Administrador do bpms que executara a tarefa
+	 * @param params - parametros de saida necessarios para executar a tarefa
 	 * @return status da tarefa apos ser completada
 	 */
 	public String executeTask(long taskId, String user,
@@ -110,19 +111,19 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
 		//EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
 		
-		//UserGroupCallback userGroupCallback = new JBossUserGroupCallbackImpl("classpath:/usergroup.properties");
+		// UserGroupCallback userGroupCallback = new JBossUserGroupCallbackImpl("classpath:/usergroup.properties");
 		// EntityManagerFactory emf = EntityManagerFactoryManager.get().getOrCreate("org.jbpm.persistence.jpa");
 		// TransactionManager tm = TransactionManagerServices.getTransactionManager();
 
 		RuntimeEnvironmentBuilder environmentBuilder;
 		
 		//JBPMHelper.startH2Server();
-		try {
+		/*try {
 			Server server = Server.createTcpServer(new String[0]);
 			server.start();
 		} catch (Throwable t) {
 			throw new RuntimeException("Could not start H2 server", t);
-		}
+		}*/
 		
 		//JBPMHelper.setupDataSource();
 		PoolingDataSource ds = new PoolingDataSource();
@@ -145,44 +146,38 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		  .newDefaultInMemoryBuilder();
 		
 		for (String resource : bpmnProcessDefinitions) {
-
+				
+			/**Caminho relativo*/
 			// environmentBuilder.addAsset(ResourceFactory.newClassPathResource(resource),ResourceType.BPMN2);
+			
+			/** Caminho absoluto*/
 			environmentBuilder.addAsset(
 					ResourceFactory.newFileResource(resource),
 					ResourceType.BPMN2);
 		}
-
-		/*
-		 * RuntimeEnvironment environment = environmentBuilder
+		
+		/** Adicionar suporte a transa√ß√£o*/
+		/* RuntimeEnvironment environment = environmentBuilder
 		 * .addEnvironmentEntry(EnvironmentName.TRANSACTION_MANAGER, tm) .get();
 		 */
 
 		RuntimeEnvironment environment = environmentBuilder.get();
 
-		/*
-		 * Sess„o de conhecimento ˙nico que ir· executar todas as inst‚ncias de
-		 * processo
-		 */
+		/** Sess√£o de conhecimento √∫nica que ir√° executar todas as inst√¢ncias de processo*/
 		RuntimeManager manager = RuntimeManagerFactory.Factory.get()
 				.newSingletonRuntimeManager(environment);
 
-		/*
-		 * Cada pedido (que est· na chamada de getRuntimeEngine) ter· nova
-		 * sess„o de conhecimento RuntimeManager manager =
-		 * RuntimeManagerFactory.Factory.get()
-		 * .newPerRequestRuntimeManager(environment);
-		 */
+		/**
+		 *  Cada pedido (que est√° na chamada de getRuntimeEngine) ter√° nova sess√£o de conhecimento */
+		 //RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerRequestRuntimeManager(environment);
+		 
 
-		/*
-		 * Cada inst‚ncia do processo ter· sua sess„o de conhecimento dedicada
-		 * para todo o tempo de vida Precisa fornecer o ID da instancia do
-		 * processo no getRuntimeEngine (engine =
-		 * manager.getRuntimeEngine(ProcessInstanceIdContext.get())) Obs: a
-		 * inst‚ncia processo precisa estar criada RuntimeManager manager =
-		 * RuntimeManagerFactory.Factory.get()
-		 * .newPerProcessInstanceRuntimeManager(environment);
-		 */
-
+		/**
+		 * Cada inst√¢ncia do processo ter√° sua sess√£o de conhecimento dedicada para todo o tempo de vida 
+		 * Precisa fornecer o ID da inst√¢ncia do processo no getRuntimeEngine (engine = manager.getRuntimeEngine(ProcessInstanceIdContext.get())) 
+		 * Obs: a inst√¢ncia processo precisa estar criada */
+		 //RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerProcessInstanceRuntimeManager(environment);
+		 
 		return manager;
 	}
 

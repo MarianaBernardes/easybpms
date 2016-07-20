@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1469051371271
+Build-Jdk: 1.7.0_80
+Built-By: saudeuser
+Bundle-ManifestVersion: 2
+Bundle-Name: jBPM Maven
+Bundle-SymbolicName: com.bpms.jbpm
+Bundle-Version: 1.0.0
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.bpms.jbpm;uses:="com.easybpms.bpms,org.jbpm.process.
+ instance.impl.demo,org.jbpm.services.task.wih,org.kie.api.event.process
+ ,org.kie.api.runtime,org.kie.api.runtime.process,org.kie.api.task,org.k
+ ie.api.task.model";version="1.0.0"
+Import-Package: bitronix.tm.resource.jdbc,com.easybpms.bpms;version="[1.
+ 0,2)",org.jbpm.process.instance.impl.demo;version="[6.2,7)",org.jbpm.ru
+ leflow.instance;version="[6.2,7)",org.jbpm.services.task.exception;vers
+ ion="[6.2,7)",org.jbpm.services.task.utils;version="[6.2,7)",org.jbpm.s
+ ervices.task.wih;version="[6.2,7)",org.jbpm.workflow.core.node;version=
+ "[6.2,7)",org.jbpm.workflow.instance.node;version="[6.2,7)",org.kie.api
+ .event.process;version="[6.2,7)",org.kie.api.io;version="[6.2,7)",org.k
+ ie.api.runtime;version="[6.2,7)",org.kie.api.runtime.manager;version="[
+ 6.2,7)",org.kie.api.runtime.process;version="[6.2,7)",org.kie.api.task;
+ version="[6.2,7)",org.kie.api.task.model;version="[6.2,7)",org.kie.inte
+ rnal.io;version="[6.2,7)",org.kie.internal.runtime.manager.context;vers
+ ion="[6.2,7)",org.kie.internal.task.api;version="[6.2,7)",org.kie.inter
+ nal.task.exception;version="[6.2,7)",org.slf4j;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
+Tool: Bnd-3.0.0.201509101326
