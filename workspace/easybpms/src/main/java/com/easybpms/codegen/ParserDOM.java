@@ -104,6 +104,8 @@ public class ParserDOM {
         aux.setInputParameter(inputParameters);
         aux.setOutputParameter(outputParameters);
         aux.setUserGroup(usersGroup);
+        //EntityTask add para que a atividade tenha somente um observador. Somente um parâmetro de entrada da lista será escolhido para obter o observador
+        aux.setEntityTask(inputParameters.get(0).getEntityTask());
         return aux;
     }
     

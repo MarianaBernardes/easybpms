@@ -12,8 +12,9 @@
    		
 		<!--<non-jta-data-source>java:jboss/datasources/easybpmsDS</non-jta-data-source>-->
 	   	<!-- entidade mapeada -->
+	   	
 	   	<class>com.easybpms.domain.Process</class>
-		<class>com.easybpms.domain.Activity</class>
+	   	<class>com.easybpms.domain.Activity</class>
 		<class>com.easybpms.domain.Property</class>
 		<class>com.easybpms.domain.UserGroup</class>
 		<class>com.easybpms.domain.Parameter</class>

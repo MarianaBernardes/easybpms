@@ -12,5 +12,6 @@ public interface IUser {
 	 */
 	public String getIdApp();
 	public String getName();
+	public String getTenancy();
 	public List<String> getUserGroupNames();
 }

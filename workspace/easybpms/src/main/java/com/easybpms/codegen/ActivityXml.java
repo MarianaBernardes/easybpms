@@ -2,32 +2,41 @@ package com.easybpms.codegen;
 
 import java.util.ArrayList;
 
-public class ActivityXml extends Marcacao{
-	
+public class ActivityXml extends Marcacao {
+
 	private ArrayList<ParameterXml> inputParameter;
-    private ArrayList<ParameterXml> outputParameter;
-    private ArrayList<UserGroupXml> userGroup;
-   
+	private ArrayList<ParameterXml> outputParameter;
+	private ArrayList<UserGroupXml> userGroup;
 
-    public ActivityXml() {
-    }
+	private String entityTask;
 
-    public ArrayList<ParameterXml> getInputParameter() {
-        return inputParameter;
-    }
+	public ActivityXml() {
+	}
+	
+	public String getEntityTask() {
+		return entityTask;
+	}
 
-    public void setInputParameter(ArrayList<ParameterXml> inputParameter) {
-        this.inputParameter = inputParameter;
-    }
+	public void setEntityTask(String entity) {
+		this.entityTask = entity;
+	}
 
-    public ArrayList<ParameterXml> getOutputParameter() {
-        return outputParameter;
-    }
+	public ArrayList<ParameterXml> getInputParameter() {
+		return inputParameter;
+	}
 
-    public void setOutputParameter(ArrayList<ParameterXml> outputParameter) {
-        this.outputParameter = outputParameter;
-        
-    }
+	public void setInputParameter(ArrayList<ParameterXml> inputParameter) {
+		this.inputParameter = inputParameter;
+	}
+
+	public ArrayList<ParameterXml> getOutputParameter() {
+		return outputParameter;
+	}
+
+	public void setOutputParameter(ArrayList<ParameterXml> outputParameter) {
+		this.outputParameter = outputParameter;
+
+	}
 
 	public ArrayList<UserGroupXml> getUserGroup() {
 		return userGroup;

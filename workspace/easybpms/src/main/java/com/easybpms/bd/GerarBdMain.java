@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import com.easybpms.bd.dao.CRUDEntity;
 import com.easybpms.domain.ProcessInstance;
+import com.easybpms.domain.Process;
 
 public class GerarBdMain {
 

@@ -7,6 +7,7 @@ com\easybpms\bd\CRUDException.class
 com\easybpms\domain\User.class
 com\easybpms\bd\Session.class
 com\easybpms\domain\Process.class
+com\easybpms\bpms\ServiceTask.class
 com\easybpms\bpms\AbstractBpmsInterface.class
 com\easybpms\domain\ActivityInstance.class
 com\easybpms\codegen\ProcessXml.class

@@ -55,16 +55,17 @@ public class Context extends AbstractContext {
             #foreach ($task in $process.getListUserTask())
             	listObservers = new ArrayList<Observer>();
                 teo = new TaskExecutedObserver("$task.getId()");
-                listObservers.add(teo);            
-                #foreach ($parameter in $task.getInputParameter())
-                    addMapping("CRUD$parameter.getEntityTask()", listObservers);
-                #end
+                listObservers.add(teo); 
+                addMapping("CRUD$task.getEntityTask()", listObservers);           
+                ##foreach ($parameter in $task.getInputParameter())
+                    ##addMapping("CRUD$parameter.getEntityTask()", listObservers);
+                ##end
             #end 
             
             
             
             /*
-             * Criar definição do processo
+             * Criar definiï¿½ï¿½o do processo
              */
           	
           	//Processo $process.getName()

@@ -25,7 +25,9 @@ public class User implements IUser {
 	
 	private String name;
 	
-	//@transient - n„o persiste no bd
+	private String tenancy;
+	
+	//@transient - n√£o persiste no bd
 	@Transient
 	private List<String> userGroupNames;
 	
@@ -38,6 +40,14 @@ public class User implements IUser {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActivityInstance> activityInstances = new ArrayList<ActivityInstance>();
+
+	public String getTenancy() {
+		return tenancy;
+	}
+
+	public void setTenancy(String tenancy) {
+		this.tenancy = tenancy;
+	}
 
 	public int getId() {
 		return id;
@@ -78,13 +88,13 @@ public class User implements IUser {
 	public void setActivityInstances(List<ActivityInstance> activityInstances) {
 		this.activityInstances = activityInstances;
 	}
-	//sincroniza a associaÁ„o bidirecional User-ActivityInstance
+	//sincroniza a associa√ß√£o bidirecional User-ActivityInstance
 	public void addActivityInstance(ActivityInstance activityInstance){
 		activityInstances.add(activityInstance);
 		activityInstance.setUser(this);
 	}
 				
-	//sincroniza a associaÁ„o bidirecional User-ActivityInstance
+	//sincroniza a associa√ß√£o bidirecional User-ActivityInstance
 	public void removeActivityInstance(ActivityInstance activityInstance){
 		activityInstances.remove(activityInstance);
 		activityInstance.setUser(null);

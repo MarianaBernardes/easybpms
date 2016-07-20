@@ -18,7 +18,7 @@ public class CRUDUser {
 		User user = new User();
 		user.setIdApp(appUser.getIdApp());
 		user.setName(appUser.getName());
-		
+		user.setTenancy(appUser.getTenancy());
 		
 		List<String> userGroupNames = appUser.getUserGroupNames();
 		if (userGroupNames != null) {
@@ -89,7 +89,7 @@ public class CRUDUser {
 				return session.createQuery("FROM User WHERE userGroup_id = '" + ((UserGroup)user.getUserGroup()).getId() + "'", User.class).getSingleResult();
 			}*/
 			else{
-				System.out.println("Não foi possível carregar a entidade. Parâmetros não fornecidos.");
+				System.out.println("Nï¿½o foi possï¿½vel carregar a entidade. Parï¿½metros nï¿½o fornecidos.");
 			}
 		} catch (NoResultException ex1) {		
 			throw ex1;

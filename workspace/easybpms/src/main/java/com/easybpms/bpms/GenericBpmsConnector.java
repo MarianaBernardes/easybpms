@@ -20,6 +20,7 @@ public class GenericBpmsConnector {
 		ProcessInstance processInstance = new ProcessInstance();
 		ActivityInstance activityInstance = new ActivityInstance();
 		ParameterInstance parameterInstance = new ParameterInstance();
+		String tenancy = null;
 		
 		//Buscar processo
 		process.setIdBpms(processId);
@@ -70,20 +71,25 @@ public class GenericBpmsConnector {
 			for (Map.Entry<String, Object> entry : params.entrySet())
 			{
 				if (entry.getKey().contains("easybpms")){
-					//Buscar parametro
-					parameter.setName(entry.getKey());
-					parameter.setType("input");
-					parameter.setActivity(activity);
-					try {
-						parameter = (Parameter)CRUDEntity.read(parameter);
-					} catch (CRUDException e1) {
-						e1.printStackTrace();
+					//Descobrir o tenancy que a atividade pertence
+					if (entry.getKey().contains("tenancy")){
+						tenancy = (String) entry.getValue();
+					}else{
+						//Buscar parametro
+						parameter.setName(entry.getKey());
+						parameter.setType("input");
+						parameter.setActivity(activity);
+						try {
+							parameter = (Parameter)CRUDEntity.read(parameter);
+						} catch (CRUDException e1) {
+							e1.printStackTrace();
+						}
+						//Definir instancia parametro
+						parameterInstance.setValue(entry.getValue().toString());
+						parameterInstance.setType("input");
+						parameter.addParameterInstance(parameterInstance);
+						activityInstance.addParameterInstance(parameterInstance);
 					}
-					//Definir instancia parametro
-					parameterInstance.setValue(entry.getValue().toString());
-					parameterInstance.setType("input");
-					parameter.addParameterInstance(parameterInstance);
-					activityInstance.addParameterInstance(parameterInstance);
 				}
 			}
 			
@@ -91,7 +97,7 @@ public class GenericBpmsConnector {
 			User user = users.get(0);
 			//procurar usuario com menor qtd de instancias atividades que pertence ao grupo de usuario da atividade passada como parametro
 			for (int i = 0; i<users.size(); i++){
-				if (users.get(i).getActivityInstances().size() < user.getActivityInstances().size()){
+				if ((users.get(i).getTenancy().equals(tenancy)) && (users.get(i).getActivityInstances().size() <= user.getActivityInstances().size())){
 					user = users.get(i);
 				}
 			}
