@@ -1,0 +1,174 @@
+package com.easybpms.codegen;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observer;
+import java.util.Map;
+import java.util.HashMap;
+
+import com.easybpms.domain.Process;
+import com.easybpms.domain.*;
+import com.easybpms.bd.dao.*;
+import com.easybpms.event.StartProcessObserver;
+import com.easybpms.event.TaskExecutedObserver;
+import com.easybpms.bpms.AbstractBpmsInterface;
+import $bpmsPackage .ConcreteBpmsInterface;
+
+public class Context extends AbstractContext {
+
+	private Map<String, List<Observer>> mapObservers;
+
+    public Context() {
+    	
+    	Process process;
+    	Property property;
+    	UserGroup userGroup;
+    	UserGroup userGroupAux;
+    	Activity activity;
+      	Parameter parameter;
+      	
+      	Process aux;
+      	boolean existProcess;
+
+		AbstractBpmsInterface bpms = new ConcreteBpmsInterface();
+		List<String> processPaths = new ArrayList<String>();
+
+        #foreach ($process in $listProcesses)
+        
+        	this.mapObservers = new HashMap<String, List<Observer>>();
+            ArrayList<Observer> listObservers = new ArrayList<Observer>();
+    		
+    		
+    		/*
+             * Cria e mapeia observador de inicio de processo
+            */ 
+            StartProcessObserver spo = new StartProcessObserver("$process.getId()");
+            listObservers.add(spo);
+			addMapping("CRUD$process.getEntityProcess()", listObservers);
+			
+    		
+            /*
+             * Cria e mapeia observadores de tarefas
+            */ 
+            TaskExecutedObserver teo;
+
+            #foreach ($task in $process.getListUserTask())
+            	listObservers = new ArrayList<Observer>();
+                teo = new TaskExecutedObserver("$task.getId()");
+                listObservers.add(teo); 
+                addMapping("CRUD$task.getEntityTask()", listObservers);           
+                ##foreach ($parameter in $task.getInputParameter())
+                    ##addMapping("CRUD$parameter.getEntityTask()", listObservers);
+                ##end
+            #end 
+            
+            
+            
+            /*
+             * Criar definicao do processo
+             */
+          	
+          	//Processo $process.getName()
+          	process = new Process();
+            process.setName("$process.getName()");
+            process.setIdBpms("$process.getId()");
+            processPaths.add("$process.getFilePath()");
+            
+            	//Variaveis do Processo $process.getName()  
+                #foreach ($property in $process.getListProperty())                
+                    property = new Property();
+                    property.setName("$property.getName()");
+                    process.addVariable(property);	
+                #end
+
+            	//Atividades de Usuario do Processo $process.getName()
+            	#foreach ($userTask in $process.getListUserTask())
+            		activity = new Activity();
+               		activity.setName("$userTask.getName()");
+               		activity.setIdBpms("$userTask.getId()");
+          
+					//Parametros de Entrada da Atividade $userTask.getName()   
+	                #foreach ($parameter in $userTask.getInputParameter())                
+	                    parameter = new Parameter();
+	                    parameter.setName("$parameter.getName()");
+	                    parameter.setType("input");
+	                    activity.addParameter(parameter);	
+	                #end
+					
+					//Parametros de Saida da Atividade $userTask.getName()
+	                #foreach ($parameter in $userTask.getOutputParameter())                
+	                    parameter = new Parameter();
+	                    parameter.setName("$parameter.getName()");
+	                    parameter.setType("output");
+	        			activity.addParameter(parameter);
+	                #end
+
+	                //Grupos de Usuario da Atividade $userTask.getName()
+	                #foreach ($userGroup in $userTask.getUserGroup()) 
+	            		userGroup = new UserGroup();
+	                	userGroup.setName("$userGroup.getName()");
+	                	userGroupAux = new UserGroup();
+	                	try {
+							userGroupAux = (UserGroup) CRUDEntity.read(userGroup);
+							activity.setUserGroup(userGroupAux);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						if (userGroupAux==null){
+							try {
+								CRUDEntity.create(userGroup);
+								activity.setUserGroup(userGroup);
+							}catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+	                	##userGroup.addActivity(activity);
+	                	##activity.addUserGroup(userGroup);
+	                #end
+	         		
+	         		process.addActivity(activity);
+	                
+				#end
+				
+				aux = new Process();
+				aux.setIdBpms(process.getIdBpms());
+
+				existProcess = true;
+				try {
+					aux = (Process) CRUDEntity.read(aux);
+				} catch (Exception e) {
+					existProcess = false;
+				}
+
+				if(!existProcess){
+					try {
+						CRUDEntity.create(process);
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+			//Fim do processo $process.getName()
+        #end
+        
+        bpms.startBPMS(processPaths);
+        #foreach ($process in $listProcesses)
+        	//Adicionar Atividades de Servico do Processo $process.getName() na Sessao jBPM
+            #foreach ($serviceTask in $process.getListServiceTask())     
+            	bpms.addServiceTask(new $serviceTask.getName());           	
+            #end
+        #end
+        
+    }
+    
+    private void addMapping(String key, List<Observer> observers) {
+        if(this.mapObservers.containsKey(key)){
+            this.mapObservers.get(key).addAll(observers);
+        }else{
+            this.mapObservers.put(key, observers);
+        }
+    }
+    public List<Observer> getObservers(String nameClasse){
+        return this.mapObservers.get(nameClasse);
+    }
+}
