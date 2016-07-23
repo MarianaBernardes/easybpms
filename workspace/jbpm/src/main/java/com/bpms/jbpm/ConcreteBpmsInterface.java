@@ -3,6 +3,9 @@ package com.bpms.jbpm;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
@@ -66,14 +69,16 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",
 				myWorkItemHandler);
 		ksession.getWorkItemManager().registerWorkItemHandler("Manual Task",
-				new ManualTaskWorkItemHandler());
+				new ManualTaskWorkItem());
 	}
 
 	
-	public void addServiceTask(ServiceTask task) {
-		WorkItemHandler myWorkItemHandler = new JavaServiceTask(task);
+	public void addServiceTask(ServiceTask serviceTask) {
+		WorkItemHandler myWorkItemHandler = new ServiceTaskWorkItem(serviceTask);
 		ksession.getWorkItemManager().registerWorkItemHandler("Service Task",
 				myWorkItemHandler);
+		
+		
 	}
 
 	/**
@@ -108,8 +113,6 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
 	private RuntimeManager createRuntimeManager(
 			List<String> bpmnProcessDefinitions) {
-
-		//EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
 		
 		// UserGroupCallback userGroupCallback = new JBossUserGroupCallbackImpl("classpath:/usergroup.properties");
 		// EntityManagerFactory emf = EntityManagerFactoryManager.get().getOrCreate("org.jbpm.persistence.jpa");
@@ -127,23 +130,24 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		
 		//JBPMHelper.setupDataSource();
 		PoolingDataSource ds = new PoolingDataSource();
-		ds.setUniqueName("jdbc/jbpm");
+		ds.setUniqueName("jdbc/jbpm-ds");
 		ds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
 		ds.setMaxPoolSize(3); ds.setAllowLocalTransactions(true);
-		ds.getDriverProperties().put("user", "sa");
+		ds.getDriverProperties().put("user", "root");
 		ds.getDriverProperties().put("password", "");
-		ds.getDriverProperties().put("url", "jdbc:h2:mem:jbpm-db");
-		ds.getDriverProperties().put("driverClassName", "org.h2.Driver");
+		ds.getDriverProperties().put("url", "jdbc:mysql://localhost/jbpm");
+		ds.getDriverProperties().put("driverClassName", "com.mysql.jdbc.Driver");
 		ds.init();
 		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
 		
-		/*environmentBuilder = RuntimeEnvironmentBuilder.Factory.get()
+		environmentBuilder = RuntimeEnvironmentBuilder.Factory.get()
 				.newDefaultBuilder().entityManagerFactory(emf);
 				//.userGroupCallback(userGroupCallback);*/
 
 		
-		environmentBuilder = RuntimeEnvironmentBuilder.Factory .get()
-		  .newDefaultInMemoryBuilder();
+		/*environmentBuilder = RuntimeEnvironmentBuilder.Factory .get()
+		  .newDefaultInMemoryBuilder();*/
 		
 		for (String resource : bpmnProcessDefinitions) {
 				
