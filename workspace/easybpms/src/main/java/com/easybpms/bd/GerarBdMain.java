@@ -18,6 +18,12 @@ public class GerarBdMain {
 		p = (ProcessInstance) CRUDEntity.read(p);
 		CRUDEntity.remove(p);
 		
+		p = new ProcessInstance();
+		p.setId(2);
+		//CRUDEntity.create(p);
+		p = (ProcessInstance) CRUDEntity.read(p);
+		CRUDEntity.remove(p);
+		
 		
 		/*for (int i=1; i<=6; i++){
 			UserGroup u = new UserGroup();

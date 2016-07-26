@@ -24,8 +24,6 @@ public abstract class AbstractBpmsInterface {
 	public abstract void stopBPMS();
 
 	public abstract long startProcess(String processId, Map<String, Object> params);
-
-	public abstract void addServiceTask(ServiceTask serviceTask);
 	
 	/**
 	 * @param taskId
