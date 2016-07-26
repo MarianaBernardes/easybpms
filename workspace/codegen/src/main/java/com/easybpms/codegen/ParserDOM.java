@@ -69,15 +69,6 @@ public class ParserDOM {
 	    if (listUserTask.size() > 0) {
 	        process.setListUserTask(listUserTask);
 	    }
-	    
-	    
-	  //Recupera um conjunto de tarefas de serviço
-        ArrayList<TaskServiceXml> listServiceTask = this.getServiceTasks(document);
-      
-	    //adiciona variaveis do processo
-	    if (listServiceTask.size() > 0) {
-	        process.setListServiceTask(listServiceTask);
-	    }
 	}
 	
 	//retorna processo
@@ -100,20 +91,6 @@ public class ParserDOM {
         return retorno;
     }
 	
-	private ArrayList<TaskServiceXml> getServiceTasks(Document document) {
-		
-		NodeList interfaces = document.getElementsByTagName(nameSpace + "interface");
-		ArrayList<TaskServiceXml> retorno = new ArrayList<TaskServiceXml>();
-		
-		for (int i = 0; i < interfaces.getLength(); i++) {
-			
-			Element element = (Element) interfaces.item(i);
-            TaskServiceXml auxt = new TaskServiceXml();
-            auxt.setName(element.getAttribute("implementationRef") + "()");  
-            retorno.add(auxt);
-        }
-        return retorno;
-    }
     
     private ActivityXml getUserTask(Node userTask) {
         Element element = (Element) userTask;

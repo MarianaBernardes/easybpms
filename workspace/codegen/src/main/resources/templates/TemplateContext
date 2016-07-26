@@ -152,12 +152,6 @@ public class Context extends AbstractContext {
         #end
         
         bpms.startBPMS(processPaths);
-        #foreach ($process in $listProcesses)
-        	//Adicionar Atividades de Servico do Processo $process.getName() na Sessao jBPM
-            #foreach ($serviceTask in $process.getListServiceTask())     
-            	bpms.addServiceTask(new $serviceTask.getName());           	
-            #end
-        #end
         
     }
     

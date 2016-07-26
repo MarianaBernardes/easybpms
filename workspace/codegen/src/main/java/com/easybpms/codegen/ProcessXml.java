@@ -7,7 +7,6 @@ public class ProcessXml extends Marcacao{
 	
 	private HashMap<String, ActivityXml> listUserTask;
 	private ArrayList<PropertyXml> listProperty;
-	private ArrayList<TaskServiceXml> listServiceTask;
     private String filePath;
     private String entityProcess;
     
@@ -29,14 +28,6 @@ public class ProcessXml extends Marcacao{
 
 	public void setListProperty(ArrayList<PropertyXml> listProperty) {
 		this.listProperty = listProperty;
-	}
-
-	public ArrayList<TaskServiceXml> getListServiceTask() {
-		return listServiceTask;
-	}
-
-	public void setListServiceTask(ArrayList<TaskServiceXml> listServiceTask) {
-		this.listServiceTask = listServiceTask;
 	}
 
 	public String getFilePath() {

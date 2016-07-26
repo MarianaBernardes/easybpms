@@ -11,6 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.xml.sax.SAXException;
 
 
@@ -44,8 +46,8 @@ public class GenerateContext {
 		// inicializando o velocity
 		VelocityEngine ve = new VelocityEngine();
 		//Descomentar caso a pasta de templates nao esteja dentro da pasta resources
-		//ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-		//ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+		ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
 		ve.init();
 
 		// criando o contexto que liga o java ao template
@@ -55,7 +57,8 @@ public class GenerateContext {
 		// Recuperando os Eventos de Inicio
 
 		// escolhendo o template
-		Template t = ve.getTemplate("./src/main/resources/templates/TemplateContext");
+		//Template t = ve.getTemplate("./src/main/resources/templates/TemplateContext");
+		Template t = ve.getTemplate("resources/templates/TemplateContext");
 		//t = define a estrutura do codigo gerado
 
 		context.put("listProcesses", listProcesses);
