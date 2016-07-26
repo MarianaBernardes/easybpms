@@ -23,11 +23,10 @@ import org.kie.internal.runtime.manager.context.EmptyContext;
 import bitronix.tm.resource.jdbc.PoolingDataSource;
 
 import com.easybpms.bpms.AbstractBpmsInterface;
-import com.easybpms.bpms.ServiceTask;
 
 public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
-	// RuntimeManager - combina��o do motor e do processo de servi�o tarefa humana
+	// RuntimeManager - combinacao do motor e do processo de servico de tarefa humana
 	private RuntimeManager manager;
 	private RuntimeEngine engine;
 	private KieSession ksession;
@@ -41,7 +40,7 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		ksession = engine.getKieSession();
 		// ksession = JPAKnowledgeService.newStatefulKnowledgeSession(engine.getKieSession().getKieBase(),null, engine.getKieSession().getEnvironment());
 		taskService = engine.getTaskService();
-		addHumanTaskConnector();
+		addTaskConnector();
 
 	}
 
@@ -63,23 +62,13 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	 * myWorkItemHandler - conector especifico registrado na sessao que sera
 	 * chamado quando o motor chegar em uma atividade de usuario
 	 */
-	public void addHumanTaskConnector() {
-		WorkItemHandler myWorkItemHandler = new SpecificBpmsConnector(
-				taskService, ksession);
-		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",
-				myWorkItemHandler);
-		ksession.getWorkItemManager().registerWorkItemHandler("Manual Task",
-				new ManualTaskWorkItem());
+	public void addTaskConnector() {
+		WorkItemHandler myWorkItemHandler = new SpecificBpmsConnector(taskService, ksession);
+		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",myWorkItemHandler);
+		ksession.getWorkItemManager().registerWorkItemHandler("Manual Task",new ManualTaskWorkItem());
+		ksession.getWorkItemManager().registerWorkItemHandler("Service Task",new ServiceTaskWorkItem());
 	}
 
-	
-	public void addServiceTask(ServiceTask serviceTask) {
-		WorkItemHandler myWorkItemHandler = new ServiceTaskWorkItem(serviceTask);
-		ksession.getWorkItemManager().registerWorkItemHandler("Service Task",
-				myWorkItemHandler);
-		
-		
-	}
 
 	/**
 	 * @param taskId - idBpms da tarefa registrado no BD da API
@@ -132,7 +121,8 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		PoolingDataSource ds = new PoolingDataSource();
 		ds.setUniqueName("jdbc/jbpm-ds");
 		ds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
-		ds.setMaxPoolSize(3); ds.setAllowLocalTransactions(true);
+		ds.setMaxPoolSize(5); 
+		ds.setAllowLocalTransactions(true);
 		ds.getDriverProperties().put("user", "root");
 		ds.getDriverProperties().put("password", "");
 		ds.getDriverProperties().put("url", "jdbc:mysql://localhost/jbpm");
