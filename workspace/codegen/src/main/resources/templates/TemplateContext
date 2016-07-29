@@ -109,14 +109,14 @@ public class Context extends AbstractContext {
 	                	userGroup.setName("$userGroup.getName()");
 	                	userGroupAux = new UserGroup();
 	                	try {
-							userGroupAux = (UserGroup) CRUDEntity.read(userGroup);
+							userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
 							activity.setUserGroup(userGroupAux);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 						if (userGroupAux==null){
 							try {
-								CRUDEntity.create(userGroup);
+								CRUDUserGroup.create(userGroup);
 								activity.setUserGroup(userGroup);
 							}catch (Exception e) {
 								e.printStackTrace();
