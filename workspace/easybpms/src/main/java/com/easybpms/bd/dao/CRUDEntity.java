@@ -26,8 +26,8 @@ public class CRUDEntity {
 				CRUDActivity.create((Activity) entity, session);
 			} else if (entityClass.equals(Parameter.class)) {
 				CRUDParameter.create((Parameter) entity, session);
-			}else if (entityClass.equals(UserGroup.class)) {
-				CRUDUserGroup.create((UserGroup) entity, session);
+			/*}else if (entityClass.equals(UserGroup.class)) {
+				CRUDUserGroup.create((UserGroup) entity, session);*/
 			}else if (entityClass.equals(ProcessInstance.class)) {
 				CRUDProcessInstance.create((ProcessInstance) entity, session);
 			}else if (entityClass.equals(ActivityInstance.class)) {
@@ -77,8 +77,8 @@ public class CRUDEntity {
 				CRUDActivity.remove((Activity) entity, session);
 			} else if (entityName.equals(Parameter.class)) {
 				CRUDParameter.remove((Parameter) entity, session);
-			}else if (entityName.equals(UserGroup.class)) {
-				CRUDUserGroup.remove((UserGroup) entity, session);
+			/*}else if (entityName.equals(UserGroup.class)) {
+				CRUDUserGroup.remove((UserGroup) entity, session);*/
 			}else if (entityName.equals(ProcessInstance.class)) {
 				CRUDProcessInstance.remove((ProcessInstance) entity, session);
 			}else if (entityName.equals(ActivityInstance.class)) {
@@ -125,8 +125,8 @@ public class CRUDEntity {
 				retorno = CRUDActivity.read((Activity) entity, session);
 			} else if (entityName.equals(Parameter.class)) {
 				retorno = CRUDParameter.read((Parameter) entity, session);
-			} else if (entityName.equals(UserGroup.class)) {
-				retorno = CRUDUserGroup.read((UserGroup) entity, session);
+			/*} else if (entityName.equals(UserGroup.class)) {
+				retorno = CRUDUserGroup.read((UserGroup) entity, session);*/
 			} else if (entityName.equals(Property.class)) {
 				retorno = CRUDProperty.read((Property) entity, session);
 			} else if (entityName.equals(ProcessInstance.class)) {

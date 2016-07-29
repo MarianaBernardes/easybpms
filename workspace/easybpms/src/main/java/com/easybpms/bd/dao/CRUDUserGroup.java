@@ -3,28 +3,61 @@ package com.easybpms.bd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 import com.easybpms.bd.CRUDException;
 import com.easybpms.bd.Session;
+import com.easybpms.domain.IUserGroup;
 import com.easybpms.domain.UserGroup;
 
 public class CRUDUserGroup {
-	public static void create(UserGroup entity, EntityManager session) throws CRUDException {
-		try {			
-			session.persist(entity);
-		} catch (Exception ex) {			
+	public static void create(IUserGroup entity) throws CRUDException {
+		
+		UserGroup userGroup = new UserGroup();
+		userGroup.setName(entity.getName());
+		
+		EntityManager session = Session.getSession();
+		EntityTransaction transaction = session.getTransaction();
+		try {		
+			transaction.begin();
+			session.persist(userGroup);
+			transaction.commit();
+		} catch (RuntimeException re) {
+            if(transaction.isActive()) {
+            	transaction.rollback();
+            }
+            re.printStackTrace();;
+			
+		} catch (Exception ex) {
+			transaction.rollback();		
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("grupo de usuario"), ex);		
 		}
 	}
-	public static void remove(UserGroup entity, EntityManager session) throws CRUDException {
-		try {			
+	public static void remove(IUserGroup entity) throws CRUDException {
+		
+		EntityManager session = Session.getSession();
+		EntityTransaction transaction = session.getTransaction();
+		
+		try {		
+			transaction.begin();
 			session.remove(entity);
-		} catch (Exception ex) {			
+			transaction.commit();
+			
+		} catch (RuntimeException re) {
+            if(transaction.isActive()) {
+            	transaction.rollback();
+            }
+            re.printStackTrace();;
+			
+		} catch (Exception ex) {
+			transaction.rollback();
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("grupo de usuario"), ex);		
 		}
+		
 	}
-	public static UserGroup read(UserGroup userGroup, EntityManager session) throws CRUDException {
+	public static UserGroup read(UserGroup userGroup) throws CRUDException {
+		EntityManager session = Session.getSession();
 		try {
 					
 			if(userGroup.getId() > 0){

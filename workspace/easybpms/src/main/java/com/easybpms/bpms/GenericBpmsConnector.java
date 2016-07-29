@@ -1,5 +1,6 @@
 package com.easybpms.bpms;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class GenericBpmsConnector {
 		ProcessInstance processInstance = new ProcessInstance();
 		ActivityInstance activityInstance = new ActivityInstance();
 		ParameterInstance parameterInstance = new ParameterInstance();
+		User user;
 		String tenancy = null;
 		
 		//Buscar processo
@@ -93,14 +95,26 @@ public class GenericBpmsConnector {
 				}
 			}
 			
+			//Buscar Usuario
 			List<User> users = activity.getUserGroup().getUsers();
-			User user = users.get(0);
-			//procurar usuario com menor qtd de instancias atividades que pertence ao grupo de usuario da atividade passada como parametro
+			List<User> usersTenancy = new ArrayList<User>();
+			//procurar usuario que possui tenancy igual ao da entidade de dominio da aplicacao
 			for (int i = 0; i<users.size(); i++){
-				if ((users.get(i).getTenancy().equals(tenancy)) && (users.get(i).getActivityInstances().size() <= user.getActivityInstances().size())){
-					user = users.get(i);
+				if (users.get(i).getTenancy().equals(tenancy)){
+					usersTenancy.add(users.get(i));
+					
 				}
 			}
+			
+			//procurar usuario que possui tenancy igual ao da entidade de dominio da aplicacao e com menor qtd 
+			//de instancias atividades que pertence ao grupo de usuario da atividade passada como parametro e 
+			user = usersTenancy.get(0);
+			for (int i = 0; i<usersTenancy.size(); i++){
+				if (usersTenancy.get(i).getActivityInstances().size() <= user.getActivityInstances().size()){
+					user = usersTenancy.get(i);
+				}
+			}
+			
 			user.addActivityInstance(activityInstance);
 			activity.addActivityInstance(activityInstance);
 			processInstance.addActivityInstance(activityInstance);

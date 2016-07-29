@@ -27,7 +27,7 @@ public class User implements IUser {
 	
 	private String tenancy;
 	
-	//@transient - não persiste no bd
+	//@transient - nao persiste no bd
 	@Transient
 	private List<String> userGroupNames;
 	
@@ -88,13 +88,13 @@ public class User implements IUser {
 	public void setActivityInstances(List<ActivityInstance> activityInstances) {
 		this.activityInstances = activityInstances;
 	}
-	//sincroniza a associação bidirecional User-ActivityInstance
+	//sincroniza a associacao bidirecional User-ActivityInstance
 	public void addActivityInstance(ActivityInstance activityInstance){
 		activityInstances.add(activityInstance);
 		activityInstance.setUser(this);
 	}
 				
-	//sincroniza a associação bidirecional User-ActivityInstance
+	//sincroniza a associacao bidirecional User-ActivityInstance
 	public void removeActivityInstance(ActivityInstance activityInstance){
 		activityInstances.remove(activityInstance);
 		activityInstance.setUser(null);

@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class UserGroup implements IEntity {
+public class UserGroup implements IUserGroup {
 	@Id
 	@GeneratedValue(generator="UserGroupId")
 	@GenericGenerator(name="UserGroupId", strategy="increment")
@@ -68,27 +68,27 @@ public class UserGroup implements IEntity {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	//sincroniza a associação bidirecional UserGroup-User
+	//sincroniza a associacao bidirecional UserGroup-User
 	public void addUser(User user){
 		users.add(user);
 		user.getUserGroups().add(this);
 		//user.setUserGroup(this);
 	}
 			
-	//sincroniza a associação bidirecional UserGroup-User
+	//sincroniza a associacao bidirecional UserGroup-User
 	public void removeUser(User user){
 		users.remove(user);
 		user.getUserGroups().remove(this);
 		//user.setUserGroup(null);
 	}
 	
-	//sincroniza a associação bidirecional UserGroup-Activity
+	//sincroniza a associacao bidirecional UserGroup-Activity
 	public void addActivity(Activity activity){
 		activities.add(activity);
 		activity.setUserGroup(this);
 	}
 					
-	//sincroniza a associação bidirecional UserGroup-Activity
+	//sincroniza a associacao bidirecional UserGroup-Activity
 	public void removeActivity(Activity activity){
 		activities.remove(activity);
 		activity.setUserGroup(null);

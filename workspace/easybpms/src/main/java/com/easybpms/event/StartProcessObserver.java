@@ -27,10 +27,10 @@ public class StartProcessObserver implements Observer{
 	}
 	
 	/**
-	 * Observador notificado todas as vezes que o método notifyObservers for chamado na aplicação
-	 * Observador será escolhido quando o id do processo no bpmn (processidbpms) for igual ao nome da classe 
-	 * que inicia o processo na aplicação (className). Exemplo: entidade com.solicitarviagem.domain.Viagem
-	 * @param arg - Instância da classe que inicia o processo na aplicação
+	 * Observador notificado todas as vezes que o metodo notifyObservers for chamado na aplicacao
+	 * Observador sera escolhido quando o id do processo no bpmn (processidbpms) for igual ao nome da classe 
+	 * que inicia o processo na aplicacao (className). Exemplo: entidade com.solicitarviagem.domain.Viagem
+	 * @param arg - Instancia da classe que inicia o processo na aplicacao
 	 */
 	public void update(Observable o, Object arg) {
 		
@@ -39,24 +39,24 @@ public class StartProcessObserver implements Observer{
 		
 		String className = arg.getClass().getName(); //nomedopacote.nomedaclasse
 		
-		System.out.println("\nStart Process Observer do processo " + processidbpms + " notificado.Objeto passado: " + className + "\n");
+		//System.out.println("\nStart Process Observer do processo " + processidbpms + " notificado.Objeto passado: " + className + "\n");
 		
 		if(!className.equals(processidbpms)){ 
 			return;
 		}
 		
 		/**
-		 * @param inputParamName - parâmetro de entrada que deve ser inserido para todas as atividades de usuário
-		 * do processo ne negócio. 
-		 * Para iniciar o processo correto, esse parâmetro tem que ser correspondente ao  id da entidade de domínio 
-		 * que inicia o processo na aplicação. Exemplo: parâmetro de entrada easybpms_com_solicitarviagem_domain_Viagem_id 
+		 * @param inputParamName - parametro de entrada que deve ser inserido para todas as atividades de usuario
+		 * do processo ne negocio. 
+		 * Para iniciar o processo correto, esse parametro tem que ser correspondente ao  id da entidade de dominio 
+		 * que inicia o processo na aplicacao. Exemplo: parametro de entrada easybpms_com_solicitarviagem_domain_Viagem_id 
 		 */
 		String inputParamName = "easybpms." + className + ".id";
 		inputParamName = inputParamName.replace(".","_"); 
 		
 		/**
-		 * @param inputParamValue - valor do parâmetro de entrada buscado na aplicação. Exemplo: valor do id da entidade Viagem
-		 * Obs: Utiliza API de reflexão para invocar o método da instância da entidade de domínio da aplicação e seu respectivo valor
+		 * @param inputParamValue - valor do parametro de entrada buscado na aplicacao. Exemplo: valor do id da entidade Viagem
+		 * Obs: Utiliza API de reflexao para invocar o metodo da instância da entidade de dominio da aplicacao e seu respectivo valor
 		 */
 		String inputParamValue = null;
 		try {
@@ -68,7 +68,7 @@ public class StartProcessObserver implements Observer{
 		}
 		
 		/**
-		 * @param - listIp - lista de todas as instâncias parâmetro do easybpms
+		 * @param - listIp - lista de todas as instancias parametro do easybpms
 		 */
 		List<ParameterInstance> listIp = null;
 		try {
@@ -78,10 +78,10 @@ public class StartProcessObserver implements Observer{
 		}
 		
 		/**
-		 * Para cada instância parâmetro da lista verifica se existe uma instância da entidade de domínio
-		 * que inicia o processo na aplicação. Ou seja, onde o inputParamName é igual à algum parâmetro de entrada
+		 * Para cada instancia parametro da lista verifica se existe uma instancia da entidade de dominio
+		 * que inicia o processo na aplicacao. Ou seja, onde o inputParamName e igual a� algum parametro de entrada
 		 * do easybpms e o inputParamValue é igual a alguma instância parâmetro do easybpms.
-		 * Se a condição for satisfeita significa que o processo já foi iniciado
+		 * Se a condicao for satisfeita significa que o processo ja foi iniciado
 		 */
 		for (ParameterInstance ip : listIp){
 			if(ip.getParameter().getName().equals(inputParamName) && ip.getValue().equals(inputParamValue)){ 
@@ -90,9 +90,9 @@ public class StartProcessObserver implements Observer{
 		}
 		
 		/**
-		 * Se a condição não for satisfeita significa que o processo não foi iniciado
-		 * Para descobrir a definição de processo e criar uma instância, busca no easybpms o processo
-		 * que tem id igual à processIdBpms. Exemplo: com_solicitarviagem_domain_Viagem
+		 * Se a condicao nao for satisfeita significa que o processo nao foi iniciado
+		 * Para descobrir a definicao de processo e criar uma instancia, busca no easybpms o processo
+		 * que tem id igual ao processIdBpms. Exemplo: com_solicitarviagem_domain_Viagem
 		 */
 		//Processo nao iniciado
 		Process p = new Process();
@@ -111,9 +111,9 @@ public class StartProcessObserver implements Observer{
 		}
 		
 		/**
-		 * Para iniciar o processo, é necessário enviar o valor das suas propriedades
+		 * Para iniciar o processo, e necessario enviar o valor das suas propriedades
 		 * @param params - mapa que armazena o nome das propriedade e seus respectivos valores
-		 * O valor de cada propriedade é o valor de cada atributo da entidade de domínio da aplicação, que é invocado por meio da API de reflexão
+		 * O valor de cada propriedade e o valor de cada atributo da entidade de dominio da aplicacao, que e invocado por meio da API de reflexao
 		 */
 		Map<String,Object> params = new HashMap<String, Object>();
 		for (Property pr : listP){
@@ -139,10 +139,10 @@ public class StartProcessObserver implements Observer{
 		}
 		String processInstanceId = "";
 		/**
-		 * @param processInstanceId - recebe o id da instância processo criada no bpms
+		 * @param processInstanceId - recebe o id da instancia processo criada no bpms
 		 */
-		processInstanceId = "" + AbstractBpmsInterface.getBpmsInterface().startProcess(this.processIdBpms, params);
-		
+		System.out.println("\nProcesso " + p.getName() + " iniciado!\n");
+		processInstanceId = "" + AbstractBpmsInterface.getBpmsInterface().startProcess(this.processIdBpms, params);	
 	}
 
 }

@@ -25,7 +25,7 @@ public class CRUDUser {
 			for (String groupName : userGroupNames){
 				UserGroup userGroup = new UserGroup();
 				userGroup.setName(groupName);
-				userGroup = (UserGroup)CRUDEntity.read(userGroup);
+				userGroup = CRUDUserGroup.read(userGroup);
 				if (userGroup != null){
 					userGroup.addUser(user);
 				}

@@ -21,35 +21,35 @@ public class TaskExecutedObserver implements Observer{
 	
 	/**
 	 * TaskExecutedObserver instanciado no Context
-	 * @param taskIdBpms - id da tarefa de usuário no bpmn
+	 * @param taskIdBpms - id da tarefa de usuario no bpmn
 	 */
 	public TaskExecutedObserver (String taskIdBpms) {
 		this.taskIdBpms = taskIdBpms;
 	}
 	
 	/**
-	 * Observador notificado todas as vezes que o método notifyObservers for chamado na aplicação
-	 * Observador será escolhido quando a atividade parada no bpms for identificada
-	 * @param arg - Instância da classe que executa a tarefa na aplicação
+	 * Observador notificado todas as vezes que o metodo notifyObservers for chamado na aplicacao
+	 * Observador sera escolhido quando a atividade parada no bpms for identificada
+	 * @param arg - Instancia da classe que executa a tarefa na aplicacao
 	 */
 	public void update(Observable o, Object arg) {
-		System.out.println("\nTaskExecuted da tarefa " + this.taskIdBpms + " notificado. Objeto passado: " + arg.getClass().getName());
+		//System.out.println("\nTaskExecuted da tarefa " + this.taskIdBpms + " notificado. Objeto passado: " + arg.getClass().getName());
 		
 		String className = arg.getClass().getName(); //nomedopacote.nomedaclasse
 		
 		
 		/**
-		 * @param inputParamName - parâmetro de entrada que deve ser inserido para todas as atividades de usuário
-		 * do processo ne negócio. 
-		 * Para executar a atividade correta, esse parâmetro tem que ser correspondente ao id da entidade de domínio 
-		 * que executa a atividade na aplicação. Exemplo: parâmetro de entrada easybpms_com_solicitarviagem_domain_Viagem_id 
+		 * @param inputParamName - parametro de entrada que deve ser inserido para todas as atividades de usuario
+		 * do processo ne negocio. 
+		 * Para executar a atividade correta, esse parametro tem que ser correspondente ao id da entidade de dominio 
+		 * que executa a atividade na aplicacao. Exemplo: parametro de entrada easybpms_com_solicitarviagem_domain_Viagem_id 
 		 */
 		String inputParamName = "easybpms." + className + ".id";
 		inputParamName = inputParamName.replace(".","_"); 	
         
 		/**
-		 * @param inputParamValue - valor do parâmetro de entrada buscado na aplicação. Exemplo: valor do id da entidade Viagem
-		 * Obs: Utiliza API de reflexão para invocar o método da instância da entidade de domínio da aplicação e seu respectivo valor
+		 * @param inputParamValue - valor do parametro de entrada buscado na aplicacao. Exemplo: valor do id da entidade Viagem
+		 * Obs: Utiliza API de reflexao para invocar o metodo da instancia da entidade de dominio da aplicacao e seu respectivo valor
 		 */
 		String inputParamValue = null;
 		try {
@@ -61,7 +61,7 @@ public class TaskExecutedObserver implements Observer{
 		}
 		
 		/**
-		 * @param - listIp - lista de todas as instâncias parâmetro do easybpms
+		 * @param - listIp - lista de todas as instancias parametro do easybpms
 		 */
 		List<ParameterInstance> listIp = null;
 		try {
@@ -73,10 +73,10 @@ public class TaskExecutedObserver implements Observer{
 		List<ActivityInstance> taskInstances = new ArrayList<ActivityInstance>();
 		
 		/**
-		 * Para cada instância parâmetro da lista identifica as instâncias atividades que tem parâmetro de 
-		 * entrada igual ao id da entidade de dominio e que estão paradas no bpms (status = "Reserved"). 
-		 * Em outras palavras, em que o inputParamName é igual à algum parâmetro de entrada do easybpms e o 
-		 * inputParamValue é igual a alguma instância parâmetro do easybpms.
+		 * Para cada instancia parametro da lista identifica as instancias atividades que tem parametro de 
+		 * entrada igual ao id da entidade de dominio e que estao paradas no bpms (status = "Reserved"). 
+		 * Em outras palavras, em que o inputParamName e igual a algum parametro de entrada do easybpms e o 
+		 * inputParamValue e igual a alguma instancia parametro do easybpms.
 		 */
 		
 		for (ParameterInstance ip : listIp){
@@ -89,11 +89,11 @@ public class TaskExecutedObserver implements Observer{
 		}
 		
 		/**
-		 * Para cada instância atividade identificada, cria o parâmetro de saída
-		 * O parâmetro de saída corresponde à algum atributo da entidade de domínio da aplicação que é necessário
-		 * para executar a atividade no processo. Ele é buscado por meio da API de reflexão. Exemplo: Para executar
-		 * a atividade Analisar Solicitação de Viagem, o atributo aprovar tem que ser true ou false. Ele será um
-		 * parâmetro de saída para a atividade para que o bpms dê um passo no processo
+		 * Para cada instancia atividade identificada, cria o parametro de saida
+		 * O parametro de saida corresponde a algum atributo da entidade de dominio da aplicacao que e necessario
+		 * para executar a atividade no processo. Ele e buscado por meio da API de reflexao. Exemplo: Para executar
+		 * a atividade Analisar Solicitacao de Viagem, o atributo aprovar tem que ser true ou false. Ele sera um
+		 * parametro de saida para a atividade para que o bpms de um passo no processo
 		 */
 
 		for (ActivityInstance task : taskInstances) {  
@@ -120,8 +120,8 @@ public class TaskExecutedObserver implements Observer{
 		}
 		
 		/**
-		 * Para executar as instâncias atividades, é necessário enviar o valor dos parâmetros de saída
-		 * @param params - mapa que armazena o nome dos parâmetros de saída e seus respectivos valores
+		 * Para executar as instancias atividades, e necessario enviar o valor dos parametros de saida
+		 * @param params - mapa que armazena o nome dos parametros de saida e seus respectivos valores
 		 */
 		for (ActivityInstance task : taskInstances) {
 			Map<String,Object> params = new HashMap<String,Object>(); 
@@ -148,7 +148,7 @@ public class TaskExecutedObserver implements Observer{
 			} catch (CRUDException e) {
 				e.printStackTrace();
 			}
-			
+			System.out.println("\nTarefa " + task.getActivity().getName() + " executada!\n");
 		}
 	}
 

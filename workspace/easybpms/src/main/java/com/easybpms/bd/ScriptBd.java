@@ -1,25 +1,19 @@
 package com.easybpms.bd;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
 import com.easybpms.bd.dao.CRUDEntity;
 import com.easybpms.domain.ProcessInstance;
 import com.easybpms.domain.Process;
 
-public class GerarBdMain {
+public class ScriptBd {
 
 	public static void main(String[] args) throws CRUDException {
 
-		EntityManager session = Session.getSession();
+		Session.getSession();
 		
 		ProcessInstance p = new ProcessInstance();
 		p.setId(1);
-		//CRUDEntity.create(p);
-		p = (ProcessInstance) CRUDEntity.read(p);
-		CRUDEntity.remove(p);
-		
-		p = new ProcessInstance();
-		p.setId(2);
 		//CRUDEntity.create(p);
 		p = (ProcessInstance) CRUDEntity.read(p);
 		CRUDEntity.remove(p);
@@ -82,5 +76,39 @@ public class GerarBdMain {
 		System.out.println("Tamanho da lista de variavel " + vlist.size());*/
 		
 		Session.closeSession();
+	}
+	
+	public static void deleteProcessesInstances(List<Integer> listProcessesInstances){
+		if (listProcessesInstances != null){
+			Session.getSession();
+			for (Integer i : listProcessesInstances){
+				ProcessInstance p = new ProcessInstance();
+				p.setId(i);
+				try {
+					p = (ProcessInstance) CRUDEntity.read(p);
+					CRUDEntity.remove(p);
+				} catch (CRUDException e) {
+					e.printStackTrace();
+				}	
+			}
+			Session.closeSession();
+		}
+	}
+	
+	public static void deleteProcesses(List<Integer> listProcesses){
+		if (listProcesses != null){
+			Session.getSession();
+			for (Integer i : listProcesses){
+				Process p = new Process();
+				p.setId(i);
+				try {
+					p = (Process) CRUDEntity.read(p);
+					CRUDEntity.remove(p);
+				} catch (CRUDException e) {
+					e.printStackTrace();
+				}	
+			}
+			Session.closeSession();
+		}
 	}
 }
