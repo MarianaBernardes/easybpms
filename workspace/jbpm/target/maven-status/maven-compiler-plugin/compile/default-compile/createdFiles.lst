@@ -1,5 +1,6 @@
 com\bpms\jbpm\EndEventListener.class
-com\bpms\jbpm\SpecificBpmsConnector.class
 com\bpms\jbpm\ConcreteBpmsInterface.class
 com\bpms\jbpm\ServiceTaskWorkItem.class
+com\bpms\jbpm\SpecificBpmsConnector.class
+com\bpms\jbpm\AbstractConnection.class
 com\bpms\jbpm\ManualTaskWorkItem.class

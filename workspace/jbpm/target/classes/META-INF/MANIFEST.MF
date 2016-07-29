@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1469303817996
+Bnd-LastModified: 1469714704639
 Build-Jdk: 1.7.0_80
 Built-By: saudeuser
 Bundle-ManifestVersion: 2
@@ -11,19 +11,19 @@ Export-Package: com.bpms.jbpm;version="1.0.0";uses:="com.easybpms.bpms,o
  rg.jbpm.bpmn2.handler,org.jbpm.process.instance.impl.demo,org.jbpm.serv
  ices.task.wih,org.kie.api.event.process,org.kie.api.runtime,org.kie.api
  .runtime.process,org.kie.api.task,org.kie.api.task.model"
-Import-Package: bitronix.tm.resource.jdbc,com.easybpms.bpms;version="[1.
- 0,2)",javax.persistence,org.jbpm.bpmn2.handler;version="[6.2,7)",org.jb
- pm.process.instance.impl.demo;version="[6.2,7)",org.jbpm.ruleflow.insta
- nce;version="[6.2,7)",org.jbpm.services.task.exception;version="[6.2,7)
- ",org.jbpm.services.task.utils;version="[6.2,7)",org.jbpm.services.task
- .wih;version="[6.2,7)",org.jbpm.workflow.core.node;version="[6.2,7)",or
- g.jbpm.workflow.instance.node;version="[6.2,7)",org.kie.api.event.proce
- ss;version="[6.2,7)",org.kie.api.io;version="[6.2,7)",org.kie.api.runti
- me;version="[6.2,7)",org.kie.api.runtime.manager;version="[6.2,7)",org.
- kie.api.runtime.process;version="[6.2,7)",org.kie.api.task;version="[6.
- 2,7)",org.kie.api.task.model;version="[6.2,7)",org.kie.internal.io;vers
- ion="[6.2,7)",org.kie.internal.runtime.manager.context;version="[6.2,7)
- ",org.kie.internal.task.api;version="[6.2,7)",org.kie.internal.task.exc
- eption;version="[6.2,7)",org.slf4j;version="[1.7,2)"
+Import-Package: com.easybpms.bpms;version="[1.0,2)",javax.persistence,or
+ g.jbpm.bpmn2.handler;version="[6.2,7)",org.jbpm.process.instance.impl.d
+ emo;version="[6.2,7)",org.jbpm.ruleflow.instance;version="[6.2,7)",org.
+ jbpm.services.task.exception;version="[6.2,7)",org.jbpm.services.task.u
+ tils;version="[6.2,7)",org.jbpm.services.task.wih;version="[6.2,7)",org
+ .jbpm.workflow.core.node;version="[6.2,7)",org.jbpm.workflow.instance.n
+ ode;version="[6.2,7)",org.kie.api.event.process;version="[6.2,7)",org.k
+ ie.api.io;version="[6.2,7)",org.kie.api.runtime;version="[6.2,7)",org.k
+ ie.api.runtime.manager;version="[6.2,7)",org.kie.api.runtime.process;ve
+ rsion="[6.2,7)",org.kie.api.task;version="[6.2,7)",org.kie.api.task.mod
+ el;version="[6.2,7)",org.kie.internal.io;version="[6.2,7)",org.kie.inte
+ rnal.runtime.manager.context;version="[6.2,7)",org.kie.internal.task.ap
+ i;version="[6.2,7)",org.kie.internal.task.exception;version="[6.2,7)",o
+ rg.slf4j;version="[1.7,2)"
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
 Tool: Bnd-3.0.0.201509101326

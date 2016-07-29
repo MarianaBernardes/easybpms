@@ -20,8 +20,6 @@ import org.kie.api.task.model.Task;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.runtime.manager.context.EmptyContext;
 
-import bitronix.tm.resource.jdbc.PoolingDataSource;
-
 import com.easybpms.bpms.AbstractBpmsInterface;
 
 public class ConcreteBpmsInterface extends AbstractBpmsInterface {
@@ -118,7 +116,7 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		}*/
 		
 		//JBPMHelper.setupDataSource();
-		PoolingDataSource ds = new PoolingDataSource();
+		/*PoolingDataSource ds = new PoolingDataSource();
 		ds.setUniqueName("jdbc/jbpm-ds");
 		ds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
 		ds.setMaxPoolSize(5); 
@@ -127,9 +125,12 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		ds.getDriverProperties().put("password", "");
 		ds.getDriverProperties().put("url", "jdbc:mysql://localhost/jbpm");
 		ds.getDriverProperties().put("driverClassName", "com.mysql.jdbc.Driver");
-		ds.init();
+		ds.init();*/
 		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
+		//Comunicação com o BD jBPM configurado na aplicação do usuário
+		AbstractConnection.getConnection();
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.domain");
 		
 		environmentBuilder = RuntimeEnvironmentBuilder.Factory.get()
 				.newDefaultBuilder().entityManagerFactory(emf);
