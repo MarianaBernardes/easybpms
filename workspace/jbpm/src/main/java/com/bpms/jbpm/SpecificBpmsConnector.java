@@ -56,12 +56,19 @@ public class SpecificBpmsConnector extends LocalHTWorkItemHandler {
 		
 		
 		ArrayList<NodeInstance> nodeInstances = (ArrayList<NodeInstance>) pi.getNodeInstances();
-		if (nodeInstances.get(0).getNodeName().equals(taskInstance.getName())){
-			HumanTaskNodeInstance nodeInstanceHumanTask = (HumanTaskNodeInstance) nodeInstances.get(0);
-			HumanTaskNode nodeHumanTask = nodeInstanceHumanTask.getHumanTaskNode();
-			Object aux = nodeHumanTask.getMetaData("UniqueId");
-			String taskIdBpms = aux.toString();
-			this.connector.execute(taskIdBpms,taskInstance.getName(), String.valueOf(taskInstance.getId()), status, params, processInstance.getProcessId(), String.valueOf(processInstance.getId()));
+		/**
+		 * Foi implementado esse loop pois quando existem tarefas paralelas no jbpm a lista
+		 * "nodeInstances" retorna as duas atividades. Assim, precisa chamar o connector para 
+		 * a tarefa correta, de mesmo nome
+		 */
+		for (NodeInstance node : nodeInstances){
+			if (node.getNodeName().equals(taskInstance.getName())){
+				HumanTaskNodeInstance nodeInstanceHumanTask = (HumanTaskNodeInstance) node;
+				HumanTaskNode nodeHumanTask = nodeInstanceHumanTask.getHumanTaskNode();
+				Object aux = nodeHumanTask.getMetaData("UniqueId");
+				String taskIdBpms = aux.toString();
+				this.connector.execute(taskIdBpms,taskInstance.getName(), String.valueOf(taskInstance.getId()), status, params, processInstance.getProcessId(), String.valueOf(processInstance.getId()));
+			}
 		}
 	
 	}

@@ -33,7 +33,6 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
 	public void startBPMS(List<String> processes) {
 		manager = createRuntimeManager(processes);
-		// engine = manager.getRuntimeEngine(EmptyContext.get());
 		engine = manager.getRuntimeEngine(EmptyContext.get());
 		ksession = engine.getKieSession();
 		// ksession = JPAKnowledgeService.newStatefulKnowledgeSession(engine.getKieSession().getKieBase(),null, engine.getKieSession().getEnvironment());
@@ -151,26 +150,26 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 					ResourceType.BPMN2);
 		}
 		
-		/** Adicionar suporte a transação*/
+		/** Adicionar suporte a transacao*/
 		/* RuntimeEnvironment environment = environmentBuilder
 		 * .addEnvironmentEntry(EnvironmentName.TRANSACTION_MANAGER, tm) .get();
 		 */
 
 		RuntimeEnvironment environment = environmentBuilder.get();
 
-		/** Sessão de conhecimento única que irá executar todas as instâncias de processo*/
+		/** Sessao de conhecimento unica que ira executar todas as instancias de processo*/
 		RuntimeManager manager = RuntimeManagerFactory.Factory.get()
 				.newSingletonRuntimeManager(environment);
 
 		/**
-		 *  Cada pedido (que está na chamada de getRuntimeEngine) terá nova sessão de conhecimento */
+		 *  Cada pedido (que esta na chamada de getRuntimeEngine) tera nova sessao de conhecimento */
 		 //RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerRequestRuntimeManager(environment);
 		 
 
 		/**
-		 * Cada instância do processo terá sua sessão de conhecimento dedicada para todo o tempo de vida 
-		 * Precisa fornecer o ID da instância do processo no getRuntimeEngine (engine = manager.getRuntimeEngine(ProcessInstanceIdContext.get())) 
-		 * Obs: a instância processo precisa estar criada */
+		 * Cada instancia do processo tera sua sessao de conhecimento dedicada para todo o tempo de vida 
+		 * Precisa fornecer o ID da instancia do processo no getRuntimeEngine (engine = manager.getRuntimeEngine(ProcessInstanceIdContext.get())) 
+		 * Obs: a instancia processo precisa estar criada */
 		 //RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerProcessInstanceRuntimeManager(environment);
 		 
 		return manager;
