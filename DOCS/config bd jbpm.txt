@@ -1,0 +1,21 @@
+PoolingDataSource ds = new PoolingDataSource();
+		ds.setUniqueName("jdbc/jbpm-ds");
+		ds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
+		ds.setMaxPoolSize(5); 
+		ds.setAllowLocalTransactions(true);
+		ds.getDriverProperties().put("user", "root");
+		ds.getDriverProperties().put("password", "");
+		ds.getDriverProperties().put("url", "jdbc:mysql://localhost/jbpm");
+		ds.getDriverProperties().put("driverClassName", "com.mysql.jdbc.Driver");
+		ds.init();
+
+
+
+lib Maven
+
+<dependency>
+	<groupId>org.codehaus.btm</groupId>
+	<artifactId>btm</artifactId>
+	<version>2.1.4</version>
+</dependency>
+
