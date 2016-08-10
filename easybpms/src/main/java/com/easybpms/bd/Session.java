@@ -21,4 +21,9 @@ public class Session {
 		manager.close();
 		factory.close();
 	}
+	
+	public static void setEntityManagerFactory(EntityManagerFactory emfFactory) {
+		factory = emfFactory;
+		manager = factory.createEntityManager();;
+	}
 }

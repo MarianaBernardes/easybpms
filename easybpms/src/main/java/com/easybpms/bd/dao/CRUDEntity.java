@@ -12,10 +12,10 @@ import com.easybpms.domain.*;
 public class CRUDEntity {
 	public static void create (IEntity entity) throws CRUDException{
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+//		EntityTransaction transaction = session.getTransaction();
 		
 		try{
-			transaction.begin();
+//			transaction.begin();
 			Class<? extends IEntity> entityClass = entity.getClass();
 	        
 			if (entityClass.equals(Process.class)) {
@@ -40,22 +40,22 @@ public class CRUDEntity {
 				throw new CRUDException("Não há create para a classe " + entityClass.getSimpleName());
 			}
 
-			transaction.commit();
+//			transaction.commit();
 			
 		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
+//            if(transaction.isActive()) {
+//            	transaction.rollback();
+//            }
             throw re;
 			
 		}catch(CRUDException ex1) {
 			
-			transaction.rollback();
+//			transaction.rollback();
 			throw ex1;
 			
 		}catch (Exception ex) {
 			System.out.println(ex.getMessage());
-			transaction.rollback();
+//			transaction.rollback();
 			
 			throw CRUDException.getExcecao("Inconformidade ao persistir " + entity.getClass().getSimpleName() + "!", ex);
 		}

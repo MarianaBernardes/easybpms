@@ -1,0 +1,89 @@
+buildscript {
+    ext {
+        grailsVersion = project.grailsVersion
+    }
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.8.2"
+        classpath "org.grails.plugins:hibernate4:5.0.10"
+    }
+}
+
+version "0.1"
+group "jbpmgrailshello"
+
+apply plugin:"eclipse"
+apply plugin:"idea"
+apply plugin:"war"
+apply plugin:"org.grails.grails-web"
+apply plugin:"org.grails.grails-gsp"
+apply plugin:"asset-pipeline"
+
+ext {
+    grailsVersion = project.grailsVersion
+    gradleWrapperVersion = project.gradleWrapperVersion
+}
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.grails:grails-bom:$grailsVersion"
+    }
+    applyMavenExclusions false
+}
+
+def jbpmVersion = '6.4.0.Final'
+def postgresJdbcVersion = '9.2-1004-jdbc41'
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-autoconfigure"
+    compile "org.grails:grails-core"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
+    compile "org.grails:grails-dependencies"
+    compile "org.grails:grails-web-boot"
+    compile "org.grails.plugins:cache"
+    compile "org.grails.plugins:scaffolding"
+    compile "org.grails.plugins:hibernate4"
+    compile "org.hibernate:hibernate-ehcache"
+	compile group: 'org.jbpm', name: 'jbpm-bom', version: jbpmVersion, ext: 'pom'
+	compile group: 'org.drools', name: 'drools-bom', version: jbpmVersion, ext: 'pom'
+	compile group: 'org.jbpm', name: 'jbpm-runtime-manager', version: jbpmVersion
+	compile group: 'org.jbpm', name: 'jbpm-persistence-jpa', version: jbpmVersion
+	compile group: 'org.jbpm', name: 'jbpm-shared-services', version: jbpmVersion
+	runtime group: 'org.kie', name: 'kie-spring', version: jbpmVersion
+	compile group: 'org.codehaus.btm', name: 'btm', version: '2.1.4'
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.3.11.Final'
+	runtime group: 'org.postgresql', name: 'postgresql', version: postgresJdbcVersion
+    console "org.grails:grails-console"
+    profile "org.grails.profiles:web"
+    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"
+    runtime "com.h2database:h2"
+    testCompile "org.grails:grails-plugin-testing"
+    testCompile "org.grails.plugins:geb"
+    testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
+    testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+//	compile group: 'org.jbpm', name: 'jbpm-test', version: jbpmVersion
+//	runtime group: 'org.jbpm', name: 'jbpm-flow', version: jbpmVersion
+//	runtime group: 'org.jbpm', name: 'jbpm-flow-builder', version: jbpmVersion
+//	runtime group: 'org.jbpm', name: 'jbpm-bpmn2', version: jbpmVersion
+//	runtime group: 'org.drools', name: 'droolsjbpm-integration-distribution', version: jbpmVersion, ext: 'pom'
+}
+
+assets {
+    minifyJs = true
+    minifyCss = true
+}
+
+bootRun {
+	jvmArgs = ['-Xms1024m', '-Xmx4096m', '-Djava.awt.headless=false', '-Dorg.gradle.debug=true', '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006']
+}

@@ -18,19 +18,19 @@ public class CRUDUserGroup {
 		userGroup.setName(entity.getName());
 		
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+//		EntityTransaction transaction = session.getTransaction();
 		try {		
-			transaction.begin();
+//			transaction.begin();
 			session.persist(userGroup);
-			transaction.commit();
+//			transaction.commit();
 		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
+//            if(transaction.isActive()) {
+//            	transaction.rollback();
+//            }
             re.printStackTrace();;
 			
 		} catch (Exception ex) {
-			transaction.rollback();		
+//			transaction.rollback();		
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("grupo de usuario"), ex);		
 		}
 	}

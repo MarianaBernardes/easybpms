@@ -61,7 +61,7 @@ public class StartProcessObserver implements Observer{
 		String inputParamValue = null;
 		try {
 			Method m = arg.getClass().getMethod("getId");
-			Integer i = (Integer)m.invoke(arg);
+			Long i = (Long)m.invoke(arg);
 			inputParamValue = i.toString(); 
 		} catch (Exception e) {
 			e.printStackTrace();

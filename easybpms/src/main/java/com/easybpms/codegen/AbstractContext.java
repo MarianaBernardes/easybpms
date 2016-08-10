@@ -3,6 +3,8 @@ package com.easybpms.codegen;
 import java.util.List;
 import java.util.Observer;
 
+import com.easybpms.bpms.BpmsSession;
+
 
 public abstract class AbstractContext {
 
@@ -20,17 +22,7 @@ public abstract class AbstractContext {
 		return instance;
 	}
 	
+	public abstract void setBpmsSession(BpmsSession bpmsSession);
+	
 	public abstract List<Observer> getObservers(String nameClasse);
-	/*public List<Observer> getObservers(String nameClasse) {
-		List<Observer> observers = null;
-		try {
-			Class<?> concreteContextClass = Class.forName("com.easybpms.codegen.Context");
-			Method m = concreteContextClass.getClass().getMethod("getObservers");
-			observers = (List<Observer>)m.invoke(nameClasse);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return observers;
-	}*/
 }

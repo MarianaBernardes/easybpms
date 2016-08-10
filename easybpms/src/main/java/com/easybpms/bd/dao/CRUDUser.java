@@ -33,20 +33,20 @@ public class CRUDUser {
 		}
 		
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+//		EntityTransaction transaction = session.getTransaction();
 		try {			
-			transaction.begin();
+//			transaction.begin();
 			session.persist(user);
-			transaction.commit();
+//			transaction.commit();
 			
 		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
+//            if(transaction.isActive()) {
+//            	transaction.rollback();
+//            }
             re.printStackTrace();;
 			
 		} catch (Exception ex) {
-			transaction.rollback();
+//			transaction.rollback();
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("usuario"), ex);		
 		}
 	}

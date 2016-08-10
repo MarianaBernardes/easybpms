@@ -1,0 +1,28 @@
+
+1. Context.java:
+processPaths.add("C:\\workspace\\mars\\fixwo\\backend\\processo\\fixWO\\src\\main\\resources\\BPMN_Model\\fixwo.bpmn2");
+Caminho absoluto!
+
+2. CRUDException.java:
+com.easybpms.bd.CRUDException.getExcecao
+nome ruim de metodo.
+
+3. create UserGroup deveria retornar UserGroup created e não void
+
+4. catch Exception no UserGroup nao deixa userGroupAux == null
+
+5. UserGroup.read tenta ler com id. é
+ preciso ler com name
+
+6. Bug: duas vezes o grupo Usuario e nao tem grupo funcionario
+
+7. persistence.xml do jbpm 6.2.0.Final não é igual ao 6.4.0.Final.
+
+8. Erro a seguir deveria testar a existência e não dar um erro tão genérico.
+
+Caused by: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:653)
+	at java.util.ArrayList.get(ArrayList.java:429)
+	at com.easybpms.bpms.GenericBpmsConnector.execute(GenericBpmsConnector.java:111)
+
+Deve ser informado que não há usuário cadastrado para o Grupo com o nome testado.
