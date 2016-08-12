@@ -37,7 +37,7 @@ public class User implements IUser {
     @JoinColumn(name = "userGroup_id",foreignKey=@ForeignKey(name = "usergroup_user_FK"))
     private UserGroup userGroup;*/
 	
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany//(mappedBy = "users")//, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<UserGroup> userGroups = new ArrayList<UserGroup>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

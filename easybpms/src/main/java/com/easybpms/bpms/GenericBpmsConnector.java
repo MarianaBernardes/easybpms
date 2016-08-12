@@ -20,6 +20,7 @@ public class GenericBpmsConnector {
 		Parameter parameter = new Parameter();
 		ProcessInstance processInstance = new ProcessInstance();
 		ActivityInstance activityInstance = new ActivityInstance();
+		activityInstance.setCurrentTransaction(true);
 		ParameterInstance parameterInstance = new ParameterInstance();
 		User user;
 		String tenancy = null;

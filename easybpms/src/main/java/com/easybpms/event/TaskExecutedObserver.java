@@ -80,11 +80,14 @@ public class TaskExecutedObserver implements Observer{
 		 */
 		
 		for (ParameterInstance ip : listIp){
-			if(ip.getActivityInstance().getActivity().getIdBpms().equals(taskIdBpms) && 
-					ip.getActivityInstance().getStatus().equals("Reserved") && ip.getType().equals("input") && 
-					ip.getParameter().getName().equals(inputParamName) && ip.getValue().equals(inputParamValue)){ 
-				taskInstances.add(ip.getActivityInstance()); 
-				break;
+			ActivityInstance activityInstance = ip.getActivityInstance();
+			if (!activityInstance.isCurrentTransaction()) {
+				if(ip.getActivityInstance().getActivity().getIdBpms().equals(taskIdBpms) && 
+						ip.getActivityInstance().getStatus().equals("Reserved") && ip.getType().equals("input") && 
+						ip.getParameter().getName().equals(inputParamName) && ip.getValue().equals(inputParamValue)){ 
+					taskInstances.add(ip.getActivityInstance()); 
+					break;
+				}
 			}
 		}
 		

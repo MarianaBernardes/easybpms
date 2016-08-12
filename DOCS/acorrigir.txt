@@ -26,3 +26,18 @@ Caused by: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
 	at com.easybpms.bpms.GenericBpmsConnector.execute(GenericBpmsConnector.java:111)
 
 Deve ser informado que não há usuário cadastrado para o Grupo com o nome testado.
+
+9. O CascadeType do @ManyToOne de Activity->group não é setado. Isto funciona sem JTA,
+porque o flush e commit são feitos na ordem. Com JTA não funciona.
+
+10. User escolhido é sempre o primeiro da lista, deveria ser o que tem menos ActivityInstances não executadas.
+
+11. CORRIGIDO para global transactions. Adicionado @Transient boolean isCurrentTransaction no ActivityInstance. Razão:
+Ao executar a task X, se esta fizesse o BPMS criar a task Y mas o observer da task Y fosse executado após o
+Observer da task X, ainda na transação da task X, o easybpms executava também a task Y.
+Agora o easybpms cria new ActivityInstance e seta currentTransaction=true, o que não é feito por default.
+Quando o Hibernate instancia ActivityInstance, com dados do BD, currentTransaction=false. Então, uma
+ActivityInstance com status RESERVED só é executada se não for transiente. Isto só server para global
+transactions. Local transactions precisariam persistir um contador de transações.
+
+

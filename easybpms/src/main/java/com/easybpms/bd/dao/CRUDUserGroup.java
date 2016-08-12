@@ -12,14 +12,15 @@ import com.easybpms.domain.IUserGroup;
 import com.easybpms.domain.UserGroup;
 
 public class CRUDUserGroup {
-	public static void create(IUserGroup entity) throws CRUDException {
+//	public static void create(IUserGroup entity) throws CRUDException {
+	public static void create(UserGroup userGroup) throws CRUDException {
 		
-		UserGroup userGroup = new UserGroup();
-		userGroup.setName(entity.getName());
+//		UserGroup userGroup = new UserGroup();
+//		userGroup.setName(entity.getName());
 		
 		EntityManager session = Session.getSession();
 //		EntityTransaction transaction = session.getTransaction();
-		try {		
+		try {
 //			transaction.begin();
 			session.persist(userGroup);
 //			transaction.commit();
@@ -34,6 +35,7 @@ public class CRUDUserGroup {
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("grupo de usuario"), ex);		
 		}
 	}
+	
 	public static void remove(IUserGroup entity) throws CRUDException {
 		
 		EntityManager session = Session.getSession();
@@ -56,6 +58,31 @@ public class CRUDUserGroup {
 		}
 		
 	}
+
+	public static UserGroup read(UserGroup userGroup, EntityManager session) throws CRUDException {
+		try {
+					
+			if(userGroup.getId() > 0){
+				return session.find(UserGroup.class, userGroup.getId());
+			}
+			else if(userGroup.getName() != null){
+				return session.createQuery("FROM UserGroup WHERE name = '" + userGroup.getName() + "'", UserGroup.class).getSingleResult();
+			}
+			/*else if(userGroup.getActivity() != null){
+				return session.createQuery("FROM UserGroup WHERE activity_id = '" + userGroup.getActivity().getId() + "'", UserGroup.class).getSingleResult();
+			}*/
+			else{
+				System.out.println("Nï¿½o foi possï¿½vel carregar a entidade. Parï¿½metros nï¿½o fornecidos.");
+			}
+		} catch (NoResultException ex1) {	
+			return null;
+			//throw ex1;
+		} catch (Exception ex) {		
+			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("grupo usuario"), ex);	
+		}
+		return userGroup;
+	}
+	
 	public static UserGroup read(UserGroup userGroup) throws CRUDException {
 		EntityManager session = Session.getSession();
 		try {
@@ -70,7 +97,7 @@ public class CRUDUserGroup {
 				return session.createQuery("FROM UserGroup WHERE activity_id = '" + userGroup.getActivity().getId() + "'", UserGroup.class).getSingleResult();
 			}*/
 			else{
-				System.out.println("Não foi possível carregar a entidade. Parâmetros não fornecidos.");
+				System.out.println("Nï¿½o foi possï¿½vel carregar a entidade. Parï¿½metros nï¿½o fornecidos.");
 			}
 		} catch (NoResultException ex1) {	
 			return null;

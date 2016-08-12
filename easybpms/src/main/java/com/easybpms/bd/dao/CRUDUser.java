@@ -19,36 +19,51 @@ public class CRUDUser {
 		user.setIdApp(appUser.getIdApp());
 		user.setName(appUser.getName());
 		user.setTenancy(appUser.getTenancy());
+
+//////		
+		EntityManager session = Session.getSession();
 		
 		List<String> userGroupNames = appUser.getUserGroupNames();
 		if (userGroupNames != null) {
 			for (String groupName : userGroupNames){
 				UserGroup userGroup = new UserGroup();
 				userGroup.setName(groupName);
-				userGroup = CRUDUserGroup.read(userGroup);
+				userGroup = CRUDUserGroup.read(userGroup,session);
 				if (userGroup != null){
+//////
+					
+					
 					userGroup.addUser(user);
+					
+					try {			
+						session.persist(userGroup);
+					} catch (RuntimeException re) {
+			            re.printStackTrace();;
+						
+					} catch (Exception ex) {
+						throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("usuario"), ex);		
+					}
+					
 				}
 			}
 		}
 		
-		EntityManager session = Session.getSession();
 //		EntityTransaction transaction = session.getTransaction();
-		try {			
-//			transaction.begin();
-			session.persist(user);
-//			transaction.commit();
-			
-		} catch (RuntimeException re) {
-//            if(transaction.isActive()) {
-//            	transaction.rollback();
-//            }
-            re.printStackTrace();;
-			
-		} catch (Exception ex) {
-//			transaction.rollback();
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("usuario"), ex);		
-		}
+//		try {			
+////			transaction.begin();
+//			session.persist(user);
+////			transaction.commit();
+//			
+//		} catch (RuntimeException re) {
+////            if(transaction.isActive()) {
+////            	transaction.rollback();
+////            }
+//            re.printStackTrace();;
+//			
+//		} catch (Exception ex) {
+////			transaction.rollback();
+//			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("usuario"), ex);		
+//		}
 	}
 	
 	public static void remove(IUser user) throws CRUDException {

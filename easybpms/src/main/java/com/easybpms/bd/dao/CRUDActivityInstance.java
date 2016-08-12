@@ -52,7 +52,7 @@ public class CRUDActivityInstance {
 				return session.createQuery("FROM ActivityInstance WHERE user_id = '" + activityInstance.getUser().getId() + "'", ActivityInstance.class).getSingleResult();
 			}
 			else{
-				System.out.println("Não foi possível carregar a entidade. Parâmetros não fornecidos.");
+				System.out.println("Nï¿½o foi possï¿½vel carregar a entidade. Parï¿½metros nï¿½o fornecidos.");
 			}
 		} catch (NoResultException ex1) {		
 			throw ex1;
@@ -64,12 +64,12 @@ public class CRUDActivityInstance {
 	
 	public static void update(ActivityInstance activityInstance, String status) throws CRUDException {
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+//		EntityTransaction transaction = session.getTransaction();
 		
 		try{
-			transaction.begin();
+//			transaction.begin();
 			activityInstance.setStatus(status);
-			transaction.commit();
+//			transaction.commit();
 		} catch (Exception ex) {		
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeAlterar("instancia atividade"), ex);	
 		}

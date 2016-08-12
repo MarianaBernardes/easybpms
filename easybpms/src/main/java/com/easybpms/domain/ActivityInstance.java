@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,7 +26,18 @@ public class ActivityInstance implements IEntity{
 	private String idBpms;
 	
 	private String status;
-	
+
+	@Transient
+	private boolean currentTransaction = false;
+
+	public boolean isCurrentTransaction() {
+		return currentTransaction;
+	}
+
+	public void setCurrentTransaction(boolean currentTransaction) {
+		this.currentTransaction = currentTransaction;
+	}
+
 	@OneToMany(mappedBy = "activityInstance", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParameterInstance> parameterInstances = new ArrayList<ParameterInstance>();
 	
@@ -127,37 +139,37 @@ public class ActivityInstance implements IEntity{
 		this.parameterInstances = parameterInstances;
 	}
 
-	//sincroniza a associação bidirecional ActivityInstance-InputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional ActivityInstance-InputParameter
 	public void addParameterInstance(ParameterInstance parameterInstance){
 		parameterInstances.add(parameterInstance);
 		parameterInstance.setActivityInstance(this);
 	}
 			
-	//sincroniza a associação bidirecional ActivityInstance-InputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional ActivityInstance-InputParameter
 	public void removeParameterInstance(ParameterInstance parameterInstance){
 		parameterInstances.remove(parameterInstance);
 		parameterInstance.setActivityInstance(null);
 	}
 
-	/*//sincroniza a associação bidirecional ActivityInstance-InputParameter
+	/*//sincroniza a associaï¿½ï¿½o bidirecional ActivityInstance-InputParameter
 	public void addInputParameterInstance(ParameterInstance parameterInstance){
 		inputParameterInstances.add(parameterInstance);
 		parameterInstance.setActivityInstanceInput(this);
 	}
 			
-	//sincroniza a associação bidirecional ActivityInstance-InputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional ActivityInstance-InputParameter
 	public void removeInputParameterInstance(ParameterInstance parameterInstance){
 		inputParameterInstances.remove(parameterInstance);
 		parameterInstance.setActivityInstanceInput(null);
 	}
 		
-	//sincroniza a associação bidirecional ActivityInstance-OutputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional ActivityInstance-OutputParameter
 	public void addOutputParameterInstance(ParameterInstance parameterInstance){
 		outputParameterInstances.add(parameterInstance);
 		parameterInstance.setActivityInstanceOutput(this);
 	}
 				
-	//sincroniza a associação bidirecional ActivityInstance-OutputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional ActivityInstance-OutputParameter
 	public void removeOutputParameterInstance(ParameterInstance parameterInstance){
 		outputParameterInstances.remove(parameterInstance);
 		parameterInstance.setActivityInstanceOutput(null);

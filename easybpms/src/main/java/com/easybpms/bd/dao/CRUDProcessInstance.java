@@ -42,7 +42,7 @@ public class CRUDProcessInstance {
 				"' AND process_id = '"  + processInstance.getProcess().getId() + "'", ProcessInstance.class).getSingleResult();
 			}
 			else{
-				System.out.println("Não foi possível carregar a entidade. Parâmetros não fornecidos.");
+				System.out.println("Nï¿½o foi possï¿½vel carregar a entidade. Parï¿½metros nï¿½o fornecidos.");
 			}
 		} catch (NoResultException ex1) {		
 			throw ex1;
@@ -54,12 +54,12 @@ public class CRUDProcessInstance {
 	
 	public static void update(ProcessInstance processInstance, String status) throws CRUDException {
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+//		EntityTransaction transaction = session.getTransaction();
 		
 		try{
-			transaction.begin();
+//			transaction.begin();
 			processInstance.setStatus(status);
-			transaction.commit();
+//			transaction.commit();
 		} catch (Exception ex) {		
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeAlterar("instancia processo"), ex);	
 		}

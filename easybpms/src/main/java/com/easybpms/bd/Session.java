@@ -14,7 +14,12 @@ public class Session {
 			manager = factory.createEntityManager(); 
 		}
 			
+//		return factory.createEntityManager();
 	    return manager;
+	}
+	
+	public static void startSession() {
+		manager = factory.createEntityManager();
 	}
 	
 	public static void closeSession(){
@@ -24,6 +29,11 @@ public class Session {
 	
 	public static void setEntityManagerFactory(EntityManagerFactory emfFactory) {
 		factory = emfFactory;
-		manager = factory.createEntityManager();;
+		manager = factory.createEntityManager();
 	}
+
+	public static void setEntityManager(EntityManager emanager) {
+		manager = emanager;
+	}
+
 }

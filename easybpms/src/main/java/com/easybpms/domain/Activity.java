@@ -9,10 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-//import javax.persistence.ForeignKey;
-import org.hibernate.annotations.ForeignKey;
 import javax.persistence.OneToMany;
 
+//import javax.persistence.ForeignKey;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -47,7 +47,7 @@ public class Activity implements IEntity{
     //@JoinColumn(name = "process_id",foreignKey=@ForeignKey(name = "process_activity_FK"))
     private Process process;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "usergroup_id")
 	@ForeignKey(name = "usergroup_activity_FK")
     //@JoinColumn(name = "usergroup_id",foreignKey=@ForeignKey(name = "usergroup_activity_FK"))
@@ -125,61 +125,61 @@ public class Activity implements IEntity{
 		this.parameters = parameters;
 	}
 
-	/*//sincroniza a associação bidirecional Activity-UserGroup
+	/*//sincroniza a associaï¿½ï¿½o bidirecional Activity-UserGroup
 	public void addUserGroup(UserGroup userGroup){
 		userGroups.add(userGroup);
 		userGroup.getActivities().add(this);
 	}
 			
-	//sincroniza a associação bidirecional Activity-UserGroup
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-UserGroup
 	public void removeuserGroup(UserGroup userGroup){
 		userGroups.remove(userGroup);
 		userGroup.getActivities().remove(this);
 	}*/
 	
-	//sincroniza a associação bidirecional Activity-InputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-InputParameter
 	public void addParameter(Parameter parameter){
 		parameters.add(parameter);
 		parameter.setActivity(this);
 	}
 	
-	//sincroniza a associação bidirecional Activity-InputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-InputParameter
 	public void removeParameter(Parameter parameter){
 		parameters.remove(parameter);
 		parameter.setActivity(null);
 	}
 	
-	/*//sincroniza a associação bidirecional Activity-InputParameter
+	/*//sincroniza a associaï¿½ï¿½o bidirecional Activity-InputParameter
 	public void addInputParameter(Parameter parameter){
 		inputParameters.add(parameter);
 		parameter.setActivityInput(this);
 	}
 	
-	//sincroniza a associação bidirecional Activity-InputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-InputParameter
 	public void removeInputParameter(Parameter parameter){
 		inputParameters.remove(parameter);
 		parameter.setActivityInput(null);
 	}
 	
-	//sincroniza a associação bidirecional Activity-OutputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-OutputParameter
 	public void addOutputParameter(Parameter parameter){
 		outputParameters.add(parameter);
 		parameter.setActivityOutput(this);
 	}
 	
-	//sincroniza a associação bidirecional Activity-OutputParameter
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-OutputParameter
 	public void removeOutputParameter(Parameter parameter){
 		outputParameters.remove(parameter);
 		parameter.setActivityOutput(null);
 	}*/
 	
-	//sincroniza a associação bidirecional Activity-ActivityInstance
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-ActivityInstance
 	public void addActivityInstance(ActivityInstance activityInstance){
 		activityInstances.add(activityInstance);
 		activityInstance.setActivity(this);
 	}
 			
-	//sincroniza a associação bidirecional Activity-ActivityInstance
+	//sincroniza a associaï¿½ï¿½o bidirecional Activity-ActivityInstance
 	public void removeActivity(ActivityInstance activityInstance){
 		activityInstances.remove(activityInstance);
 		activityInstance.setActivity(null);
