@@ -31,7 +31,7 @@ public class GerarContextMain {
 		String pathIn = (GerarContextMain.getFile()).replace("\\","\\\\");
 		
 		ArrayList<String> files = my.listFiles(pathIn);
-		GenerateContext gc = new GenerateContext("com.bpms.jbpm");
+		GenerateContext gc = new GenerateContext("com.easybpms.jbpm");
 		String fileOut = gc.gerarContext(files);
 		
 		String pathOut = (GerarContextMain.getFile() + "\\src\\easybpms\\java\\com\\easybpms\\codegen\\Context.java").replace("\\","\\\\");

@@ -1,0 +1,118 @@
+package com.easybpms.codegen;
+
+import java.util.ArrayList;
+import java.util.Observer;
+
+import com.easybpms.domain.Process;
+import com.easybpms.domain.*;
+import com.easybpms.event.StartProcessObserver;
+import com.easybpms.event.TaskExecutedObserver;
+import com.easybpms.bpms.BpmsSession;
+import $bpmsPackage .ConcreteBpmsInterface;
+import $bpmsPackage .JbpmSession;
+
+public class Context extends AbstractContext {
+
+    public Context() {
+    	
+    	Process process;
+    	Property property;
+    	UserGroup userGroup;
+    	Activity activity;
+      	Parameter parameter;
+
+		##List<String> processPaths = new ArrayList<String>();
+
+        #foreach ($process in $listProcesses)
+        
+            ArrayList<Observer> listObservers = new ArrayList<Observer>();
+    		
+    		
+    		/*
+             * Cria e mapeia observador de inicio de processo
+            */ 
+            StartProcessObserver spo = new StartProcessObserver("$process.getId()");
+            listObservers.add(spo);
+			addMapping("CRUD$process.getEntityProcess()", listObservers);
+			
+    		
+            /*
+             * Cria e mapeia observadores de tarefas
+            */ 
+            TaskExecutedObserver teo;
+
+            #foreach ($task in $process.getListUserTask())
+            	listObservers = new ArrayList<Observer>();
+                teo = new TaskExecutedObserver("$task.getId()");
+                listObservers.add(teo); 
+                addMapping("CRUD$task.getEntityTask()", listObservers);           
+                ##foreach ($parameter in $task.getInputParameter())
+                    ##addMapping("CRUD$parameter.getEntityTask()", listObservers);
+                ##end
+            #end 
+            
+            
+            
+            /*
+             * Cria definicao do processo
+             */
+          	
+          	//Processo $process.getName()
+          	process = new Process();
+            process.setName("$process.getName()");
+            process.setIdBpms("$process.getId()");
+            ##processPaths.add("$process.getFilePath()");
+            
+            	//Variaveis do Processo $process.getName()  
+                #foreach ($property in $process.getListProperty())                
+                    property = new Property();
+                    property.setName("$property.getName()");
+                    process.addVariable(property);	
+                #end
+
+            	//Atividades de Usuario do Processo $process.getName()
+            	#foreach ($userTask in $process.getListUserTask())
+            		activity = new Activity();
+               		activity.setName("$userTask.getName()");
+               		activity.setIdBpms("$userTask.getId()");
+          
+					//Parametros de Entrada da Atividade $userTask.getName()   
+	                #foreach ($parameter in $userTask.getInputParameter())                
+	                    parameter = new Parameter();
+	                    parameter.setName("$parameter.getName()");
+	                    parameter.setType("input");
+	                    activity.addParameter(parameter);	
+	                #end
+					
+					//Parametros de Saida da Atividade $userTask.getName()
+	                #foreach ($parameter in $userTask.getOutputParameter())                
+	                    parameter = new Parameter();
+	                    parameter.setName("$parameter.getName()");
+	                    parameter.setType("output");
+	        			activity.addParameter(parameter);
+	                #end
+
+	                //Grupos de Usuario da Atividade $userTask.getName()
+	                #foreach ($userGroup in $userTask.getUserGroup()) 
+	                	userGroup = new UserGroup();
+						userGroup.setName("$userGroup.getName()");
+						setUserGroup(userGroup,activity);
+	                #end
+	         		
+	         		process.addActivity(activity);
+	                
+				#end
+				
+				setProcess(process);
+				
+			//Fim do processo $process.getName()
+        #end
+        
+    }
+    
+    @Override
+	public void setBpmsSession(BpmsSession bpmsSession) {
+		ConcreteBpmsInterface bpms = new ConcreteBpmsInterface();
+		bpms.setBpmsSession((JbpmSession)bpmsSession);
+	}
+}
