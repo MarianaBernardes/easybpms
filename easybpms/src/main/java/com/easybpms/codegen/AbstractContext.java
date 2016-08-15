@@ -6,10 +6,12 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.easybpms.bd.dao.CRUDEntity;
 import com.easybpms.bd.dao.CRUDUserGroup;
 import com.easybpms.bpms.BpmsSession;
 import com.easybpms.domain.Activity;
 import com.easybpms.domain.UserGroup;
+import com.easybpms.domain.Process;
 
 
 public abstract class AbstractContext {
@@ -60,6 +62,28 @@ public abstract class AbstractContext {
 		activity.setUserGroup(userGroupAux);
 		
 	}	
+	
+	protected void setProcess (Process process){
+		Process aux;
+      	boolean existProcess;
+		aux = new Process();
+		aux.setIdBpms(process.getIdBpms());
+
+		existProcess = true;
+		try {
+			aux = (Process) CRUDEntity.read(aux);
+		} catch (Exception e) {
+			existProcess = false;
+		}
+
+		if(!existProcess){
+			try {
+				CRUDEntity.create(process);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public abstract void setBpmsSession(BpmsSession bpmsSession);
 
 	public void notifyObservers(String className, Object arg) {
