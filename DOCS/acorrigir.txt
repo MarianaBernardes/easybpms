@@ -1,4 +1,4 @@
-
+(CORRIGIDO) - eliminado essa parte do template
 1. Context.java:
 processPaths.add("C:\\workspace\\mars\\fixwo\\backend\\processo\\fixWO\\src\\main\\resources\\BPMN_Model\\fixwo.bpmn2");
 Caminho absoluto!
@@ -11,13 +11,18 @@ nome ruim de metodo.
 
 4. catch Exception no UserGroup nao deixa userGroupAux == null
 
+(CORRIGIDO)
 5. UserGroup.read tenta ler com id. é
  preciso ler com name
 
+(Bug 1 - Para o grupo não ser adicionado 2 vezes, é necessário colocar mapeamento unique nas classes de domínio do easybpms (A FAZER)
+Bug 2 - O context adiciona somente os grupos que tem atividades de usuário vinculado. Como o grupo funcionario não tem atividades de usuário, ele não é 
+adicionado no context)
 6. Bug: duas vezes o grupo Usuario e nao tem grupo funcionario
 
 7. persistence.xml do jbpm 6.2.0.Final não é igual ao 6.4.0.Final.
 
+(CORRIGIDO)
 8. Erro a seguir deveria testar a existência e não dar um erro tão genérico.
 
 Caused by: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
