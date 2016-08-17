@@ -1,6 +1,6 @@
 package com.easybpms.jbpm;
 
-public abstract class AbstractConnection {
+/*public abstract class AbstractConnection {
 	
 	private static AbstractConnection instance = null;
 	
@@ -21,4 +21,4 @@ public abstract class AbstractConnection {
 			}
 		}
 	}
-}
+}*/

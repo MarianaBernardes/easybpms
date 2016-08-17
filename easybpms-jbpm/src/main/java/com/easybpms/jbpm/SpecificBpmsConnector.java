@@ -124,7 +124,7 @@ public class SpecificBpmsConnector extends LocalHTWorkItemHandler {
 		return taskId;
 	}
 	
-	//método da versão 6.3.0
+	//método adicionado na versão 6.3.0
 	protected Map<String, Object> createTaskDataBasedOnWorkItemParams(KieSession session, WorkItem workItem) {
         Map<String, Object> data = new HashMap<String, Object>();
         Object contentObject = workItem.getParameter("Content");

@@ -37,14 +37,16 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		this.taskService = jbpmSession.getTaskService();
 		addTaskConnector();
 	}
-
-	public void startBPMS(List<String> processes) {
+	
+	//Método deve ser apagado se os processos forem carregados via Spring
+	
+	/*public void startBPMS(List<String> processes) {
 		manager = createRuntimeManager(processes);
 		engine = manager.getRuntimeEngine(EmptyContext.get());
 		ksession = engine.getKieSession();
 		taskService = engine.getTaskService();
 		addTaskConnector();
-	}
+	}*/
 
 	/**
 	 * @param process - idBpms do processo registrado no BD da API
@@ -52,11 +54,10 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	 * @return id da instancia processo criada no bpms listner - ouvinte do evento final adicionado a sessao 
 	 * que sera chamado quando o processo terminar
 	 */
-	public long startProcess(String process, Map<String, Object> params) {
+	public void startProcess(String process, Map<String, Object> params) {
 		EndEventListener listener = new EndEventListener();
 		ksession.addEventListener(listener);
 		ProcessInstance pi = ksession.startProcess(process, params);
-		return pi.getId();
 	}
 
 	/**
@@ -77,14 +78,15 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	 * @param params - parametros de saida necessarios para executar a tarefa
 	 * @return status da tarefa apos ser completada
 	 */
-	public String executeTask(long taskId, String user,
-			Map<String, Object> params) {
+	public String executeTask(long taskId, String user,Map<String, Object> params) {
 		taskService.start(taskId, user);
 		taskService.complete(taskId, user, params);
 		return taskService.getTaskById(taskId).getTaskData().getStatus().name();
 	}
-
-	public void stopProcess(long processInstanceId) {
+	
+	//Métodos não utilizados
+	
+	/*public void stopProcess(long processInstanceId) {
 		this.ksession.abortProcessInstance(processInstanceId);
 	}
 
@@ -99,54 +101,55 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
 	public Task getTaskById(long taskId) {
 		return taskService.getTaskById(taskId);
-	}
+	}*/
 
-	private RuntimeManager createRuntimeManager(
+	
+	//Método deve ser apagado se os processos forem carregados via Spring
+	
+	/*private RuntimeManager createRuntimeManager(
 			List<String> bpmnProcessDefinitions) {
 		
 		RuntimeEnvironmentBuilder environmentBuilder;
 		
 		//Comunicação com o BD jBPM configurado na aplicação do usuário
-		AbstractConnection.getConnection();
+		//AbstractConnection.getConnection();
 		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.domain");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
 		
 		environmentBuilder = RuntimeEnvironmentBuilder.Factory.get()
 				.newDefaultBuilder().entityManagerFactory(emf);
 		
 		for (String resource : bpmnProcessDefinitions) {
 				
-			/**Caminho relativo*/
+			// Caminho relativo
 			// environmentBuilder.addAsset(ResourceFactory.newClassPathResource(resource),ResourceType.BPMN2);
 			
-			/** Caminho absoluto*/
+			//Caminho absoluto
 			environmentBuilder.addAsset(
 					ResourceFactory.newFileResource(resource),
 					ResourceType.BPMN2);
 		}
 		
-		/** Adicionar suporte a transacao*/
-		/* RuntimeEnvironment environment = environmentBuilder
-		 * .addEnvironmentEntry(EnvironmentName.TRANSACTION_MANAGER, tm) .get();
-		 */
+		//Adicionar suporte a transacao
+		//RuntimeEnvironment environment = environmentBuilder
+		// .addEnvironmentEntry(EnvironmentName.TRANSACTION_MANAGER, tm).get();
+		
 
 		RuntimeEnvironment environment = environmentBuilder.get();
 
-		/** Sessao de conhecimento unica que ira executar todas as instancias de processo*/
+		//Sessao de conhecimento unica que ira executar todas as instancias de processo
 		RuntimeManager manager = RuntimeManagerFactory.Factory.get().newSingletonRuntimeManager(environment);
 
-		/**
-		 *  Cada pedido (que esta na chamada de getRuntimeEngine) tera nova sessao de conhecimento */
-		 //RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerRequestRuntimeManager(environment);
+		//Cada pedido (que esta na chamada de getRuntimeEngine) tera nova sessao de conhecimento 
+		//RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerRequestRuntimeManager(environment);
 		 
 
-		/**
-		 * Cada instancia do processo tera sua sessao de conhecimento dedicada para todo o tempo de vida 
-		 * Precisa fornecer o ID da instancia do processo no getRuntimeEngine (engine = manager.getRuntimeEngine(ProcessInstanceIdContext.get())) 
-		 * Obs: a instancia processo precisa estar criada */
-		 //RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerProcessInstanceRuntimeManager(environment);
+		//Cada instancia do processo tera sua sessao de conhecimento dedicada para todo o tempo de vida 
+		//Precisa fornecer o ID da instancia do processo no getRuntimeEngine (engine = manager.getRuntimeEngine(ProcessInstanceIdContext.get())) 
+		//Obs: a instancia processo precisa estar criada 
+		//RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerProcessInstanceRuntimeManager(environment);
 		 
 		return manager;
-	}
+	}*/
 
 }

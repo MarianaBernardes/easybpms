@@ -12,10 +12,7 @@ public class EndEventListener extends DefaultProcessEventListener{
 	public void afterProcessCompleted(ProcessCompletedEvent event) {
 
 		GenericBpmsConnector.endProcess(event.getProcessInstance().getProcessId(), String.valueOf(event.getProcessInstance().getId()));
-	    
-	    /*System.out.println("Process completed: processId=["
-	            + processInstance.getProcessId() + "]; processInstanceId=["
-	            + processInstance.getId() + "]");*/
+
 	}
 
 }
