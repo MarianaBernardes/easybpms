@@ -1,6 +1,9 @@
 package com.easybpms.bd;
 
 public class CRUDException extends Exception{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String message = null;
 	private Throwable excecaoInterna = null;
 	

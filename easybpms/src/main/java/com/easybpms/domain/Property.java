@@ -1,8 +1,8 @@
 package com.easybpms.domain;
 
 import javax.persistence.Entity;
-//import javax.persistence.ForeignKey;
-import org.hibernate.annotations.ForeignKey;
+import javax.persistence.ForeignKey;
+//import org.hibernate.annotations.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,9 +20,9 @@ public class Property implements IEntity{
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "process_id")
-	@ForeignKey(name = "process_property_FK")
-    //@JoinColumn(name = "process_id",foreignKey=@ForeignKey(name = "process_property_FK"))
+	//@JoinColumn(name = "process_id")
+	//@ForeignKey(name = "process_property_FK")
+    @JoinColumn(name = "process_id",foreignKey=@ForeignKey(name = "process_property_FK"))
     private Process process;
 	
 	public int getId() {

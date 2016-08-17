@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-//import javax.persistence.ForeignKey;
-import org.hibernate.annotations.ForeignKey;
+import javax.persistence.ForeignKey;
+//import org.hibernate.annotations.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -41,28 +41,23 @@ public class ActivityInstance implements IEntity{
 	@OneToMany(mappedBy = "activityInstance", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParameterInstance> parameterInstances = new ArrayList<ParameterInstance>();
 	
-	/*@OneToMany(mappedBy = "activityInstanceInput", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ParameterInstance> inputParameterInstances = new ArrayList<ParameterInstance>();
-	
-	@OneToMany(mappedBy = "activityInstanceOutput", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ParameterInstance> outputParameterInstances = new ArrayList<ParameterInstance>();*/
 	
 	@ManyToOne
-	@JoinColumn(name = "processInstance_id")
-	@ForeignKey(name = "processinstance_activityinstance_FK")
-    //@JoinColumn(name = "processInstance_id",foreignKey=@ForeignKey(name = "processinstance_activityinstance_FK"))
+	//@JoinColumn(name = "processInstance_id")
+	//@ForeignKey(name = "processinstance_activityinstance_FK")
+    @JoinColumn(name = "processInstance_id",foreignKey=@ForeignKey(name = "processinstance_activityinstance_FK"))
     private ProcessInstance processInstance;
 	
 	@ManyToOne
-	@JoinColumn(name = "activity_id")
-	@ForeignKey(name = "activity_activityInstance_FK")
-    //@JoinColumn(name = "activity_id",foreignKey=@ForeignKey(name = "activity_activityInstance_FK"))
+	//@JoinColumn(name = "activity_id")
+	//@ForeignKey(name = "activity_activityInstance_FK")
+    @JoinColumn(name = "activity_id",foreignKey=@ForeignKey(name = "activity_activityInstance_FK"))
     private Activity activity;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	@ForeignKey(name = "user_activityInstance_FK")
-    //@JoinColumn(name = "user_id",foreignKey=@ForeignKey(name = "user_activityInstance_FK"))
+	//@JoinColumn(name = "user_id")
+	//@ForeignKey(name = "user_activityInstance_FK")
+    @JoinColumn(name = "user_id",foreignKey=@ForeignKey(name = "user_activityInstance_FK"))
     private User user;
 
 	public int getId() {
@@ -96,24 +91,6 @@ public class ActivityInstance implements IEntity{
 	public void setActivity(Activity activity) {
 		this.activity = activity;
 	}
-
-	/*public List<ParameterInstance> getInputParameterInstances() {
-		return inputParameterInstances;
-	}
-
-	public void setInputParameterInstances(
-			List<ParameterInstance> inputParameterInstances) {
-		this.inputParameterInstances = inputParameterInstances;
-	}
-
-	public List<ParameterInstance> getOutputParameterInstances() {
-		return outputParameterInstances;
-	}
-
-	public void setOutputParameterInstances(
-			List<ParameterInstance> outputParameterInstances) {
-		this.outputParameterInstances = outputParameterInstances;
-	}*/
 	
 	public String getStatus() {
 		return status;
@@ -139,40 +116,17 @@ public class ActivityInstance implements IEntity{
 		this.parameterInstances = parameterInstances;
 	}
 
-	//sincroniza a associa��o bidirecional ActivityInstance-InputParameter
+	//sincroniza a associacao bidirecional ActivityInstance-ParameterInstance
 	public void addParameterInstance(ParameterInstance parameterInstance){
 		parameterInstances.add(parameterInstance);
 		parameterInstance.setActivityInstance(this);
 	}
 			
-	//sincroniza a associa��o bidirecional ActivityInstance-InputParameter
+	//sincroniza a associacao bidirecional ActivityInstance-ParameterInstance
 	public void removeParameterInstance(ParameterInstance parameterInstance){
 		parameterInstances.remove(parameterInstance);
 		parameterInstance.setActivityInstance(null);
 	}
 
-	/*//sincroniza a associa��o bidirecional ActivityInstance-InputParameter
-	public void addInputParameterInstance(ParameterInstance parameterInstance){
-		inputParameterInstances.add(parameterInstance);
-		parameterInstance.setActivityInstanceInput(this);
-	}
-			
-	//sincroniza a associa��o bidirecional ActivityInstance-InputParameter
-	public void removeInputParameterInstance(ParameterInstance parameterInstance){
-		inputParameterInstances.remove(parameterInstance);
-		parameterInstance.setActivityInstanceInput(null);
-	}
-		
-	//sincroniza a associa��o bidirecional ActivityInstance-OutputParameter
-	public void addOutputParameterInstance(ParameterInstance parameterInstance){
-		outputParameterInstances.add(parameterInstance);
-		parameterInstance.setActivityInstanceOutput(this);
-	}
-				
-	//sincroniza a associa��o bidirecional ActivityInstance-OutputParameter
-	public void removeOutputParameterInstance(ParameterInstance parameterInstance){
-		outputParameterInstances.remove(parameterInstance);
-		parameterInstance.setActivityInstanceOutput(null);
-	}*/
 
 }

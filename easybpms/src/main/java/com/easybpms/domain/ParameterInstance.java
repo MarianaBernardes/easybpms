@@ -1,8 +1,8 @@
 package com.easybpms.domain;
 
 import javax.persistence.Entity;
-//import javax.persistence.ForeignKey;
-import org.hibernate.annotations.ForeignKey;
+import javax.persistence.ForeignKey;
+//import org.hibernate.annotations.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -24,23 +24,15 @@ public class ParameterInstance implements IEntity{
 	private String type;
 	
 	@ManyToOne
-	@JoinColumn(name = "activityInstance_id")
-	@ForeignKey(name = "activityInstance_parameterInstance_FK")
-    //@JoinColumn(name = "activityInstance_id",foreignKey=@ForeignKey(name = "activityInstance_parameterInstance_FK"))
+	//@JoinColumn(name = "activityInstance_id")
+	//@ForeignKey(name = "activityInstance_parameterInstance_FK")
+    @JoinColumn(name = "activityInstance_id",foreignKey=@ForeignKey(name = "activityInstance_parameterInstance_FK"))
     private ActivityInstance activityInstance;
 	
-	/*@ManyToOne
-    @JoinColumn(name = "activityInstance_input_id",foreignKey=@ForeignKey(name = "activityInstance_parameterInstanceInput_FK"))
-    private ActivityInstance activityInstanceInput;
-	
 	@ManyToOne
-    @JoinColumn(name = "activityInstance_output_id",foreignKey=@ForeignKey(name = "activityInstance_parameterInstanceOutput_FK"))
-    private ActivityInstance activityInstanceOutput;*/
-	
-	@ManyToOne
-	@JoinColumn(name = "parameter_id")
-	@ForeignKey(name = "parameter_parameterinstance_FK")
-    //@JoinColumn(name = "parameter_id",foreignKey=@ForeignKey(name = "parameter_parameterinstance_FK"))
+	//@JoinColumn(name = "parameter_id")
+	//@ForeignKey(name = "parameter_parameterinstance_FK")
+    @JoinColumn(name = "parameter_id",foreignKey=@ForeignKey(name = "parameter_parameterinstance_FK"))
     private Parameter parameter;
 
 	public int getId() {
@@ -90,21 +82,5 @@ public class ParameterInstance implements IEntity{
 	public void setActivityInstance(ActivityInstance activityInstance) {
 		this.activityInstance = activityInstance;
 	}
-
-	/*public ActivityInstance getActivityInstanceInput() {
-		return activityInstanceInput;
-	}
-
-	public void setActivityInstanceInput(ActivityInstance activityInstanceInput) {
-		this.activityInstanceInput = activityInstanceInput;
-	}
-
-	public ActivityInstance getActivityInstanceOutput() {
-		return activityInstanceOutput;
-	}
-
-	public void setActivityInstanceOutput(ActivityInstance activityInstanceOutput) {
-		this.activityInstanceOutput = activityInstanceOutput;
-	}*/
 
 }

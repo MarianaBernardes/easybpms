@@ -1,6 +1,5 @@
 package com.easybpms.bpms;
 
-import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractBpmsInterface {
@@ -19,11 +18,11 @@ public abstract class AbstractBpmsInterface {
 		return bpmsInterface;
 	}
 
-	public abstract void startBPMS(List<String> bpmnProcessDefinitions);
+	//public abstract void startBPMS(List<String> bpmnProcessDefinitions);
 
-	public abstract void stopBPMS();
+	//public abstract void stopBPMS();
 
-	public abstract long startProcess(String processId, Map<String, Object> params);
+	public abstract void startProcess(String processId, Map<String, Object> params);
 	
 	/**
 	 * @param taskId

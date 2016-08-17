@@ -56,7 +56,7 @@ public class StartProcessObserver implements Observer{
 		
 		/**
 		 * @param inputParamValue - valor do parametro de entrada buscado na aplicacao. Exemplo: valor do id da entidade Viagem
-		 * Obs: Utiliza API de reflexao para invocar o metodo da instância da entidade de dominio da aplicacao e seu respectivo valor
+		 * Obs: Utiliza API de reflexao para invocar o metodo da instancia da entidade de dominio da aplicacao e seu respectivo valor
 		 */
 		String inputParamValue = null;
 		try {
@@ -80,7 +80,7 @@ public class StartProcessObserver implements Observer{
 		/**
 		 * Para cada instancia parametro da lista verifica se existe uma instancia da entidade de dominio
 		 * que inicia o processo na aplicacao. Ou seja, onde o inputParamName e igual a� algum parametro de entrada
-		 * do easybpms e o inputParamValue é igual a alguma instância parâmetro do easybpms.
+		 * do easybpms e o inputParamValue eh igual a alguma instancia parametro do easybpms.
 		 * Se a condicao for satisfeita significa que o processo ja foi iniciado
 		 */
 		for (ParameterInstance ip : listIp){
@@ -113,15 +113,16 @@ public class StartProcessObserver implements Observer{
 		/**
 		 * Para iniciar o processo, e necessario enviar o valor das suas propriedades
 		 * @param params - mapa que armazena o nome das propriedade e seus respectivos valores
-		 * O valor de cada propriedade e o valor de cada atributo da entidade de dominio da aplicacao, que e invocado por meio da API de reflexao
+		 * O valor de cada propriedade e o valor de cada atributo da entidade de dominio da aplicacao, 
+		 * que eh invocado por meio da API de reflexao
 		 */
 		Map<String,Object> params = new HashMap<String, Object>();
 		for (Property pr : listP){
 			String[] partsProperty = pr.getName().split("\\_");
 			//String classProperty = partsProperty[partsProperty.length - 2];
 			//if (className.contains(classProperty)){
-				String methodName = partsProperty[partsProperty.length - 1]; 
-				methodName = "get" + methodName.substring(0,1).toUpperCase() + methodName.substring(1);
+				String attribute = partsProperty[partsProperty.length - 1]; 
+				String methodName = "get" + attribute.substring(0,1).toUpperCase() + attribute.substring(1);
 				
 				try {
 					Method m = arg.getClass().getMethod(methodName); 
@@ -129,6 +130,7 @@ public class StartProcessObserver implements Observer{
 					String propertyValue = i.toString(); 
 					params.put(pr.getName(), propertyValue);
 				} catch (Exception e) {
+					System.out.println("Atributo " + attribute + " deve ser inicializado na aplicacao!");
 					e.printStackTrace();
 				}	
 			//}
@@ -137,12 +139,11 @@ public class StartProcessObserver implements Observer{
 		if (params.isEmpty()){
 			params = null;
 		}
-		String processInstanceId = "";
 		/**
 		 * @param processInstanceId - recebe o id da instancia processo criada no bpms
 		 */
 		
-		processInstanceId = "" + AbstractBpmsInterface.getBpmsInterface().startProcess(this.processIdBpms, params);
+		AbstractBpmsInterface.getBpmsInterface().startProcess(this.processIdBpms, params);
 		System.out.println("\nProcesso " + p.getName() + " iniciado!\n");
 	}
 

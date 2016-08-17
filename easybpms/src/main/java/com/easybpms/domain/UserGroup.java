@@ -21,18 +21,9 @@ public class UserGroup implements IUserGroup {
 	
 	private String name;
 	
-	/*@OneToMany(mappedBy = "userGroup", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User> users = new ArrayList<User>();*/
-	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<User> users = new ArrayList<User>();
 	
-	/*@ManyToOne
-    @JoinColumn(name = "activity_id",foreignKey=@ForeignKey(name = "activity_usergroup_FK"))
-    private Activity activity;*/
-	
-	/*@ManyToMany(mappedBy = "userGroups")
-	private List<Activity> activities = new ArrayList<Activity>();*/
 	
 	@OneToMany(mappedBy = "userGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activities = new ArrayList<Activity>();

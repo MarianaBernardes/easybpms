@@ -23,8 +23,8 @@ public class Process implements IEntity{
 	
 	private String name;
 	
-	/*Save BD - Ao persistir a entidade Processo, o "cascade" permitirá a persistência das Atividades também
-	 Remoção BD - Ao remover uma atividade da lista de atividades, o "orphanRemoval" permitirá a remoção da respectiva Atividade*/
+	/*Save BD - Ao persistir a entidade Processo, o "cascade" permitira a persistencia das Atividades tambem
+	 Remocao BD - Ao remover uma atividade da lista de atividades, o "orphanRemoval" permitira a remocao da respectiva Atividade*/
 	@OneToMany(mappedBy = "process", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activities = new ArrayList<Activity>();
 	
@@ -83,12 +83,12 @@ public class Process implements IEntity{
 	}
 	
 	/*
-	 * OneToMany unidirecional (relação somente no lado do pai):
-	 * Ineficientes ao remover entidades filho, pois o Hibernate exclui todos os filhos do BD e reinsere os que ainda se encontram na memória
+	 * OneToMany unidirecional (relacao somente no lado do pai):
+	 * Ineficientes ao remover entidades filho, pois o Hibernate exclui todos os filhos do BD e reinsere os que ainda se encontram na memoria
 	 * Ex:process.getActivities().remove(activity1);
 	 * 
-	 * OneToMany bidirecional (relação no pai e no filho):
-	 * A remoção da entidade filho requer uma única atualização(em que a coluna de chave estrangeira é definida como NULL)
+	 * OneToMany bidirecional (relacao no pai e no filho):
+	 * A remocao da entidade filho requer uma unica atualizacao(em que a coluna de chave estrangeira eh definida como NULL)
 	 * Ex:process.removeActivity(activity1);
 	 */
 

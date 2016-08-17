@@ -1,7 +1,6 @@
 package com.easybpms.bd.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 import com.easybpms.bd.CRUDException;
@@ -37,7 +36,7 @@ public class CRUDEntity {
 			/*}else if (entityClass.equals(User.class)) {
 				CRUDUser.create((User) entity, session);*/
 			}else {
-				throw new CRUDException("Não há create para a classe " + entityClass.getSimpleName());
+				throw new CRUDException("Nao ha create para a classe " + entityClass.getSimpleName());
 			}
 
 //			transaction.commit();
@@ -63,10 +62,10 @@ public class CRUDEntity {
 	
 	public static void remove (IEntity entity) throws CRUDException{
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+		//EntityTransaction transaction = session.getTransaction();
 		
 		try{
-			transaction.begin();
+			//transaction.begin();
 			Class<? extends IEntity> entityName = entity.getClass();
 	           
 			if (entityName.equals(Process.class)) {
@@ -88,25 +87,25 @@ public class CRUDEntity {
 			/*}else if (entityName.equals(User.class)) {
 				CRUDUser.remove((User) entity, session);*/
 			}else {
-				throw new CRUDException("Não há remove para a classe " + entityName.getSimpleName());
+				throw new CRUDException("Nao ha remove para a classe " + entityName.getSimpleName());
 			}
 
-			transaction.commit();
+			//transaction.commit();
 			
 		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
+            //if(transaction.isActive()) {
+            	//transaction.rollback();
+            //}
             throw re;
             
 		}catch(CRUDException ex1) {
 			
-			transaction.rollback();
+			//transaction.rollback();
 			throw ex1;
 			
 		}catch (Exception ex) {
 			System.out.println(ex.getMessage());
-			transaction.rollback();
+			//transaction.rollback();
 			
 			throw CRUDException.getExcecao("Inconformidade ao excluir " + entity.getClass().getSimpleName() + "!", ex);
 		}
@@ -138,7 +137,7 @@ public class CRUDEntity {
 			/*} else if (entityName.equals(User.class)) {
 				retorno = CRUDUser.read((User) entity, session);*/
 			} else {
-				throw new CRUDException("Não há read para a classe" + entityName.getSimpleName());
+				throw new CRUDException("Nao ha read para a classe" + entityName.getSimpleName());
 			}
 
 			return retorno;

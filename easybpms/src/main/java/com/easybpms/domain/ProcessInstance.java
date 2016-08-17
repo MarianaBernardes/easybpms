@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-//import javax.persistence.ForeignKey;
-import org.hibernate.annotations.ForeignKey;
+import javax.persistence.ForeignKey;
+//import org.hibernate.annotations.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -30,9 +30,9 @@ public class ProcessInstance implements IEntity{
     private List<ActivityInstance> activityInstances = new ArrayList<ActivityInstance>();
 	
 	@ManyToOne
-	@JoinColumn(name = "process_id")
-	@ForeignKey(name = "process_processinstance_FK")
-    //@JoinColumn(name = "process_id",foreignKey=@ForeignKey(name = "process_processinstance_FK"))
+	//@JoinColumn(name = "process_id")
+	//@ForeignKey(name = "process_processinstance_FK")
+    @JoinColumn(name = "process_id",foreignKey=@ForeignKey(name = "process_processinstance_FK"))
     private Process process;
 
 	public int getId() {
@@ -74,13 +74,13 @@ public class ProcessInstance implements IEntity{
 		this.activityInstances = activityInstances;
 	}
 
-	//sincroniza a associação bidirecional Process-Activity
+	//sincroniza a associação bidirecional ProcessInstance-ActivityInstance
 	public void addActivityInstance(ActivityInstance activityInstance){
 		activityInstances.add(activityInstance);
 		activityInstance.setProcessInstance(this);
 	}
 		
-	//sincroniza a associação bidirecional Process-Activity
+	//sincroniza a associação bidirecional ProcessInstance-ActivityInstance
 	public void removeActivity(ActivityInstance activityInstance){
 		activityInstances.remove(activityInstance);
 		activityInstance.setProcessInstance(null);

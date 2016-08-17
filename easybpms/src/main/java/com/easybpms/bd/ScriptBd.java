@@ -91,7 +91,7 @@ public class ScriptBd {
 					e.printStackTrace();
 				}	
 			}
-			Session.closeSession();
+			//Session.closeSession();
 		}
 	}
 	
@@ -108,7 +108,7 @@ public class ScriptBd {
 					e.printStackTrace();
 				}	
 			}
-			Session.closeSession();
+			//Session.closeSession();
 		}
 	}
 }

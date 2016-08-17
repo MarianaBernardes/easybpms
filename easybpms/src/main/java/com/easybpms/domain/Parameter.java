@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-//import javax.persistence.ForeignKey;
-import org.hibernate.annotations.ForeignKey;
+import javax.persistence.ForeignKey;
+//import org.hibernate.annotations.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -31,18 +31,10 @@ public class Parameter implements IEntity{
     private List<ParameterInstance> parameterInstances = new ArrayList<ParameterInstance>();
 	
 	@ManyToOne
-	@JoinColumn(name = "activity_id")
-	@ForeignKey(name = "activity_parameter_FK")
-    //@JoinColumn(name = "activity_id",foreignKey=@ForeignKey(name = "activity_parameter_FK"))
+	//@JoinColumn(name = "activity_id")
+	//@ForeignKey(name = "activity_parameter_FK")
+    @JoinColumn(name = "activity_id",foreignKey=@ForeignKey(name = "activity_parameter_FK"))
     private Activity activity;
-	
-	/*@ManyToOne
-    @JoinColumn(name = "activity_input_id",foreignKey=@ForeignKey(name = "activity_inputparameter_FK"))
-    private Activity activityInput;
-	
-	@ManyToOne
-    @JoinColumn(name = "activity_output_id",foreignKey=@ForeignKey(name = "activity_outputparameter_FK"))
-    private Activity activityOutput;*/
 	
 
 	public int getId() {
@@ -70,22 +62,6 @@ public class Parameter implements IEntity{
 		this.type = type;
 	}
 
-	/*public Activity getActivityInput() {
-		return activityInput;
-	}
-
-	public void setActivityInput(Activity activityInput) {
-		this.activityInput = activityInput;
-	}
-
-	public Activity getActivityOutput() {
-		return activityOutput;
-	}
-
-	public void setActivityOutput(Activity activityOutput) {
-		this.activityOutput = activityOutput;
-	}*/
-
 	public Activity getActivity() {
 		return activity;
 	}
@@ -102,13 +78,13 @@ public class Parameter implements IEntity{
 		this.parameterInstances = parameterInstances;
 	}
 	
-	//sincroniza a associação bidirecional Parameter-ParameterInstance
+	//sincroniza a associacao bidirecional Parameter-ParameterInstance
 	public void addParameterInstance(ParameterInstance parameterInstance){
 		parameterInstances.add(parameterInstance);
 		parameterInstance.setParameter(this);
 	}
 				
-	//sincroniza a associação bidirecional Parameter-ParameterInstance
+	//sincroniza a associacao bidirecional Parameter-ParameterInstance
 	public void removeParameterInstance(ParameterInstance parameterInstance){
 		parameterInstances.remove(parameterInstance);
 		parameterInstance.setParameter(null);

@@ -39,7 +39,7 @@ public class CRUDProcess {
 				return session.createQuery("FROM Process WHERE idBpms = '" + process.getIdBpms() + "'", Process.class).getSingleResult();
 			}
 			else{
-				System.out.println("Não foi possível carregar a entidade. Parâmetros não fornecidos.");
+				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
 			}
 		} catch (NoResultException ex1) {		
 			throw ex1;

@@ -3,7 +3,6 @@ package com.easybpms.bd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 import com.easybpms.bd.CRUDException;
@@ -42,7 +41,7 @@ public class CRUDProcessInstance {
 				"' AND process_id = '"  + processInstance.getProcess().getId() + "'", ProcessInstance.class).getSingleResult();
 			}
 			else{
-				System.out.println("N�o foi poss�vel carregar a entidade. Par�metros n�o fornecidos.");
+				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
 			}
 		} catch (NoResultException ex1) {		
 			throw ex1;
@@ -53,7 +52,7 @@ public class CRUDProcessInstance {
 	}
 	
 	public static void update(ProcessInstance processInstance, String status) throws CRUDException {
-		EntityManager session = Session.getSession();
+//		EntityManager session = Session.getSession();
 //		EntityTransaction transaction = session.getTransaction();
 		
 		try{

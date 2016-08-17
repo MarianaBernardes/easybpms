@@ -19,8 +19,7 @@ public class CRUDUser {
 		user.setIdApp(appUser.getIdApp());
 		user.setName(appUser.getName());
 		user.setTenancy(appUser.getTenancy());
-
-//////		
+	
 		EntityManager session = Session.getSession();
 		
 		List<String> userGroupNames = appUser.getUserGroupNames();
@@ -30,13 +29,9 @@ public class CRUDUser {
 				userGroup.setName(groupName);
 				userGroup = CRUDUserGroup.read(userGroup,session);
 				if (userGroup != null){
-//////
-					
-					
 					userGroup.addUser(user);
-					
 					try {			
-						session.persist(userGroup);
+						session.persist(user);
 					} catch (RuntimeException re) {
 			            re.printStackTrace();;
 						
@@ -104,7 +99,7 @@ public class CRUDUser {
 				return session.createQuery("FROM User WHERE userGroup_id = '" + ((UserGroup)user.getUserGroup()).getId() + "'", User.class).getSingleResult();
 			}*/
 			else{
-				System.out.println("N�o foi poss�vel carregar a entidade. Par�metros n�o fornecidos.");
+				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
 			}
 		} catch (NoResultException ex1) {		
 			throw ex1;

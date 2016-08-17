@@ -62,17 +62,17 @@ public class CRUDUserGroup {
 	public static UserGroup read(UserGroup userGroup, EntityManager session) throws CRUDException {
 		try {
 					
-			if(userGroup.getId() > 0){
+			/*if(userGroup.getId() > 0){
 				return session.find(UserGroup.class, userGroup.getId());
 			}
-			else if(userGroup.getName() != null){
+			else*/ if(userGroup.getName() != null){
 				return session.createQuery("FROM UserGroup WHERE name = '" + userGroup.getName() + "'", UserGroup.class).getSingleResult();
 			}
 			/*else if(userGroup.getActivity() != null){
 				return session.createQuery("FROM UserGroup WHERE activity_id = '" + userGroup.getActivity().getId() + "'", UserGroup.class).getSingleResult();
 			}*/
 			else{
-				System.out.println("N�o foi poss�vel carregar a entidade. Par�metros n�o fornecidos.");
+				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
 			}
 		} catch (NoResultException ex1) {	
 			return null;
@@ -97,7 +97,7 @@ public class CRUDUserGroup {
 				return session.createQuery("FROM UserGroup WHERE activity_id = '" + userGroup.getActivity().getId() + "'", UserGroup.class).getSingleResult();
 			}*/
 			else{
-				System.out.println("N�o foi poss�vel carregar a entidade. Par�metros n�o fornecidos.");
+				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
 			}
 		} catch (NoResultException ex1) {	
 			return null;

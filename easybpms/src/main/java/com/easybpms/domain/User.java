@@ -33,11 +33,7 @@ public class User implements IUser {
 	@Transient
 	private List<String> userGroupNames;
 	
-	/*@ManyToOne
-    @JoinColumn(name = "userGroup_id",foreignKey=@ForeignKey(name = "usergroup_user_FK"))
-    private UserGroup userGroup;*/
-	
-	@ManyToMany//(mappedBy = "users")//, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "users")//, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<UserGroup> userGroups = new ArrayList<UserGroup>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

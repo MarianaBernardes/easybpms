@@ -46,7 +46,7 @@ public class CRUDActivity {
 				"'", Activity.class).getSingleResult();
 			}
 			else{
-				System.out.println("Não foi possível carregar a entidade. Parâmetros não fornecidos.");
+				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
 			}
 		} catch (NoResultException ex1) {		
 			throw ex1;

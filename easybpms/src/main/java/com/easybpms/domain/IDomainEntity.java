@@ -2,7 +2,7 @@ package com.easybpms.domain;
 
 public interface IDomainEntity {
 	
-	public int getId();
+	public long getId();
 	public String getTenancy();
 
 }
