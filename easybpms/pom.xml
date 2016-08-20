@@ -8,6 +8,12 @@
   <name>easybpms Maven</name>
   
   <dependencies>
+  	 	<!-- 
+  		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>4.3.2.RELEASE</version>
+		</dependency>  -->
 		
 		<dependency>
 			<groupId>org.hibernate</groupId>

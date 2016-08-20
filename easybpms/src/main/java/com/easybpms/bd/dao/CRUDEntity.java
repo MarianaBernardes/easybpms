@@ -8,8 +8,15 @@ import com.easybpms.bd.Session;
 import com.easybpms.domain.Process;
 import com.easybpms.domain.*;
 
+//@Transactional(readOnly = false)
 public class CRUDEntity {
+	
+	/*@PersistenceContext(unitName="com.easybpms.persistence.jpa")
+	EntityManager session;*/
+	
+	//@Transactional(readOnly = false)
 	public static void create (IEntity entity) throws CRUDException{
+		
 		EntityManager session = Session.getSession();
 //		EntityTransaction transaction = session.getTransaction();
 		
@@ -42,9 +49,9 @@ public class CRUDEntity {
 //			transaction.commit();
 			
 		} catch (RuntimeException re) {
-//            if(transaction.isActive()) {
+//           if(transaction.isActive()) {
 //            	transaction.rollback();
-//            }
+//           }
             throw re;
 			
 		}catch(CRUDException ex1) {

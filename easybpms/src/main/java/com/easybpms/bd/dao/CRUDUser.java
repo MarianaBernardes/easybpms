@@ -3,7 +3,6 @@ package com.easybpms.bd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 import com.easybpms.bd.CRUDException;
@@ -30,54 +29,44 @@ public class CRUDUser {
 				userGroup = CRUDUserGroup.read(userGroup,session);
 				if (userGroup != null){
 					userGroup.addUser(user);
-					try {			
+//					EntityTransaction transaction = session.getTransaction();
+					try {	
+//						transaction.begin();
 						session.persist(user);
+//						transaction.commit();
 					} catch (RuntimeException re) {
+//						if(transaction.isActive()) {
+//							transaction.rollback();
+//						}
 			            re.printStackTrace();;
 						
 					} catch (Exception ex) {
+//						transaction.rollback();
 						throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("usuario"), ex);		
 					}
 					
 				}
 			}
 		}
-		
-//		EntityTransaction transaction = session.getTransaction();
-//		try {			
-////			transaction.begin();
-//			session.persist(user);
-////			transaction.commit();
-//			
-//		} catch (RuntimeException re) {
-////            if(transaction.isActive()) {
-////            	transaction.rollback();
-////            }
-//            re.printStackTrace();;
-//			
-//		} catch (Exception ex) {
-////			transaction.rollback();
-//			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("usuario"), ex);		
-//		}
 	}
 	
 	public static void remove(IUser user) throws CRUDException {
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+//		EntityTransaction transaction = session.getTransaction();
 		
 		try {		
-			transaction.begin();
+//			transaction.begin();
 			session.remove(user);
-			transaction.commit();
+//			transaction.commit();
 			
 		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
+//            if(transaction.isActive()) {
+//           	transaction.rollback();
+//            }
             re.printStackTrace();;
 			
 		} catch (Exception ex) {
-			transaction.rollback();
+//			transaction.rollback();
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("usuario"), ex);		
 		}
 	}

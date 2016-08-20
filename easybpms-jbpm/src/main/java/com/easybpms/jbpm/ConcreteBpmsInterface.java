@@ -1,38 +1,27 @@
 package com.easybpms.jbpm;
 
-import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.manager.RuntimeEngine;
-import org.kie.api.runtime.manager.RuntimeEnvironment;
-import org.kie.api.runtime.manager.RuntimeEnvironmentBuilder;
-import org.kie.api.runtime.manager.RuntimeManager;
-import org.kie.api.runtime.manager.RuntimeManagerFactory;
+//import org.kie.api.runtime.manager.RuntimeEngine;
+//import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.task.TaskService;
-import org.kie.api.task.model.Task;
-import org.kie.internal.io.ResourceFactory;
-import org.kie.internal.runtime.manager.context.EmptyContext;
 
 import com.easybpms.bpms.AbstractBpmsInterface;
 
 public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
 	// RuntimeManager - combinacao do motor e do processo de servico de tarefa humana
-	private RuntimeManager manager;
-	private RuntimeEngine engine;
+	//private RuntimeManager manager;
+	//private RuntimeEngine engine;
 	private KieSession ksession;
 	private TaskService taskService;
 	
 	public void setBpmsSession(JbpmSession jbpmSession) {
-		this.manager = jbpmSession.getRuntimeManager();
-		this.engine = jbpmSession.getRuntimeEngine();
+		//this.manager = jbpmSession.getRuntimeManager();
+		//this.engine = jbpmSession.getRuntimeEngine();
 		this.ksession = jbpmSession.getKieSession();
 		this.taskService = jbpmSession.getTaskService();
 		addTaskConnector();

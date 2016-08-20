@@ -10,6 +10,7 @@ import com.easybpms.bd.Session;
 import com.easybpms.domain.Process;
 
 public class CRUDProcess {
+	
 	public static void create(Process entity, EntityManager session) throws CRUDException {
 		try {			
 			session.persist(entity);

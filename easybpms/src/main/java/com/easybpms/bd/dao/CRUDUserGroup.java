@@ -3,7 +3,6 @@ package com.easybpms.bd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 import com.easybpms.bd.CRUDException;
@@ -39,21 +38,21 @@ public class CRUDUserGroup {
 	public static void remove(IUserGroup entity) throws CRUDException {
 		
 		EntityManager session = Session.getSession();
-		EntityTransaction transaction = session.getTransaction();
+//		EntityTransaction transaction = session.getTransaction();
 		
 		try {		
-			transaction.begin();
+//			transaction.begin();
 			session.remove(entity);
-			transaction.commit();
+//			transaction.commit();
 			
 		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
+//            if(transaction.isActive()) {
+//            	transaction.rollback();
+//            }
             re.printStackTrace();;
 			
 		} catch (Exception ex) {
-			transaction.rollback();
+//			transaction.rollback();
 			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("grupo de usuario"), ex);		
 		}
 		
@@ -87,10 +86,10 @@ public class CRUDUserGroup {
 		EntityManager session = Session.getSession();
 		try {
 					
-			if(userGroup.getId() > 0){
+			/*if(userGroup.getId() > 0){
 				return session.find(UserGroup.class, userGroup.getId());
 			}
-			else if(userGroup.getName() != null){
+			else*/ if(userGroup.getName() != null){
 				return session.createQuery("FROM UserGroup WHERE name = '" + userGroup.getName() + "'", UserGroup.class).getSingleResult();
 			}
 			/*else if(userGroup.getActivity() != null){

@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import com.easybpms.bd.CRUDException;
 import com.easybpms.bd.Session;
 import com.easybpms.domain.ActivityInstance;
+import com.easybpms.domain.User;
 
 public class CRUDActivityInstance {
 	public static void create(ActivityInstance entity, EntityManager session) throws CRUDException {
@@ -80,6 +81,20 @@ public class CRUDActivityInstance {
 		List<ActivityInstance> list = null;
 		try {		
 			list = session.createQuery("FROM ActivityInstance", ActivityInstance.class).getResultList();
+		} catch (NoResultException ex1) {		
+			throw ex1;
+		} catch (Exception ex) {		
+			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("instancias atividade"), ex);	
+		}
+		return list;
+	}
+	
+	public static List<ActivityInstance> readActivityInstances(String tenancy, String usuarioId) throws CRUDException {
+		EntityManager session = Session.getSession();
+		List<ActivityInstance> list = null;
+		User user = session.createQuery("FROM User WHERE idApp = '" + usuarioId + "' AND tenancy = '" + tenancy + "'", User.class).getSingleResult(); 
+		try {		
+			list = session.createQuery("FROM ActivityInstance WHERE user_id = '" + user.getId() + "' AND status = '" + "Reserved" + "'", ActivityInstance.class).getResultList();
 		} catch (NoResultException ex1) {		
 			throw ex1;
 		} catch (Exception ex) {		
