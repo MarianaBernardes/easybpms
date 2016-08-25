@@ -2,11 +2,12 @@ package com.easybpms.jbpm;
 
 import java.util.Map;
 
+import org.jbpm.bpmn2.handler.ReceiveTaskHandler;
+import org.jbpm.bpmn2.handler.SendTaskHandler;
 import org.kie.api.runtime.KieSession;
 //import org.kie.api.runtime.manager.RuntimeEngine;
 //import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
-import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.task.TaskService;
 
 import com.easybpms.bpms.AbstractBpmsInterface;
@@ -20,14 +21,12 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	private TaskService taskService;
 	
 	public void setBpmsSession(JbpmSession jbpmSession) {
-		//this.manager = jbpmSession.getRuntimeManager();
-		//this.engine = jbpmSession.getRuntimeEngine();
 		this.ksession = jbpmSession.getKieSession();
 		this.taskService = jbpmSession.getTaskService();
 		addTaskConnector();
 	}
 	
-	//Método deve ser apagado se os processos forem carregados via Spring
+	//Metodo deve ser descomentado se os processos nao forem carregados via Spring
 	
 	/*public void startBPMS(List<String> processes) {
 		manager = createRuntimeManager(processes);
@@ -54,10 +53,11 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	 * chamado quando o motor chegar em uma atividade de usuario
 	 */
 	public void addTaskConnector() {
-		WorkItemHandler myWorkItemHandler = new SpecificBpmsConnector(taskService, ksession);
-		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",myWorkItemHandler);
+		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",new HumanTaskWorkItem(taskService, ksession));
 		ksession.getWorkItemManager().registerWorkItemHandler("Manual Task",new ManualTaskWorkItem());
 		ksession.getWorkItemManager().registerWorkItemHandler("Service Task",new ServiceTaskWorkItem());
+		ksession.getWorkItemManager().registerWorkItemHandler("Send Task",new SendTaskHandler());
+		ksession.getWorkItemManager().registerWorkItemHandler("Receive Task",new ReceiveTaskHandler(ksession));	
 	}
 
 
@@ -72,36 +72,14 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		taskService.complete(taskId, user, params);
 		return taskService.getTaskById(taskId).getTaskData().getStatus().name();
 	}
-	
-	//Métodos não utilizados
-	
-	/*public void stopProcess(long processInstanceId) {
-		this.ksession.abortProcessInstance(processInstanceId);
-	}
-
-	public void stopBPMS() {
-		manager.disposeRuntimeEngine(engine);
-		manager.close();
-	}
-
-	public ProcessInstance getProcessInstanceById(long processInstanceId) {
-		return ksession.getProcessInstance(processInstanceId);
-	}
-
-	public Task getTaskById(long taskId) {
-		return taskService.getTaskById(taskId);
-	}*/
 
 	
-	//Método deve ser apagado se os processos forem carregados via Spring
+	//Metodo deve ser descomentado se os processos nao forem carregados via Spring
 	
 	/*private RuntimeManager createRuntimeManager(
 			List<String> bpmnProcessDefinitions) {
 		
 		RuntimeEnvironmentBuilder environmentBuilder;
-		
-		//Comunicação com o BD jBPM configurado na aplicação do usuário
-		//AbstractConnection.getConnection();
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
 		

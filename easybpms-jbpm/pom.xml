@@ -4,7 +4,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.bpms</groupId>
+	<groupId>com.easybpms</groupId>
 	<artifactId>easybpms-jbpm</artifactId>
 	<packaging>bundle</packaging>
 	<version>1.0</version>
@@ -47,8 +47,8 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.api</groupId>
-			<artifactId>easybpms</artifactId>
+			<groupId>com.easybpms</groupId>
+			<artifactId>easybpms-core</artifactId>
 			<version>1.0</version>
 		</dependency>
 
@@ -105,8 +105,8 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>com.bpms.jbpm</Bundle-SymbolicName>
-						<Export-Package>com.bpms.jbpm.*</Export-Package>
+						<Bundle-SymbolicName>com.easybpms.jbpm</Bundle-SymbolicName>
+						<Export-Package>com.easybpms.jbpm.*</Export-Package>
 					</instructions>
 				</configuration>
 			</plugin>
