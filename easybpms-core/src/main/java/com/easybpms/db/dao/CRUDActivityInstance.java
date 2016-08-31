@@ -11,21 +11,21 @@ import com.easybpms.domain.ActivityInstance;
 import com.easybpms.domain.User;
 
 public class CRUDActivityInstance {
-	public static void create(ActivityInstance entity, EntityManager session) throws CRUDException {
+	public static void create(ActivityInstance entity, EntityManager session) throws Exception {
 		try {			
 			session.persist(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("instancia atividade"), ex);		
+			throw ex;		
 		}
 	}
-	public static void remove(ActivityInstance entity, EntityManager session) throws CRUDException {
+	public static void remove(ActivityInstance entity, EntityManager session) throws Exception {
 		try {			
 			session.remove(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("instancia atividade"), ex);		
+			throw ex;		
 		}
 	}
-	public static ActivityInstance read(ActivityInstance activityInstance, EntityManager session) throws CRUDException {
+	public static ActivityInstance read(ActivityInstance activityInstance, EntityManager session) throws Exception {
 		try {
 					
 			if(activityInstance.getId() > 0){
@@ -40,26 +40,23 @@ public class CRUDActivityInstance {
 				return session.createQuery("FROM ActivityInstance WHERE user_id = '" + activityInstance.getUser().getId() + "'", ActivityInstance.class).getSingleResult();
 			}
 			else{
-				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
+				System.err.println("Nao foi possivel carregar a entidade ActivityInstance. Parametros nao fornecidos");
 			}
-		} catch (NoResultException ex1) {		
-			throw ex1;
+		} catch (NoResultException ex) {		
+			throw ex;
 		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("instancia atividade"), ex);	
+			throw ex;	
 		}
 		return activityInstance;
 	}
 	
 	public static void update(ActivityInstance activityInstance, String status) throws CRUDException {
-//		EntityManager session = Session.getSession();
-//		EntityTransaction transaction = session.getTransaction();
-		
+
 		try{
-//			transaction.begin();
 			activityInstance.setStatus(status);
-//			transaction.commit();
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeAlterar("instancia atividade"), ex);	
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao atualizar ActivityInstance", ex);
 		}
 		
 	}
@@ -69,10 +66,11 @@ public class CRUDActivityInstance {
 		List<ActivityInstance> list = null;
 		try {		
 			list = session.createQuery("FROM ActivityInstance", ActivityInstance.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("instancias atividade"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Instancias Atividade", ex);
 		}
 		return list;
 	}
@@ -83,10 +81,11 @@ public class CRUDActivityInstance {
 		User user = session.createQuery("FROM User WHERE idApp = '" + usuarioId + "' AND tenancy = '" + tenancy + "'", User.class).getSingleResult(); 
 		try {		
 			list = session.createQuery("FROM ActivityInstance WHERE user_id = '" + user.getId() + "' AND status = '" + "Reserved" + "'", ActivityInstance.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("instancias atividade"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Instancias Atividade", ex);
 		}
 		return list;
 	}

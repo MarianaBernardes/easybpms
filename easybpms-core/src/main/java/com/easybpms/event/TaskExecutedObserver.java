@@ -140,6 +140,7 @@ public class TaskExecutedObserver implements Observer{
 			 * @param statusTask - recebe o status da tarefa executada no bpms
 			 */		
 			
+			System.out.println("Tarefa " + task.getActivity().getName() + " executada");
 			statusTask = "" + AbstractBpmsInterface.getBpmsInterface().executeTask(Long.valueOf(task.getIdBpms()), "Administrator", params);
 			
 			/**
@@ -150,7 +151,7 @@ public class TaskExecutedObserver implements Observer{
 			} catch (CRUDException e) {
 				e.printStackTrace();
 			}
-			System.out.println("\nTarefa " + task.getActivity().getName() + " executada!\n");
+			
 		}
 	}
 

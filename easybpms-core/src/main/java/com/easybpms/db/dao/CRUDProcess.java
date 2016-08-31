@@ -11,23 +11,23 @@ import com.easybpms.domain.Process;
 
 public class CRUDProcess {
 	
-	public static void create(Process entity, EntityManager session) throws CRUDException {
+	public static void create(Process entity, EntityManager session) throws Exception {
 		try {			
 			session.persist(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("processo"), ex);		
+			throw ex;		
 		}
 	}
 	
-	public static void remove(Process entity, EntityManager session) throws CRUDException {
+	public static void remove(Process entity, EntityManager session) throws Exception {
 		try {			
 			session.remove(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("processo"), ex);		
+			throw ex;		
 		}
 	}
 	
-	public static Process read(Process process, EntityManager session) throws CRUDException {
+	public static Process read(Process process, EntityManager session) throws Exception {
 		try {
 					
 			if(process.getId() > 0){
@@ -40,12 +40,12 @@ public class CRUDProcess {
 				return session.createQuery("FROM Process WHERE idBpms = '" + process.getIdBpms() + "'", Process.class).getSingleResult();
 			}
 			else{
-				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
+				System.err.println("Nao foi possivel carregar a entidade Processo. Parametros nao fornecidos");
 			}
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("processo"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {			
+			throw ex;		
 		}
 		return process;
 	}
@@ -55,10 +55,11 @@ public class CRUDProcess {
 		List<Process> list = null;
 		try {		
 			list = session.createQuery("FROM Process", Process.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("processos"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Processos", ex);
 		}
 		return list;
 	}

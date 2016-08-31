@@ -10,21 +10,21 @@ import com.easybpms.db.Session;
 import com.easybpms.domain.Activity;
 
 public class CRUDActivity {
-	public static void create(Activity entity, EntityManager session) throws CRUDException {
+	public static void create(Activity entity, EntityManager session) throws Exception {
 		try {			
 			session.persist(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("atividade"), ex);		
+			throw ex;		
 		}
 	}
-	public static void remove(Activity entity, EntityManager session) throws CRUDException {
+	public static void remove(Activity entity, EntityManager session) throws Exception {
 		try {			
 			session.remove(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("atividade"), ex);		
+			throw ex;		
 		}
 	}
-	public static Activity read(Activity activity, EntityManager session) throws CRUDException {
+	public static Activity read(Activity activity, EntityManager session) throws Exception {
 		try {
 					
 			if(activity.getId() > 0){
@@ -37,12 +37,12 @@ public class CRUDActivity {
 				"'", Activity.class).getSingleResult();
 			}
 			else{
-				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
+				System.err.println("Nao foi possivel carregar a entidade Atividade. Parametros nao fornecidos");
 			}
-		} catch (NoResultException ex1) {		
-			throw ex1;
+		} catch (NoResultException ex) {		
+			throw ex;
 		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("atividade"), ex);	
+			throw ex;	
 		}
 		return activity;
 	}
@@ -52,10 +52,11 @@ public class CRUDActivity {
 		List<Activity> list = null;
 		try {		
 			list = session.createQuery("FROM Activity", Activity.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("atividades"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Atividades", ex);
 		}
 		return list;
 	}

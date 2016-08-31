@@ -10,21 +10,21 @@ import com.easybpms.db.Session;
 import com.easybpms.domain.Parameter;
 
 public class CRUDParameter {
-	public static void create(Parameter entity, EntityManager session) throws CRUDException {
+	public static void create(Parameter entity, EntityManager session) throws Exception {
 		try {			
 			session.persist(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("parametro"), ex);		
+			throw ex;		
 		}
 	}
-	public static void remove(Parameter entity, EntityManager session) throws CRUDException {
+	public static void remove(Parameter entity, EntityManager session) throws Exception {
 		try {			
 			session.remove(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("parametro"), ex);		
+			throw ex;		
 		}
 	}
-	public static Parameter read(Parameter parameter, EntityManager session) throws CRUDException {
+	public static Parameter read(Parameter parameter, EntityManager session) throws Exception {
 		try {
 					
 			if(parameter.getId() > 0){
@@ -36,12 +36,12 @@ public class CRUDParameter {
 				"' AND type = '" + parameter.getType() + "'", Parameter.class).getSingleResult();
 			}
 			else{
-				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
+				System.err.println("Nao foi possivel carregar a entidade Parameter. Parametros nao fornecidos");
 			}
-		} catch (NoResultException ex1) {		
-			throw ex1;
+		} catch (NoResultException ex) {		
+			throw ex;
 		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("parametro"), ex);	
+			throw ex;	
 		}
 		return parameter;
 	}
@@ -51,10 +51,11 @@ public class CRUDParameter {
 		List<Parameter> list = null;
 		try {		
 			list = session.createQuery("FROM Parameter", Parameter.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("parametros"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Parametros", ex);
 		}
 		return list;
 	}

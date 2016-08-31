@@ -104,7 +104,7 @@ public class StartProcessObserver implements Observer{
 			 * @param listP - lista de todas as propriedades do respectivo processo 
 			 */
 			listP = p.getProperties();
-		} catch (Exception e) {
+		} catch (CRUDException e) {
 			e.printStackTrace();
 		}
 		
@@ -126,7 +126,7 @@ public class StartProcessObserver implements Observer{
 				String propertyValue = i.toString(); 
 				params.put(pr.getName(), propertyValue);
 			} catch (Exception e) {
-				System.out.println("Atributo " + attribute + " deve ser inicializado na aplicacao!");
+				System.err.println("Atributo " + attribute + " deve ser inicializado na aplicacao!");
 				e.printStackTrace();
 			}	
 		}
@@ -137,7 +137,7 @@ public class StartProcessObserver implements Observer{
 		/**
 		 * @param processInstanceId - recebe o id da instancia processo criada no bpms
 		 */
-		System.out.println("\nProcesso " + p.getName() + " iniciado!\n");
+		System.out.println("\nProcesso " + p.getName() + " iniciado");
 		AbstractBpmsInterface.getBpmsInterface().startProcess(this.processIdBpms, params);
 		
 	}

@@ -5,17 +5,17 @@ public class CRUDException extends Exception{
 	private static final long serialVersionUID = 1L;
 	
 	private String message = null;
-	private Throwable excecaoInterna = null;
+	private Throwable internalException = null;
 	
-	public CRUDException(String mensagem)
-	{
-		this.message = mensagem;
-	}
-	
-	public CRUDException(String message, Throwable excecaoInterna)
+	public CRUDException(String message)
 	{
 		this.message = message;
-		this.excecaoInterna = excecaoInterna;
+	}
+	
+	public CRUDException(String message, Throwable internalException)
+	{
+		this.message = message;
+		this.internalException = internalException;
 	}
 	
 	@Override
@@ -27,32 +27,16 @@ public class CRUDException extends Exception{
 	@Override
 	public Throwable getCause()
 	{
-		return this.excecaoInterna;
+		return this.internalException;
 	}
 	
-	public static CRUDException getExcecao(String message, Exception excecao) throws CRUDException {
+	public static CRUDException getException(String message, Exception exception) throws CRUDException {
 		
-		if (excecao.getClass().equals(CRUDException.class)) {
-			throw (CRUDException)excecao;
+		if (exception.getClass().equals(CRUDException.class)) {
+			throw (CRUDException)exception;
 		} else {
-			throw new CRUDException(message, excecao.getCause());
+			throw new CRUDException(message, exception.getCause());
 		}
-	}
-	
-	public static String getInconformidadeCadastrar(String nomeEntidade) {
-		return "Inconformidade ao cadastrar " + nomeEntidade + "!";
-	}
-	
-	public static String getInconformidadeAlterar(String nomeEntidade) {
-		return "Inconformidade ao alterar " + nomeEntidade + "!";
-	}
-	
-	public static String getInconformidadeConsultar(String nomeEntidade) {
-		return "Inconformidade ao consultar " + nomeEntidade + "!";
-	}
-	
-	public static String getInconformidadeExcluir(String nomeEntidade) {
-		return "Inconformidade ao excluir " + nomeEntidade + "!";
 	}
 
 }

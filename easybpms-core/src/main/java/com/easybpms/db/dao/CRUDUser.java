@@ -29,20 +29,11 @@ public class CRUDUser {
 				userGroup = CRUDUserGroup.read(userGroup,session);
 				if (userGroup != null){
 					userGroup.addUser(user);
-//					EntityTransaction transaction = session.getTransaction();
 					try {	
-//						transaction.begin();
 						session.persist(user);
-//						transaction.commit();
-					} catch (RuntimeException re) {
-//						if(transaction.isActive()) {
-//							transaction.rollback();
-//						}
-			            re.printStackTrace();;
-						
 					} catch (Exception ex) {
-//						transaction.rollback();
-						throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("usuario"), ex);		
+						System.err.println(ex.getMessage());
+						throw CRUDException.getException("Inconformidade ao persistir Usuario" , ex);		
 					}
 					
 				}
@@ -52,22 +43,12 @@ public class CRUDUser {
 	
 	public static void remove(IUser user) throws CRUDException {
 		EntityManager session = Session.getSession();
-//		EntityTransaction transaction = session.getTransaction();
 		
 		try {		
-//			transaction.begin();
 			session.remove(user);
-//			transaction.commit();
-			
-		} catch (RuntimeException re) {
-//            if(transaction.isActive()) {
-//           	transaction.rollback();
-//            }
-            re.printStackTrace();;
-			
 		} catch (Exception ex) {
-//			transaction.rollback();
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("usuario"), ex);		
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao excluir Usuario" , ex);		
 		}
 	}
 	
@@ -85,12 +66,13 @@ public class CRUDUser {
 				return session.createQuery("FROM User WHERE idApp = '" + user.getIdApp() + "'", User.class).getSingleResult();
 			}
 			else{
-				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
+				System.err.println("Nao foi possivel carregar a entidade User. Parametros nao fornecidos");
 			}
-		} catch (NoResultException ex1) {		
-			throw ex1;
+		} catch (NoResultException ex) {		
+			throw ex;
 		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("usuario"), ex);	
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar Usuario", ex);	
 		}
 		return user;
 	}
@@ -100,10 +82,11 @@ public class CRUDUser {
 		List<? extends IUser> list = null;
 		try {		
 			list = session.createQuery("FROM User", User.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
+		} catch (NoResultException ex) {		
+			throw ex;
 		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("usuarios"), ex);	
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Usuarios", ex);	
 		}
 		return list;
 	}

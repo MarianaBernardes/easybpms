@@ -13,7 +13,7 @@ import com.easybpms.domain.*;
 
 public class GenericBpmsConnector {
 	
-	public void execute(String taskIdBpms, String taskName, String taskInstanceId, String statusTask, Map<String, Object> params, String processId, String processInstanceId) {
+	public void executeHumanTask(String taskIdBpms, String taskName, String taskInstanceId, String statusTask, Map<String, Object> params, String processId, String processInstanceId) {
 		
 		Activity activity = new Activity();
 		Process process = new Process();
@@ -48,7 +48,7 @@ public class GenericBpmsConnector {
 			} catch (CRUDException e1) {
 				e1.printStackTrace();
 			}
-		}catch (Exception e) {
+		}catch (CRUDException e) {
 			e.printStackTrace();
 		}
 		
@@ -116,9 +116,9 @@ public class GenericBpmsConnector {
 						user = usersTenancy.get(i);
 					}
 				}
-			}catch(Exception e2) {
-				System.out.println("Nao ha usuarios para o grupo " + activity.getUserGroup().getName());
-				e2.printStackTrace();
+			}catch(Exception e1) {
+				System.err.println("Nao existe usuarios para o grupo " + activity.getUserGroup().getName());
+				e1.printStackTrace();
 			}	
 			
 			user.addActivityInstance(activityInstance);
@@ -131,7 +131,7 @@ public class GenericBpmsConnector {
 			} catch (CRUDException e1) {
 				e1.printStackTrace();
 			}
-		}catch (Exception e) {
+		}catch (CRUDException e) {
 			e.printStackTrace();
 		}	
 
@@ -154,10 +154,13 @@ public class GenericBpmsConnector {
 		try {
 			pi = (ProcessInstance) CRUDEntity.read(pi);
 			CRUDProcessInstance.update(pi,"Completed");
+			System.out.println("Processo " + pi.getProcess().getName() + " finalizado");
+		} catch (NoResultException ex) {
+			System.out.println("Processo " + p.getName() + " finalizado");
 		} catch (CRUDException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Processo " + pi.getProcess().getName() + " finalizado!");
+		
 	}
 
 }

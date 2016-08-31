@@ -10,21 +10,21 @@ import com.easybpms.db.Session;
 import com.easybpms.domain.ParameterInstance;
 
 public class CRUDParameterInstance {
-	public static void create(ParameterInstance entity, EntityManager session) throws CRUDException {
+	public static void create(ParameterInstance entity, EntityManager session) throws Exception {
 		try {			
 			session.persist(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("instancia parametro"), ex);		
+			throw ex;		
 		}
 	}
-	public static void remove(ParameterInstance entity, EntityManager session) throws CRUDException {
+	public static void remove(ParameterInstance entity, EntityManager session) throws Exception {
 		try {			
 			session.remove(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("instancia parametro"), ex);		
+			throw ex;		
 		}
 	}
-	public static ParameterInstance read(ParameterInstance parameterInstance, EntityManager session) throws CRUDException {
+	public static ParameterInstance read(ParameterInstance parameterInstance, EntityManager session) throws Exception {
 		try {
 					
 			if(parameterInstance.getId() > 0){
@@ -40,12 +40,12 @@ public class CRUDParameterInstance {
 				"' AND parameter_id = '" + parameterInstance.getParameter().getId() + "'", ParameterInstance.class).getSingleResult();
 			}
 			else{
-				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
+				System.err.println("Nao foi possivel carregar a entidade ParameterInstance. Parametros nao fornecidos");
 			}
-		} catch (NoResultException ex1) {		
-			throw ex1;
+		} catch (NoResultException ex) {		
+			throw ex;
 		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("instancia parametro"), ex);	
+			throw ex;	
 		}
 		return parameterInstance;
 	}
@@ -55,10 +55,11 @@ public class CRUDParameterInstance {
 		List<ParameterInstance> list = null;
 		try {		
 			list = session.createQuery("FROM ParameterInstance", ParameterInstance.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("instancias parametro"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Instancias Parametro", ex);
 		}
 		return list;
 	}

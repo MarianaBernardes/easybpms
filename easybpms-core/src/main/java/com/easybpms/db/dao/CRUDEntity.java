@@ -13,10 +13,8 @@ public class CRUDEntity {
 	public static void create (IEntity entity) throws CRUDException{
 		
 		EntityManager session = Session.getSession();
-//		EntityTransaction transaction = session.getTransaction();
 		
 		try{
-//			transaction.begin();
 			Class<? extends IEntity> entityClass = entity.getClass();
 	        
 			if (entityClass.equals(Process.class)) {
@@ -34,36 +32,18 @@ public class CRUDEntity {
 			}else if (entityClass.equals(ParameterInstance.class)) {
 				CRUDParameterInstance.create((ParameterInstance) entity, session);
 			}else {
-				throw new CRUDException("Nao ha create para a classe " + entityClass.getSimpleName());
+				throw new CRUDException("Nao existe create para a classe " + entityClass.getSimpleName());
 			}
-
-//			transaction.commit();
-			
-		} catch (RuntimeException re) {
-//           if(transaction.isActive()) {
-//            	transaction.rollback();
-//          }
-            throw re;
-			
-		}catch(CRUDException ex1) {
-			
-//			transaction.rollback();
-			throw ex1;
-			
 		}catch (Exception ex) {
-			System.out.println(ex.getMessage());
-//			transaction.rollback();
-			
-			throw CRUDException.getExcecao("Inconformidade ao persistir " + entity.getClass().getSimpleName() + "!", ex);
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao persistir " + entity.getClass().getSimpleName(), ex);
 		}
 	}
 	
 	public static void remove (IEntity entity) throws CRUDException{
 		EntityManager session = Session.getSession();
-		//EntityTransaction transaction = session.getTransaction();
 		
 		try{
-			//transaction.begin();
 			Class<? extends IEntity> entityName = entity.getClass();
 	           
 			if (entityName.equals(Process.class)) {
@@ -81,27 +61,12 @@ public class CRUDEntity {
 			}else if (entityName.equals(ParameterInstance.class)) {
 				CRUDParameterInstance.remove((ParameterInstance) entity, session);
 			}else {
-				throw new CRUDException("Nao ha remove para a classe " + entityName.getSimpleName());
+				throw new CRUDException("Nao existe remove para a classe " + entityName.getSimpleName());
 			}
-
-			//transaction.commit();
-			
-		} catch (RuntimeException re) {
-            //if(transaction.isActive()) {
-            	//transaction.rollback();
-            //}
-            throw re;
-            
-		}catch(CRUDException ex1) {
-			
-			//transaction.rollback();
-			throw ex1;
 			
 		}catch (Exception ex) {
-			System.out.println(ex.getMessage());
-			//transaction.rollback();
-			
-			throw CRUDException.getExcecao("Inconformidade ao excluir " + entity.getClass().getSimpleName() + "!", ex);
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao excluir " + entity.getClass().getSimpleName(), ex);
 		}
 	}
 	
@@ -127,18 +92,16 @@ public class CRUDEntity {
 			} else if (entityName.equals(ParameterInstance.class)) {
 				retorno = CRUDParameterInstance.read((ParameterInstance) entity, session);
 			} else {
-				throw new CRUDException("Nao ha read para a classe" + entityName.getSimpleName());
+				throw new CRUDException("Nao existe read para a classe" + entityName.getSimpleName());
 			}
 
 			return retorno;
 
-		} catch (NoResultException ex1) {
-			throw ex1;
-		} catch (CRUDException ex1) {
-			throw ex1;
+		} catch (NoResultException ex) {
+			throw ex;
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-			throw CRUDException.getExcecao("Inconformidade ao consultar " + entity.getClass().getSimpleName() + "!", ex);
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar " + entity.getClass().getSimpleName(), ex);
 		}
 	}	
 }

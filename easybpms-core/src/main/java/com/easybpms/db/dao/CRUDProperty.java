@@ -10,23 +10,23 @@ import com.easybpms.db.Session;
 import com.easybpms.domain.Property;
 
 public class CRUDProperty {
-	public static void create(Property entity, EntityManager session) throws CRUDException {
+	public static void create(Property entity, EntityManager session) throws Exception {
 		try {			
 			session.persist(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeCadastrar("property"), ex);		
+			throw ex;		
 		}
 	}
 	
-	public static void remove(Property entity, EntityManager session) throws CRUDException {
+	public static void remove(Property entity, EntityManager session) throws Exception {
 		try {			
 			session.remove(entity);
 		} catch (Exception ex) {			
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeExcluir("property"), ex);		
+			throw ex;		
 		}
 	}
 	
-	public static Property read(Property property, EntityManager session) throws CRUDException {
+	public static Property read(Property property, EntityManager session) throws Exception {
 		try {
 					
 			if(property.getId() > 0){
@@ -39,12 +39,12 @@ public class CRUDProperty {
 				return session.createQuery("FROM Property WHERE process_id = '" + property.getProcess().getId() + "'", Property.class).getSingleResult();
 			}
 			else{
-				System.out.println("Nao foi possivel carregar a entidade. Parametros nao fornecidos.");
+				System.out.println("Nao foi possivel carregar a entidade Property. Parametros nao fornecidos");
 			}
-		} catch (NoResultException ex1) {		
-			throw ex1;
+		} catch (NoResultException ex) {		
+			throw ex;
 		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("property"), ex);	
+			throw ex;	
 		}
 		return property;
 	}
@@ -54,10 +54,11 @@ public class CRUDProperty {
 		List<Property> list = null;
 		try {		
 			list = session.createQuery("FROM Property", Property.class).getResultList();
-		} catch (NoResultException ex1) {		
-			throw ex1;
-		} catch (Exception ex) {		
-			throw CRUDException.getExcecao(CRUDException.getInconformidadeConsultar("properties"), ex);	
+		} catch (NoResultException ex) {		
+			throw ex;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			throw CRUDException.getException("Inconformidade ao consultar lista de Variaveis de Processo", ex);
 		}
 		return list;
 	}
