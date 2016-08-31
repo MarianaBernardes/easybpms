@@ -25,7 +25,7 @@ public class GerarContextMain {
 		GenerateContext gc = new GenerateContext("com.easybpms.jbpm");
 		String fileOut = gc.gerarContext(files);
 		
-		String pathOut = (GerarContextMain.getFile() + "\\src\\easybpms\\java\\com\\easybpms\\codegen\\Context.java").replace("\\","\\\\");
+		String pathOut = (GerarContextMain.getFile() + "\\Context.java").replace("\\","\\\\");
 		my.writeFile(pathOut, fileOut);
 		
 	}
