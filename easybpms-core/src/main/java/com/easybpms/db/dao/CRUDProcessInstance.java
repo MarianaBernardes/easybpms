@@ -50,7 +50,6 @@ public class CRUDProcessInstance {
 		try{
 			processInstance.setStatus(status);
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao atualizar ProcessInstance", ex);
 		}
 		
@@ -64,7 +63,6 @@ public class CRUDProcessInstance {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Instancias Processo", ex);
 		}
 		return list;

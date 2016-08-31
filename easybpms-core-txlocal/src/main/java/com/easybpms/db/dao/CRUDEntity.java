@@ -41,7 +41,6 @@ public class CRUDEntity {
 			transaction.commit();
 			
 		}catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			transaction.rollback();
 			throw CRUDException.getException("Inconformidade ao persistir " + entity.getClass().getSimpleName(), ex);
 		}
@@ -76,7 +75,6 @@ public class CRUDEntity {
 			transaction.commit();
 			
 		}catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			transaction.rollback();
 			throw CRUDException.getException("Inconformidade ao excluir " + entity.getClass().getSimpleName(), ex);
 		}
@@ -112,7 +110,6 @@ public class CRUDEntity {
 		} catch (NoResultException ex) {
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar " + entity.getClass().getSimpleName(), ex);
 		}
 	}	

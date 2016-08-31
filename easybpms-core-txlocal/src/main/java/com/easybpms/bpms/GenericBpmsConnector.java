@@ -29,6 +29,8 @@ public class GenericBpmsConnector {
 		process.setIdBpms(processId);
 		try {
 			process = (Process) CRUDEntity.read(process);
+		} catch (NoResultException e) {		
+			e.printStackTrace();
 		} catch (CRUDException e) {
 			e.printStackTrace();
 		}
@@ -58,6 +60,8 @@ public class GenericBpmsConnector {
 		activity.setProcess(process);
 		try {
 			activity = (Activity) CRUDEntity.read(activity);
+		} catch (NoResultException e) {		
+			e.printStackTrace();
 		} catch (CRUDException e) {
 			e.printStackTrace();
 		}
@@ -84,6 +88,8 @@ public class GenericBpmsConnector {
 						parameter.setActivity(activity);
 						try {
 							parameter = (Parameter)CRUDEntity.read(parameter);
+						} catch (NoResultException e1) {		
+							e1.printStackTrace();
 						} catch (CRUDException e1) {
 							e1.printStackTrace();
 						}

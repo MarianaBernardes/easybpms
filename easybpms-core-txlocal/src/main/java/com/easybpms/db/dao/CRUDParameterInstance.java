@@ -58,7 +58,6 @@ public class CRUDParameterInstance {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Instancias Parametro", ex);
 		}
 		return list;

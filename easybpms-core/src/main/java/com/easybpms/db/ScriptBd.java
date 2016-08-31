@@ -2,6 +2,8 @@ package com.easybpms.db;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import com.easybpms.domain.ProcessInstance;
 import com.easybpms.db.dao.CRUDEntity;
 import com.easybpms.domain.Process;
@@ -18,6 +20,8 @@ public class ScriptBd {
 				try {
 					p = (ProcessInstance) CRUDEntity.read(p);
 					CRUDEntity.remove(p);
+				} catch (NoResultException e) {		
+					e.printStackTrace();
 				} catch (CRUDException e) {
 					e.printStackTrace();
 				}	
@@ -34,6 +38,8 @@ public class ScriptBd {
 				try {
 					p = (Process) CRUDEntity.read(p);
 					CRUDEntity.remove(p);
+				} catch (NoResultException e) {		
+					e.printStackTrace();
 				} catch (CRUDException e) {
 					e.printStackTrace();
 				}	

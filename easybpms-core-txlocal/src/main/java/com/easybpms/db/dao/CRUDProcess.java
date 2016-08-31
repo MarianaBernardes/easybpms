@@ -58,7 +58,6 @@ public class CRUDProcess {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Processos", ex);
 		}
 		return list;

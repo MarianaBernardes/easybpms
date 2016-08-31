@@ -55,7 +55,6 @@ public class CRUDActivityInstance {
 		try{
 			activityInstance.setStatus(status);
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao atualizar ActivityInstance", ex);
 		}
 		
@@ -69,7 +68,6 @@ public class CRUDActivityInstance {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Instancias Atividade", ex);
 		}
 		return list;
@@ -84,7 +82,6 @@ public class CRUDActivityInstance {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Instancias Atividade", ex);
 		}
 		return list;

@@ -35,7 +35,6 @@ public class CRUDEntity {
 				throw new CRUDException("Nao existe create para a classe " + entityClass.getSimpleName());
 			}
 		}catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao persistir " + entity.getClass().getSimpleName(), ex);
 		}
 	}
@@ -65,7 +64,6 @@ public class CRUDEntity {
 			}
 			
 		}catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao excluir " + entity.getClass().getSimpleName(), ex);
 		}
 	}
@@ -96,11 +94,9 @@ public class CRUDEntity {
 			}
 
 			return retorno;
-
 		} catch (NoResultException ex) {
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar " + entity.getClass().getSimpleName(), ex);
 		}
 	}	

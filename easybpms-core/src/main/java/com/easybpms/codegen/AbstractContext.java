@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.persistence.NoResultException;
+
 import com.easybpms.bpms.BpmsSession;
 import com.easybpms.db.CRUDException;
 import com.easybpms.db.dao.CRUDEntity;
@@ -48,6 +50,8 @@ public abstract class AbstractContext {
 		if (userGroupAux == null) {
 			try {
 				userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
+			} catch (NoResultException e) {	
+				userGroupAux = null;
 			} catch (CRUDException e) {
 				e.printStackTrace();
 			}
@@ -73,8 +77,10 @@ public abstract class AbstractContext {
 		existProcess = true;
 		try {
 			aux = (Process) CRUDEntity.read(aux);
-		} catch (CRUDException e) {
+		} catch (NoResultException e) {
 			existProcess = false;
+		} catch (CRUDException e) {
+			e.printStackTrace();
 		}
 
 		if(!existProcess){

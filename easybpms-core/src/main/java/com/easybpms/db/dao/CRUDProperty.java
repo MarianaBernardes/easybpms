@@ -57,7 +57,6 @@ public class CRUDProperty {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Variaveis de Processo", ex);
 		}
 		return list;

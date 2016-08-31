@@ -35,14 +35,7 @@ public class CRUDUser {
 						transaction.begin();
 						session.persist(user);
 						transaction.commit();
-					} catch (RuntimeException re) {
-						if(transaction.isActive()) {
-							transaction.rollback();
-						}
-			            re.printStackTrace();;
-						
 					} catch (Exception ex) {
-						System.err.println(ex.getMessage());
 						transaction.rollback();
 						throw CRUDException.getException("Inconformidade ao persistir Usuario" , ex);		
 					}
@@ -61,14 +54,7 @@ public class CRUDUser {
 			session.remove(user);
 			transaction.commit();
 			
-		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
-            re.printStackTrace();;
-			
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			transaction.rollback();
 			throw CRUDException.getException("Inconformidade ao excluir Usuario" , ex);		
 		}
@@ -93,7 +79,6 @@ public class CRUDUser {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {		
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar Usuario", ex);	
 		}
 		return user;
@@ -107,7 +92,6 @@ public class CRUDUser {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {		
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Usuarios", ex);	
 		}
 		return list;

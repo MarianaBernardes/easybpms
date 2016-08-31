@@ -20,14 +20,7 @@ public class CRUDUserGroup {
 			transaction.begin();
 			session.persist(userGroup);
 			transaction.commit();
-		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
-            re.printStackTrace();;
-			
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			transaction.rollback();
 			throw CRUDException.getException("Inconformidade ao persistir Grupo de Usuario", ex);		
 		}
@@ -42,15 +35,7 @@ public class CRUDUserGroup {
 			transaction.begin();
 			session.remove(entity);
 			transaction.commit();
-			
-		} catch (RuntimeException re) {
-            if(transaction.isActive()) {
-            	transaction.rollback();
-            }
-            re.printStackTrace();;
-			
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
 			transaction.rollback();
 			throw CRUDException.getException("Inconformidade ao excluir Grupo de Usuario", ex);		
 		}
@@ -67,9 +52,8 @@ public class CRUDUserGroup {
 				System.err.println("Nao foi possivel carregar a entidade UserGroup. Parametros nao fornecidos");
 			}
 		} catch (NoResultException ex) {	
-			return null;
+			throw ex;
 		} catch (Exception ex) {		
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar Grupo de Usuario", ex);	
 		}
 		return userGroup;
@@ -86,9 +70,8 @@ public class CRUDUserGroup {
 				System.out.println("Nao foi possivel carregar a entidade UserGroup. Parametros nao fornecidos");
 			}
 		} catch (NoResultException ex) {	
-			return null;
+			throw ex;
 		} catch (Exception ex) {		
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar Grupo de Usuario", ex);	
 		}
 		return userGroup;
@@ -102,7 +85,6 @@ public class CRUDUserGroup {
 		} catch (NoResultException ex) {		
 			throw ex;
 		} catch (Exception ex) {		
-			System.err.println(ex.getMessage());
 			throw CRUDException.getException("Inconformidade ao consultar lista de Grupos de Usuario", ex);	
 		}
 		return list;

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.persistence.NoResultException;
+
 import com.easybpms.bpms.AbstractBpmsInterface;
 import com.easybpms.db.CRUDException;
 import com.easybpms.db.dao.CRUDActivityInstance;
@@ -64,6 +66,8 @@ public class TaskExecutedObserver implements Observer{
 		List<ParameterInstance> listIp = null;
 		try {
 			listIp = CRUDParameterInstance.readAll();
+		} catch (NoResultException e) {		
+			e.printStackTrace();
 		} catch (CRUDException e) {
 			e.printStackTrace();
 		}
