@@ -45,13 +45,15 @@
 	</dependencyManagement>
 
 	<dependencies>
-
+	
+		<!-- EASYBPMS -->
 		<dependency>
 			<groupId>com.easybpms</groupId>
 			<artifactId>easybpms-core</artifactId>
 			<version>1.0</version>
 		</dependency>
 
+		<!-- JBPM -->
 		<dependency>
 			<groupId>org.jbpm</groupId>
 			<artifactId>jbpm-flow</artifactId>

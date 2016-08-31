@@ -3,7 +3,6 @@ package com.easybpms.jbpm;
 import java.util.Map;
 
 import org.jbpm.bpmn2.handler.ReceiveTaskHandler;
-import org.jbpm.bpmn2.handler.SendTaskHandler;
 import org.kie.api.runtime.KieSession;
 //import org.kie.api.runtime.manager.RuntimeEngine;
 //import org.kie.api.runtime.manager.RuntimeManager;
@@ -11,6 +10,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 
 import com.easybpms.bpms.AbstractBpmsInterface;
+import com.easybpms.bpms.GenericBpmsConnector;
 
 public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
@@ -56,7 +56,7 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",new HumanTaskWorkItem(taskService, ksession));
 		ksession.getWorkItemManager().registerWorkItemHandler("Manual Task",new ManualTaskWorkItem());
 		ksession.getWorkItemManager().registerWorkItemHandler("Service Task",new ServiceTaskWorkItem());
-		ksession.getWorkItemManager().registerWorkItemHandler("Send Task",new SendTaskHandler());
+		ksession.getWorkItemManager().registerWorkItemHandler("Send Task",new SendTaskWorkItem());
 		ksession.getWorkItemManager().registerWorkItemHandler("Receive Task",new ReceiveTaskHandler(ksession));	
 	}
 

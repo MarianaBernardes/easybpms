@@ -25,6 +25,7 @@ private static final Logger logger = LoggerFactory.getLogger(ServiceTaskWorkItem
         String parameterType = (String) workItem.getParameter("ParameterType");
         Object parameter = workItem.getParameter("Parameter");
         
+        
         String[] services = {interfaceImplementationRef,interfaceName};
         Class<?> c = null;
         
@@ -39,28 +40,71 @@ private static final Logger logger = LoggerFactory.getLogger(ServiceTaskWorkItem
             }
         }
         
+        Object result = null;
+        
         try {
             Object instance = c.newInstance();
-            /*Class<?>[] classes = null;
-            Object[] params = null;
+            //Class<?>[] classes = null;
+            Class<?> classe = null;
+            //Object[] params = null;
+            Object param = null;
+            
+            Method method;
+            
             if (parameterType != null) {
-                classes = new Class<?>[] {
+                /*classes = new Class<?>[] {
                     Class.forName(parameterType)
-                };
-                params = new Object[] {
+                };*/
+            	
+                /*params = new Object[] {
                     parameter
-                };
-            }*/
-            //Method method = c.getMethod(operation, classes);
-            Method method = c.getMethod(operation);
-            //Object result = method.invoke(instance, params);
-            Object result = method.invoke(instance);
+                };*/
+                param = parameter;
+               
+                switch (parameterType){
+                case "Integer":
+                	classe = Class.forName("java.lang.Integer");
+                	method = c.getMethod(operation, classe);
+                	result = method.invoke(instance, Integer.parseInt((String) param));
+                	break;
+                case "Boolean":
+                	classe = Class.forName("java.lang.Boolean");
+                	method = c.getMethod(operation, classe);
+                	result = method.invoke(instance, Boolean.parseBoolean((String) param));
+                	break;
+                case "Float":
+                	classe = Class.forName("java.lang.Float");
+                	method = c.getMethod(operation, classe);
+                	result = method.invoke(instance, Float.parseFloat((String) param));
+                	break;
+                case "Double":
+                	classe = Class.forName("java.lang.Double");
+                	method = c.getMethod(operation, classe);
+                	result = method.invoke(instance, Double.parseDouble((String) param));
+                	break;
+                case "Long":
+                	classe = Class.forName("java.lang.Long");
+                	method = c.getMethod(operation, classe);
+                	result = method.invoke(instance, Long.parseLong((String) param));
+                	break;
+                case "String":
+                	classe = Class.forName("java.lang.String");
+                	method = c.getMethod(operation, classe);
+                	result = method.invoke(instance, param);
+                	break;
+                default:
+                	classe = Class.forName(parameterType);
+                	method = c.getMethod(operation, classe);
+                	result = method.invoke(instance, param);
+                	break;
+                }  
+            }
             
             Map<String, Object> results = new HashMap<String, Object>();
             results.put("Result", result);
             manager.completeWorkItem(workItem.getId(), results);
-        /*} catch (ClassNotFoundException cnfe) {
-           handleException(cnfe, interfaceName, interfaceImplementationRef, operation, parameterType, parameter);*/
+        } catch (ClassNotFoundException cnfe) {
+           handleException(cnfe, interfaceName, interfaceImplementationRef, operation, parameterType, parameter);
         } catch (InstantiationException ie) {
             handleException(ie, interfaceName, interfaceImplementationRef, operation, parameterType, parameter);
         } catch (IllegalAccessException iae) {

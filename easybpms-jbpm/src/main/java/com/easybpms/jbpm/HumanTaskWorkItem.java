@@ -63,12 +63,12 @@ public class HumanTaskWorkItem extends LocalHTWorkItemHandler {
 		 * a tarefa correta, de mesmo nome
 		 */
 		for (NodeInstance node : nodeInstances){
-			if (node.getNodeName().equals(taskInstance.getName())){
+			if (node.getNodeName()!=null && node.getNodeName().equals(taskInstance.getName())){
 				HumanTaskNodeInstance nodeInstanceHumanTask = (HumanTaskNodeInstance) node;
 				HumanTaskNode nodeHumanTask = nodeInstanceHumanTask.getHumanTaskNode();
 				Object aux = nodeHumanTask.getMetaData("UniqueId");
 				String taskIdBpms = aux.toString();
-				this.connector.execute(taskIdBpms,taskInstance.getName(), String.valueOf(taskInstance.getId()), status, params, processInstance.getProcessId(), String.valueOf(processInstance.getId()));
+				this.connector.executeHumanTask(taskIdBpms,taskInstance.getName(), String.valueOf(taskInstance.getId()), status, params, processInstance.getProcessId(), String.valueOf(processInstance.getId()));
 			}
 		}
 	
