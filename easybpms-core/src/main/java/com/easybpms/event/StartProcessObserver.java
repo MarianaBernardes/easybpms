@@ -143,7 +143,7 @@ public class StartProcessObserver implements Observer{
 		/**
 		 * @param processInstanceId - recebe o id da instancia processo criada no bpms
 		 */
-		System.out.println("\nProcesso " + p.getName() + " iniciado");
+		System.out.println("Processo " + p.getName() + " iniciado [" + className + " = " + inputParamValue + "]");
 		AbstractBpmsInterface.getBpmsInterface().startProcess(this.processIdBpms, params);
 		
 	}

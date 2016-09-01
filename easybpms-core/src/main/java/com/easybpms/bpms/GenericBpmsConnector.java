@@ -13,6 +13,9 @@ import com.easybpms.domain.*;
 
 public class GenericBpmsConnector {
 	
+	static int cont = 0;
+	static String idEndProcess = null;
+	
 	public void executeHumanTask(String taskIdBpms, String taskName, String taskInstanceId, String statusTask, Map<String, Object> params, String processId, String processInstanceId) {
 		
 		Activity activity = new Activity();
@@ -144,6 +147,17 @@ public class GenericBpmsConnector {
 	}
 	
 	public static void endProcess(String processId, String processInstanceId) {
+		/**
+		 * Variaveis cont e idEndProcess:
+		 * contador criado para garantir que o fim de processo seja contabilizado somente
+		 * uma vez para a mesma instancia processo. Foi necessario criar ele pois o BPMS
+		 * esta chamando o conector de fim de processo mais de uma vez para a mesma instancia
+		 * processo
+		 */
+		if (idEndProcess != null && idEndProcess.equals(processInstanceId)){
+			cont++;
+		}
+		
 		Process p = new Process();
 	    p.setIdBpms(processId);
 	    
@@ -160,14 +174,20 @@ public class GenericBpmsConnector {
 		pi.setProcess(p);
 		
 		try {
-			pi = (ProcessInstance) CRUDEntity.read(pi);
-			CRUDProcessInstance.update(pi,"Completed");
-			System.out.println("Processo " + pi.getProcess().getName() + " finalizado");
+			if (cont == 0){
+				pi = (ProcessInstance) CRUDEntity.read(pi);
+				CRUDProcessInstance.update(pi,"Completed");
+				System.out.println("Processo " + pi.getProcess().getName() + " finalizado");
+			}
 		} catch (NoResultException ex) {
-			System.out.println("Processo " + p.getName() + " finalizado");
+			if (cont == 0){
+				System.out.println("Processo " + p.getName() + " finalizado");
+			}
 		} catch (CRUDException e) {
 			e.printStackTrace();
 		}
+		idEndProcess = processInstanceId;
+		cont = 0;
 		
 	}
 
