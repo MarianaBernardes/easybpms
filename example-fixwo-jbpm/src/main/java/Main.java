@@ -4,12 +4,12 @@ import org.fixwo.domain.Ocorrencia;
 public class Main {
 
 	public static void main(String[] args) {
-		OcorrenciaDAO crud = new OcorrenciaDAO();
-		crud.connect();
-		
+		//Instancia Ocorrencia
 		Ocorrencia o = new Ocorrencia();
 		o.setId(1L);	
 				
+		OcorrenciaDAO crud = new OcorrenciaDAO();
+		
 		//Iniciar o processo
 		crud.create(o);
 		
