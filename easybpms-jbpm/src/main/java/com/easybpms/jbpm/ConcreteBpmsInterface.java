@@ -1,22 +1,32 @@
 package com.easybpms.jbpm;
 
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.jbpm.bpmn2.handler.ReceiveTaskHandler;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
-//import org.kie.api.runtime.manager.RuntimeEngine;
-//import org.kie.api.runtime.manager.RuntimeManager;
-import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.api.runtime.manager.RuntimeEngine;
+import org.kie.api.runtime.manager.RuntimeEnvironment;
+import org.kie.api.runtime.manager.RuntimeEnvironmentBuilder;
+import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.manager.RuntimeManagerFactory;
 import org.kie.api.task.TaskService;
+import org.kie.internal.io.ResourceFactory;
+import org.kie.internal.runtime.manager.context.EmptyContext;
 
 import com.easybpms.bpms.AbstractBpmsInterface;
-import com.easybpms.bpms.GenericBpmsConnector;
+
+import bitronix.tm.resource.jdbc.PoolingDataSource;
 
 public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 
 	// RuntimeManager - combinacao do motor e do processo de servico de tarefa humana
-	//private RuntimeManager manager;
-	//private RuntimeEngine engine;
+	private RuntimeManager manager;
+	private RuntimeEngine engine;
 	private KieSession ksession;
 	private TaskService taskService;
 	
@@ -26,15 +36,14 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		addTaskConnector();
 	}
 	
-	//Metodo deve ser descomentado se os processos nao forem carregados via Spring
-	
-	/*public void startBPMS(List<String> processes) {
+	//Metodo para iniciar o BPMS sem uso de Spring
+	public void startBPMS(List<String> processes) {
 		manager = createRuntimeManager(processes);
 		engine = manager.getRuntimeEngine(EmptyContext.get());
 		ksession = engine.getKieSession();
 		taskService = engine.getTaskService();
 		addTaskConnector();
-	}*/
+	}
 
 	/**
 	 * @param process - idBpms do processo registrado no BD da API
@@ -45,14 +54,14 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	public void startProcess(String process, Map<String, Object> params) {
 		EndEventListener listener = new EndEventListener();
 		ksession.addEventListener(listener);
-		ProcessInstance pi = ksession.startProcess(process, params);
+		ksession.startProcess(process, params);
 	}
 
 	/**
 	 * myWorkItemHandler - conector especifico registrado na sessao que sera
 	 * chamado quando o motor chegar em uma atividade de usuario
 	 */
-	public void addTaskConnector() {
+	private void addTaskConnector() {
 		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",new HumanTaskWorkItem(taskService, ksession));
 		ksession.getWorkItemManager().registerWorkItemHandler("Manual Task",new ManualTaskWorkItem());
 		ksession.getWorkItemManager().registerWorkItemHandler("Service Task",new ServiceTaskWorkItem());
@@ -67,21 +76,19 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 	 * @param params - parametros de saida necessarios para executar a tarefa
 	 * @return status da tarefa apos ser completada
 	 */
-	public String executeTask(long taskId, String user,Map<String, Object> params) {
+	public String executeTask(long taskId, String user, Map<String, Object> params) {
 		taskService.start(taskId, user);
 		taskService.complete(taskId, user, params);
 		return taskService.getTaskById(taskId).getTaskData().getStatus().name();
 	}
 
-	
-	//Metodo deve ser descomentado se os processos nao forem carregados via Spring
-	
-	/*private RuntimeManager createRuntimeManager(
+	//Metodo para iniciar o BPMS sem uso de Spring
+	private RuntimeManager createRuntimeManager(
 			List<String> bpmnProcessDefinitions) {
 		
 		RuntimeEnvironmentBuilder environmentBuilder;
 		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
+		EntityManagerFactory emf = setupDataSource();
 		
 		environmentBuilder = RuntimeEnvironmentBuilder.Factory.get()
 				.newDefaultBuilder().entityManagerFactory(emf);
@@ -117,6 +124,24 @@ public class ConcreteBpmsInterface extends AbstractBpmsInterface {
 		//RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerProcessInstanceRuntimeManager(environment);
 		 
 		return manager;
-	}*/
+	}
+	
+	//Metodo para carregar o BD do BPMS sem uso de Spring
+	private EntityManagerFactory setupDataSource(){
+		PoolingDataSource ds = new PoolingDataSource();
+		ds.setUniqueName("jdbc/jbpm-ds");
+		ds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
+		ds.setMaxPoolSize(5); 
+		ds.setAllowLocalTransactions(true);
+		ds.getDriverProperties().put("user", "sa");
+		ds.getDriverProperties().put("password", "");
+		ds.getDriverProperties().put("url", "jdbc:h2:mem:jbpm-db");
+		ds.getDriverProperties().put("driverClassName", "org.h2.Driver");
+		ds.init();
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.jbpm.persistence.jpa");
+				
+		return emf;
+	}
 
 }

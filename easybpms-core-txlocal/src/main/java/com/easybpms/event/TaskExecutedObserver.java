@@ -36,6 +36,7 @@ public class TaskExecutedObserver implements Observer{
 	 */
 	public void update(Observable o, Object arg) {
 		
+		
 		String className = arg.getClass().getName(); //nomedopacote.nomedaclasse
 		
 		/**
@@ -83,7 +84,7 @@ public class TaskExecutedObserver implements Observer{
 		
 		for (ParameterInstance ip : listIp){
 			//ActivityInstance activityInstance = ip.getActivityInstance();
-			//if (!activityInstance.isCurrentTransaction()) {
+			//if (activityInstance.isCurrentTransaction()) {
 				if(ip.getActivityInstance().getActivity().getIdBpms().equals(taskIdBpms) && 
 						ip.getActivityInstance().getStatus().equals("Reserved") && ip.getType().equals("input") && 
 						ip.getParameter().getName().equals(inputParamName) && ip.getValue().equals(inputParamValue)){ 

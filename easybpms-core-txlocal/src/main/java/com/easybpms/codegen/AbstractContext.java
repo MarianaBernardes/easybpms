@@ -92,7 +92,9 @@ public abstract class AbstractContext {
 		}
 	}
 	public abstract void setBpmsSession(BpmsSession bpmsSession);
-
+	
+	public abstract void connect();
+	
 	public void notifyObservers(String className, Object arg) {
 		BpmsObservable observable = this.getObservable("CRUD" + className);
 		observable.setChanged();

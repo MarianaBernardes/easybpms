@@ -45,7 +45,7 @@
 	</dependencyManagement>
 
 	<dependencies>
-	
+
 		<!-- EASYBPMS -->
 		<dependency>
 			<groupId>com.easybpms</groupId>
@@ -95,6 +95,13 @@
 			<groupId>org.kie</groupId>
 			<artifactId>kie-spring</artifactId>
 		</dependency>
+
+		<!-- BTM -->
+		<dependency>
+			<groupId>org.codehaus.btm</groupId>
+			<artifactId>btm</artifactId>
+			<version>2.1.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -112,6 +119,17 @@
 					</instructions>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin> 
+
 		</plugins>
 
 	</build>
