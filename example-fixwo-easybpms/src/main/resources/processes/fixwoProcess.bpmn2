@@ -6,7 +6,8 @@
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="Boolean"/>
   <bpmn2:itemDefinition id="ItemDefinition_58" isCollection="false" structureRef="Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_270" isCollection="false" structureRef="Float"/>
-  <bpmn2:message id="idOcorrencia" itemRef="ItemDefinition_2" name="idOcorrencia"/>
+  <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="Long"/>
+  <bpmn2:message id="idOcorrencia" itemRef="ItemDefinition_4" name="idOcorrencia"/>
   <bpmn2:message id="existeArea" itemRef="ItemDefinition_3" name="existeArea"/>
   <bpmn2:message id="tenancy" itemRef="ItemDefinition_1" name="tenancy"/>
   <bpmn2:interface id="Interface_1" implementationRef="org.fixwo.services.AssociarCliente" name="AssociarCliente">
@@ -39,7 +40,7 @@
       <tns:import name="org.fixwo.services.PublicarServico"/>
       <tns:import name="org.fixwo.services.EnviarEmail"/>
     </bpmn2:extensionElements>
-    <bpmn2:property id="org_fixwo_domain_Ocorrencia_id" itemSubjectRef="ItemDefinition_2" name="org_fixwo_domain_Ocorrencia_id"/>
+    <bpmn2:property id="org_fixwo_domain_Ocorrencia_id" itemSubjectRef="ItemDefinition_4" name="org_fixwo_domain_Ocorrencia_id"/>
     <bpmn2:property id="org_fixwo_domain_Ocorrencia_tenancy" itemSubjectRef="ItemDefinition_1" name="org_fixwo_domain_Ocorrencia_tenancy"/>
     <bpmn2:property id="org_fixwo_domain_Ocorrencia_existeArea" itemSubjectRef="ItemDefinition_3" name="org_fixwo_domain_Ocorrencia_existeArea"/>
     <bpmn2:property id="org_fixwo_domain_Ocorrencia_status" itemSubjectRef="ItemDefinition_1" name="org_fixwo_domain_Ocorrencia_status"/>
@@ -257,7 +258,7 @@
         <bpmn2:dataInput id="DataInput_7" itemSubjectRef="ItemDefinition_1" name="Content"/>
         <bpmn2:dataInput id="DataInput_8" itemSubjectRef="ItemDefinition_1" name="Locale"/>
         <bpmn2:dataInput id="DataInput_9" itemSubjectRef="ItemDefinition_1" name="CreatedBy"/>
-        <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_2" name="easybpms_org_fixwo_domain_Ocorrencia_id"/>
+        <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_4" name="easybpms_org_fixwo_domain_Ocorrencia_id"/>
         <bpmn2:dataInput id="DataInput_24" itemSubjectRef="ItemDefinition_1" name="easybpms_org_fixwo_domain_Ocorrencia_tenancy"/>
         <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_1" name="easybpms_org_fixwo_domain_Ocorrencia_status"/>
         <bpmn2:dataOutput id="DataOutput_2" itemSubjectRef="ItemDefinition_1" name="easybpms_org_fixwo_domain_Ocorrencia_setor"/>
@@ -408,7 +409,7 @@
         <bpmn2:dataInput id="DataInput_18" itemSubjectRef="ItemDefinition_1" name="Content"/>
         <bpmn2:dataInput id="DataInput_19" itemSubjectRef="ItemDefinition_1" name="Locale"/>
         <bpmn2:dataInput id="DataInput_20" itemSubjectRef="ItemDefinition_1" name="CreatedBy"/>
-        <bpmn2:dataInput id="DataInput_38" itemSubjectRef="ItemDefinition_2" name="easybpms_org_fixwo_domain_Ocorrencia_id"/>
+        <bpmn2:dataInput id="DataInput_38" itemSubjectRef="ItemDefinition_4" name="easybpms_org_fixwo_domain_Ocorrencia_id"/>
         <bpmn2:dataInput id="DataInput_40" itemSubjectRef="ItemDefinition_1" name="easybpms_org_fixwo_domain_Ocorrencia_tenancy"/>
         <bpmn2:dataOutput id="DataOutput_6" itemSubjectRef="ItemDefinition_1" name="easybpms_org_fixwo_domain_Ocorrencia_feedback"/>
         <bpmn2:dataOutput id="DataOutput_7" itemSubjectRef="ItemDefinition_1" name="easybpms_org_fixwo_domain_Ocorrencia_status"/>
@@ -560,7 +561,7 @@
         <bpmn2:dataInput id="DataInput_33" itemSubjectRef="ItemDefinition_1" name="Content"/>
         <bpmn2:dataInput id="DataInput_34" itemSubjectRef="ItemDefinition_1" name="Locale"/>
         <bpmn2:dataInput id="DataInput_35" itemSubjectRef="ItemDefinition_1" name="CreatedBy"/>
-        <bpmn2:dataInput id="DataInput_41" itemSubjectRef="ItemDefinition_2" name="easybpms_org_fixwo_domain_Ocorrencia_id"/>
+        <bpmn2:dataInput id="DataInput_41" itemSubjectRef="ItemDefinition_4" name="easybpms_org_fixwo_domain_Ocorrencia_id"/>
         <bpmn2:dataInput id="DataInput_42" itemSubjectRef="ItemDefinition_1" name="easybpms_org_fixwo_domain_Ocorrencia_tenancy"/>
         <bpmn2:dataOutput id="DataOutput_8" itemSubjectRef="ItemDefinition_3" name="easybpms_org_fixwo_domain_Ocorrencia_avaliacao"/>
         <bpmn2:inputSet id="_InputSet_21">

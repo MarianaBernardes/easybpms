@@ -1,7 +1,7 @@
 package org.fixwo.domain;
 
 public class Ocorrencia {
-	private long id;
+	private Long id;
 	private String tenancy = "";
 	private Boolean existeArea = false;
 	private String status = "";
@@ -9,10 +9,10 @@ public class Ocorrencia {
 	private String feedback = "";
 	private Boolean avaliacao = false;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTenancy() {

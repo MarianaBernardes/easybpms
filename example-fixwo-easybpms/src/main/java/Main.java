@@ -40,7 +40,7 @@ public class Main {
 		
 		//Instancia Ocorrencia
 		Ocorrencia o = new Ocorrencia();
-		o.setId(1);
+		o.setId(1L);
 				
 		OcorrenciaDAO crud = new OcorrenciaDAO();
 				
