@@ -1,7 +1,7 @@
 package org.fixwo.services;
 
 public class BuscarArea {
-	public static Boolean run(long idOcorrencia){
+	public static Boolean run(Long idOcorrencia){
 		
 	/*Receber o id da ocorrencia para conseguir buscar a geolocalizacao armazenada
 	para a ocorrencia. Fazer uma busca das areas cadastradas com aquelas coordenadas.

@@ -13,7 +13,7 @@ public class FixwoCallback {
 	
 	//UserTask
 	
-	public void criarOcorrencia(long id){
+	public void criarOcorrencia(Long id){
 		ocorrencia.setId(id);
 	}
 	

@@ -6,7 +6,7 @@ public class Main {
 	public static void main(String[] args) {
 		//Instancia Ocorrencia
 		Ocorrencia o = new Ocorrencia();
-		o.setId(1);
+		o.setId(1L);
 				
 		OcorrenciaDAO crud = new OcorrenciaDAO();
 				
@@ -24,7 +24,7 @@ public class Main {
 		crud.update(o);
 		
 		//Executar a atividade Avaliar Solucao
-		o.setAvaliacao(false);;
+		o.setAvaliacao(false);
 		crud.update(o);
 
 	}

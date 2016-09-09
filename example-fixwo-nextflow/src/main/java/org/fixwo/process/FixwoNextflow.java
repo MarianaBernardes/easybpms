@@ -15,19 +15,78 @@
  
 package org.fixwo.process;
 
+import java.util.List;
+
+import org.fixwo.domain.Ocorrencia;
 import org.nextflow.owm.Configuration;
 import org.nextflow.owm.WorkflowObjectFactory;
 
-public class Connection {
+public class FixwoNextflow {
 	
-	private static WorkflowObjectFactory factory;
 	private static String url = "jwfc:jbpm:fixwo.bpmn2";
-
-	public static WorkflowObjectFactory getFactory() {
-		return getFactory(url, FixwoCallback.class);
+	private static WorkflowObjectFactory factory = FixwoNextflow.getFactory(url, FixwoCallback.class);
+	
+	private static FixwoProcess fixwoProcess;
+	
+	
+	//Iniciar o processo
+	private void startNewFixwoProcess() {
+		fixwoProcess =  factory.start(FixwoProcess.class);
 	}
 	
-	public static WorkflowObjectFactory getFactory(String url, Class<?>...callbacks) {
+	//Retorna o processo em execução
+	private void getProcessForEntity(long id) {
+		
+		List <FixwoProcess> processes = factory.getRepository().getRunningProcesses (FixwoProcess.class);
+		for (FixwoProcess fp : processes) {
+			Ocorrencia o = fp.getData();
+			long vId = o.getId();
+			if(vId == id){
+				fixwoProcess = fp ;
+			}
+		}
+		if(fixwoProcess == null ){
+			startNewFixwoProcess();
+		}
+	}
+	
+	//Retorna a tarefa disponível
+	private String getAvailableTask() {
+		List <String> availableTasks = fixwoProcess.getAvailableTasks ();
+		String taskHandler = null;
+		
+		for (String task : availableTasks){
+			if (fixwoProcess.isTaskAvailable(task)){
+				taskHandler = task;
+				return taskHandler;
+			}
+		}
+		return taskHandler;
+		
+	}
+	
+	//Executar tarefa
+	protected void executeTask(Ocorrencia o){
+		getProcessForEntity(o.getId());
+		String task = getAvailableTask();
+		
+		switch (task){
+		case "Criar Ocorrencia":
+			fixwoProcess.criarOcorrencia(o.getId());
+			break;
+		case "Classificar e Encaminhar ao Setor Responsavel":
+			fixwoProcess.classificarEEncaminharAoSetorResponsavel(o.getStatus(), o.getSetor());
+			break;
+		case "Enviar Feedback ao Solicitante":
+			fixwoProcess.enviarFeedbackAoSolicitante(o.getStatus(), o.getFeedback());
+			break;
+		case "Avaliar Solucao":
+			fixwoProcess.avaliarSolucao(o.getAvaliacao());
+			break;
+	}
+	}
+	
+	private static WorkflowObjectFactory getFactory(String url, Class<?>...callbacks) {
 		if(factory == null){
 			logInfo(url, callbacks);
 			factory = createFactory(url, callbacks);
