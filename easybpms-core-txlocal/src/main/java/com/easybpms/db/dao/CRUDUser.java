@@ -18,7 +18,6 @@ public class CRUDUser {
 		User user = new User();
 		user.setIdApp(appUser.getIdApp());
 		user.setName(appUser.getName());
-		user.setTenancy(appUser.getTenancy());
 	
 		EntityManager session = Session.getSession();
 		

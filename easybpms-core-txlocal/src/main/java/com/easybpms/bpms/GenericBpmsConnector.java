@@ -1,6 +1,5 @@
 package com.easybpms.bpms;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ public class GenericBpmsConnector {
 		activityInstance.setCurrentTransaction(true);
 		ParameterInstance parameterInstance = new ParameterInstance();
 		User user = null;
-		String tenancy = null;
 		
 		//Buscar processo
 		process.setIdBpms(processId);
@@ -81,56 +79,43 @@ public class GenericBpmsConnector {
 			for (Map.Entry<String, Object> entry : params.entrySet())
 			{
 				if (entry.getKey().contains("easybpms")){
-					//Descobrir o tenancy que a atividade pertence
-					if (entry.getKey().contains("tenancy")){
-						tenancy = (String) entry.getValue();
-					}else{
-						//Buscar parametro
-						parameter.setName(entry.getKey());
-						parameter.setType("input");
-						parameter.setActivity(activity);
-						try {
-							parameter = (Parameter)CRUDEntity.read(parameter);
-						} catch (NoResultException e1) {		
-							e1.printStackTrace();
-						} catch (CRUDException e1) {
-							e1.printStackTrace();
-						}
-						//Definir instancia parametro
-						parameterInstance.setValue(entry.getValue().toString());
-						parameterInstance.setType("input");
-						parameter.addParameterInstance(parameterInstance);
-						activityInstance.addParameterInstance(parameterInstance);
+					//Buscar parametro
+					parameter.setName(entry.getKey());
+					parameter.setType("input");
+					parameter.setActivity(activity);
+					try {
+						parameter = (Parameter)CRUDEntity.read(parameter);
+					} catch (NoResultException e1) {		
+						e1.printStackTrace();
+					} catch (CRUDException e1) {
+						e1.printStackTrace();
 					}
+					//Definir instancia parametro
+					parameterInstance.setValue(entry.getValue().toString());
+					parameterInstance.setType("input");
+					parameter.addParameterInstance(parameterInstance);
+					activityInstance.addParameterInstance(parameterInstance);
 				}
 			}
 			
 			try{
 				//Buscar Usuario
 				List<User> users = activity.getUserGroup().getUsers();
-				List<User> usersTenancy = new ArrayList<User>();
-				//procurar usuario que possui tenancy igual ao da entidade de dominio da aplicacao
+				user = users.get(0);
 				for (int i = 0; i<users.size(); i++){
-					if (users.get(i).getTenancy().equals(tenancy)){
-						usersTenancy.add(users.get(i));
-						
+					if (users.get(i).getActivityInstances().size() <= user.getActivityInstances().size()){
+						user = users.get(i);
 					}
 				}
-				
-				//procurar usuario que possui tenancy igual ao da entidade de dominio da aplicacao e com menor qtd 
-				//de instancias atividades que pertence ao grupo de usuario da atividade passada como parametro e 
-				user = usersTenancy.get(0);
-				for (int i = 0; i<usersTenancy.size(); i++){
-					if (usersTenancy.get(i).getActivityInstances().size() <= user.getActivityInstances().size()){
-						user = usersTenancy.get(i);
-					}
-				}
+				//Alocar usuario para a tarefa
+				user.addActivityInstance(activityInstance);
 			}catch(Exception e1) {
-				System.err.println("Nao existe usuarios para o grupo " + activity.getUserGroup().getName());
-				e1.printStackTrace();
+				System.err.println("Nao existe usuarios para o grupo " + activity.getUserGroup().getName()
+						           + "\nTarefa " + activityInstance.getActivity().getName() + " nao foi "
+						           + "alocada para nenhum usuario!");
+				
 			}	
 			
-			user.addActivityInstance(activityInstance);
 			activity.addActivityInstance(activityInstance);
 			processInstance.addActivityInstance(activityInstance);
 			

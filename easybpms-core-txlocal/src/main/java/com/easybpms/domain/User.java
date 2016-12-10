@@ -27,8 +27,6 @@ public class User implements IUser {
 	
 	private String name;
 	
-	private String tenancy;
-	
 	//@transient - nao persiste no bd
 	@Transient
 	private List<String> userGroupNames;
@@ -39,13 +37,6 @@ public class User implements IUser {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActivityInstance> activityInstances = new ArrayList<ActivityInstance>();
 
-	public String getTenancy() {
-		return tenancy;
-	}
-
-	public void setTenancy(String tenancy) {
-		this.tenancy = tenancy;
-	}
 
 	public int getId() {
 		return id;
