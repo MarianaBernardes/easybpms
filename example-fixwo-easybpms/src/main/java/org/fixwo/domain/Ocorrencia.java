@@ -2,24 +2,24 @@ package org.fixwo.domain;
 
 public class Ocorrencia {
 	private Long id;
-	private String tenancy = "";
 	private Boolean existeArea = false;
 	private String status = "";
 	private String setor = "";
 	private String feedback = "";
 	private Boolean avaliacao = false;
+	private String cliente = "";
 	
+	public String getCliente() {
+		return cliente;
+	}
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
+	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getTenancy() {
-		return tenancy;
-	}
-	public void setTenancy(String tenancy) {
-		this.tenancy = tenancy;
 	}
 	public Boolean getExisteArea() {
 		return existeArea;

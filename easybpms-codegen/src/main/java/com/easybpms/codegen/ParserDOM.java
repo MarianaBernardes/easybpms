@@ -96,6 +96,7 @@ public class ParserDOM {
         Element element = (Element) userTask;
         ArrayList<ParameterXml> inputParameters = this.getListParameters(userTask, nameSpace + "dataInput");
         ArrayList<ParameterXml> outputParameters = this.getListParameters(userTask, nameSpace + "dataOutput");
+        //TO DO: Adicionar o grupo de usuario da atividade a partir da lane
         ArrayList<UserGroupXml> usersGroup = this.getListUsers(userTask, nameSpace + "potentialOwner");
         
         ActivityXml aux = new ActivityXml();
@@ -104,7 +105,8 @@ public class ParserDOM {
         aux.setInputParameter(inputParameters);
         aux.setOutputParameter(outputParameters);
         aux.setUserGroup(usersGroup);
-        //EntityTask - add para que a atividade tenha somente um observador. Somente um parametro de entrada da lista sera escolhido para obter o observador
+        //EntityTask - add para que a atividade tenha somente um observador. Somente um parametro de entrada da lista sera escolhido para obter o observavel
+        //TO DO: Pegar a classe que tem o parametro de entrada id
         aux.setEntityTask(inputParameters.get(0).getEntityTask());
         return aux;
     }

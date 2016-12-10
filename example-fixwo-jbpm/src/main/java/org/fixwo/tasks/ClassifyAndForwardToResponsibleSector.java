@@ -3,19 +3,20 @@ package org.fixwo.tasks;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.fixwo.domain.Ocorrencia;
+import org.fixwo.domain.Occurrence;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.Task;
 
-public class AvaliarSolucao implements ExternalTaskHandler{
+public class ClassifyAndForwardToResponsibleSector implements ExternalTaskHandler{
 
 	@Override
-	public void executeTask(Ocorrencia ocorrencia, TaskService taskService, Task task) {
+	public void executeTask(Occurrence occurrence, TaskService taskService, Task task) {
 		Map <String,Object> results = new HashMap <String,Object>();
-		results.put("easybpms_org_fixwo_domain_Ocorrencia_avaliacao", ocorrencia.getAvaliacao());
+		results.put("out_status", occurrence.getStatus());
+		results.put("out_sector", occurrence.getSector());
 		System.out.println("Tarefa " + task.getName() + " executada");
 		taskService.start(task.getId(), "Administrator");
 		taskService.complete(task.getId(), "Administrator", results);
 	}
-
+	
 }

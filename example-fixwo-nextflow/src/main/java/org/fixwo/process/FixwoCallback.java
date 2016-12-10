@@ -12,59 +12,39 @@ public class FixwoCallback {
 	Ocorrencia ocorrencia;
 	
 	//UserTask
-	
 	public void criarOcorrencia(Long id){
 		ocorrencia.setId(id);
+		System.out.println("Tarefa Criar Ocorrencia executada");
 	}
-	
 	public void classificarEEncaminharAoSetorResponsavel(String status, String setor){
 		ocorrencia.setStatus(status);
 		ocorrencia.setSetor(setor);
 		System.out.println("Tarefa Classificar e Encaminhar ao Setor Responsavel executada");
 	}
-	
 	public void enviarFeedbackAoSolicitante(String status, String feedback){
 		ocorrencia.setStatus(status);
 		ocorrencia.setFeedback(feedback);
 		System.out.println("Enviar Feedback ao Solicitante executada");
 	}
-	
 	public void avaliarSolucao(Boolean avaliacao){
 		ocorrencia.setAvaliacao(avaliacao);
 		System.out.println("Avaliar Solucao executada");
 	}
 	
 	//ScriptTask
-	
 	public void buscarArea(){
 		Boolean area = BuscarArea.run(ocorrencia.getId());
 		ocorrencia.setExisteArea(area);
 	}
-	
 	public void associarCliente(){
-		String tenancy = AssociarCliente.run(ocorrencia.getId());
-		ocorrencia.setTenancy(tenancy);
+		String cliente = AssociarCliente.run(ocorrencia.getId());
+		ocorrencia.setCliente(cliente);
 	}
-	
 	public void publicarOrdemDeServico(){
-		String tenancy = PublicarServico.run(ocorrencia.getId());
-		ocorrencia.setTenancy(tenancy);
+		PublicarServico.run(ocorrencia.getId());
 	}
-	
-	public void enviarMensagemAreaInvalida(){
-		
-	}
-	
-	public void delegarAoServicoTerceirizado(){
-		System.out.println("Saiu da Atividade Delegar ao Servico Terceirizado");
-	}
-	
-	public void executarOrdemDeServico(){
-		System.out.println("Saiu da Atividade Executar Ordem de Servico");
-	}
-	
-	public void enviarMensagemSolucaoRejeitada(){
-		
-	}
-
+	public void enviarMensagemAreaInvalida(){}
+	public void delegarAoServicoTerceirizado(){}
+	public void executarOrdemDeServico(){}
+	public void enviarMensagemSolucaoRejeitada(){}
 }

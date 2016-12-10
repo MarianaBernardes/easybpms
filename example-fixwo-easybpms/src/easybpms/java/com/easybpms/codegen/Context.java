@@ -70,7 +70,7 @@ public class Context extends AbstractContext {
 		property.setName("org_fixwo_domain_Ocorrencia_id");
 		process.addVariable(property);	
 		property = new Property();
-		property.setName("org_fixwo_domain_Ocorrencia_tenancy");
+		property.setName("org_fixwo_domain_Ocorrencia_cliente");
 		process.addVariable(property);	
 		property = new Property();
 		property.setName("org_fixwo_domain_Ocorrencia_existeArea");
@@ -97,11 +97,7 @@ public class Context extends AbstractContext {
 		parameter = new Parameter();
 		parameter.setName("easybpms_org_fixwo_domain_Ocorrencia_id");
 		parameter.setType("input");
-		activity.addParameter(parameter);	
-		parameter = new Parameter();
-		parameter.setName("easybpms_org_fixwo_domain_Ocorrencia_tenancy");
-		parameter.setType("input");
-		activity.addParameter(parameter);	
+		activity.addParameter(parameter);		
 
 		//Parametros de Saida da Atividade Enviar Feedback ao Solicitante
 		parameter = new Parameter();
@@ -128,11 +124,7 @@ public class Context extends AbstractContext {
 		parameter = new Parameter();
 		parameter.setName("easybpms_org_fixwo_domain_Ocorrencia_id");
 		parameter.setType("input");
-		activity.addParameter(parameter);	
-		parameter = new Parameter();
-		parameter.setName("easybpms_org_fixwo_domain_Ocorrencia_tenancy");
-		parameter.setType("input");
-		activity.addParameter(parameter);	
+		activity.addParameter(parameter);		
 
 		//Parametros de Saida da Atividade Classificar e Encaminhar ao Setor Responsavel
 		parameter = new Parameter();
@@ -159,11 +151,7 @@ public class Context extends AbstractContext {
 		parameter = new Parameter();
 		parameter.setName("easybpms_org_fixwo_domain_Ocorrencia_id");
 		parameter.setType("input");
-		activity.addParameter(parameter);	
-		parameter = new Parameter();
-		parameter.setName("easybpms_org_fixwo_domain_Ocorrencia_tenancy");
-		parameter.setType("input");
-		activity.addParameter(parameter);	
+		activity.addParameter(parameter);		
 
 		//Parametros de Saida da Atividade Avaliar Solucao
 		parameter = new Parameter();

@@ -1,13 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-
 import org.fixwo.dao.OcorrenciaDAO;
-import org.fixwo.dao.UsuarioDAO;
 import org.fixwo.domain.Ocorrencia;
 //import org.springframework.context.ApplicationContext;
 //import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.easybpms.bpms.BpmsSession;
 import com.easybpms.codegen.AbstractContext;
 
 public class Main {
@@ -24,17 +19,17 @@ public class Main {
 		
 		
 		//Usuarios
-		List<String> grupoNomes = new ArrayList<String>();
+		/*List<String> grupoNomes = new ArrayList<String>();
 		grupoNomes.add("Responsavel Setor");
-		UsuarioDAO.create("Responsavel Setor1","1","1",grupoNomes);
+		UsuarioDAO.create("Responsavel Setor1","1",grupoNomes);
 		
 		grupoNomes = new ArrayList<String>();
 		grupoNomes.add("Triador");
-		UsuarioDAO.create("Triador1","1","1",grupoNomes);
+		UsuarioDAO.create("Triador1","1",grupoNomes);
 		
 		grupoNomes = new ArrayList<String>();
 		grupoNomes.add("Solicitante");
-		UsuarioDAO.create("Solicitante1","1","1",grupoNomes);
+		UsuarioDAO.create("Solicitante1","1",grupoNomes);*/
 		
 		
 		

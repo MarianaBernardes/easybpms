@@ -201,7 +201,7 @@
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
-      <bpmn2:script>System.out.println(&quot;Servico Publicado&quot;);</bpmn2:script>
+      <bpmn2:script>System.out.println (&quot;Publicando servico...&quot;);</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" tns:priority="1" sourceRef="ScriptTask_3" targetRef="ScriptTask_4"/>
     <bpmn2:userTask id="UserTask_2" name="Classificar e Encaminhar ao Setor Responsavel">
@@ -288,7 +288,7 @@
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
-      <bpmn2:script>System.out.println(&quot;Entrou na Atividade Delegar ao Servico Terceirizado&quot;);</bpmn2:script>
+      <bpmn2:script>System.out.println(&quot;Entrou na Atividade Delegar ao Servico Terceirizado\nSaiu da Atividade Delegar ao Servico Terceirizado&quot;);</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_8" tns:priority="1" sourceRef="UserTask_2" targetRef="ScriptTask_5"/>
     <bpmn2:parallelGateway id="ParallelGateway_1" name="Parallel Gateway 1" gatewayDirection="Diverging">
@@ -381,7 +381,7 @@
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
-      <bpmn2:script>System.out.println(&quot;Entrou na Atividade Executar Ordem de Servico&quot;);</bpmn2:script>
+      <bpmn2:script>System.out.println(&quot;Entrou na Atividade Executar Ordem de Servico\nSaiu da Atividade Executar Ordem de Servico&quot;);</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_11" tns:priority="1" sourceRef="ParallelGateway_1" targetRef="ScriptTask_6"/>
     <bpmn2:parallelGateway id="ParallelGateway_2" name="Parallel Gateway 2" gatewayDirection="Converging">

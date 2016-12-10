@@ -1,6 +1,6 @@
 package org.fixwo.services;
 
-public class EnviarEmail {
+public class SendEmail {
 	
 	public void run(){
 		/*Receber o id da ocorrencia para conseguir buscar o usuario que solicitou 

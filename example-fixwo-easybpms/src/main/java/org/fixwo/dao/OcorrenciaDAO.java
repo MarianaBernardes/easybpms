@@ -1,7 +1,6 @@
 package org.fixwo.dao;
 
 import org.fixwo.domain.Ocorrencia;
-
 import com.easybpms.event.CRUDObservable;
 
 public class OcorrenciaDAO extends CRUDObservable{

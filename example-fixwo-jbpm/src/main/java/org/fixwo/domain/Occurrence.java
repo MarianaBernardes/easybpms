@@ -1,14 +1,14 @@
 package org.fixwo.domain;
 
-public class Ocorrencia {
+public class Occurrence {
 	
 	private Long id;
 	private String cliente;
-	private Boolean existeArea;
+	private Boolean existArea;
 	private String status;
-	private String setor;
+	private String sector;
 	private String feedback;
-	private Boolean avaliacao;
+	private Boolean evaluation;
 	
 	public Long getId() {
 		return id;
@@ -22,11 +22,11 @@ public class Ocorrencia {
 	public void setCliente(String cliente) {
 		this.cliente = cliente;
 	}
-	public Boolean getExisteArea() {
-		return existeArea;
+	public Boolean getExistArea() {
+		return existArea;
 	}
-	public void setExisteArea(Boolean existeArea) {
-		this.existeArea = existeArea;
+	public void setExistArea(Boolean existArea) {
+		this.existArea = existArea;
 	}
 	public String getStatus() {
 		return status;
@@ -34,11 +34,11 @@ public class Ocorrencia {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getSetor() {
-		return setor;
+	public String getSector() {
+		return sector;
 	}
-	public void setSetor(String setor) {
-		this.setor = setor;
+	public void setSector(String sector) {
+		this.sector = sector;
 	}
 	public String getFeedback() {
 		return feedback;
@@ -46,11 +46,10 @@ public class Ocorrencia {
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
 	}
-	public Boolean getAvaliacao() {
-		return avaliacao;
+	public Boolean getEvaluation() {
+		return evaluation;
 	}
-	public void setAvaliacao(Boolean avaliacao) {
-		this.avaliacao = avaliacao;
+	public void setEvaluation(Boolean evaluation) {
+		this.evaluation = evaluation;
 	}
-
 }
