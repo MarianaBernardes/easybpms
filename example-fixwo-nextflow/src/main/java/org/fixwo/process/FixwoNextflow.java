@@ -32,7 +32,7 @@ public class FixwoNextflow {
 		fixwoProcess = getProcessForEntity(ocorrencia.getId());
 		List <String> availableTasks = fixwoProcess.getAvailableTasks();
 		ExternalTaskHandler handler = getExternalTaskHandler(availableTasks);
-		handler.executeTask(ocorrencia,fixwoProcess);
+		handler.executeUserTask(ocorrencia,fixwoProcess);
 	}
 	
 	//Iniciar o processo

@@ -5,8 +5,7 @@ import org.fixwo.process.FixwoProcess;
 
 public class EnviarFeedbackAoSolicitante implements ExternalTaskHandler{
 
-	@Override
-	public void executeTask(Ocorrencia ocorrencia, FixwoProcess fixwoProcess) {
+	public void executeUserTask(Ocorrencia ocorrencia, FixwoProcess fixwoProcess) {
 		fixwoProcess.enviarFeedbackAoSolicitante(ocorrencia.getStatus(), ocorrencia.getFeedback());
 		
 	}

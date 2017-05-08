@@ -5,8 +5,7 @@ import org.fixwo.process.FixwoProcess;
 
 public class CriarOcorrencia implements ExternalTaskHandler{
 
-	@Override
-	public void executeTask(Ocorrencia ocorrencia, FixwoProcess fixwoProcess) {
+	public void executeUserTask(Ocorrencia ocorrencia, FixwoProcess fixwoProcess) {
 		fixwoProcess.criarOcorrencia(ocorrencia.getId());
 		
 	}

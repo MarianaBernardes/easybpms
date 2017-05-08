@@ -9,8 +9,7 @@ import org.kie.api.task.model.Task;
 
 public class EvaluateSolution implements ExternalTaskHandler{
 
-	@Override
-	public void executeTask(Occurrence occurrence, TaskService taskService, Task task) {
+	public void executeUserTask(Occurrence occurrence, TaskService taskService, Task task) {
 		Map <String,Object> results = new HashMap <String,Object>();
 		results.put("out_evaluation", occurrence.getEvaluation());
 		System.out.println("Tarefa " + task.getName() + " executada");

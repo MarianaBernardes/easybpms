@@ -6,5 +6,5 @@ import org.kie.api.task.model.Task;
 
 public interface ExternalTaskHandler {
 	
-	public void executeTask(Occurrence occurrence,TaskService taskService, Task task);
+	public void executeUserTask(Occurrence occurrence,TaskService taskService, Task task);
 }

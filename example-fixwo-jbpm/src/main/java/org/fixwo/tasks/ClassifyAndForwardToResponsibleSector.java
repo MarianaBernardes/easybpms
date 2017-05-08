@@ -9,8 +9,7 @@ import org.kie.api.task.model.Task;
 
 public class ClassifyAndForwardToResponsibleSector implements ExternalTaskHandler{
 
-	@Override
-	public void executeTask(Occurrence occurrence, TaskService taskService, Task task) {
+	public void executeUserTask(Occurrence occurrence, TaskService taskService, Task task) {
 		Map <String,Object> results = new HashMap <String,Object>();
 		results.put("out_status", occurrence.getStatus());
 		results.put("out_sector", occurrence.getSector());

@@ -54,7 +54,7 @@ public class FixwoJbpm {
 		processInstance = getProcessForEntity(occurrence.getId());
 		List<Long> availableTasks = taskService.getTasksByProcessInstanceId(processInstance.getId());
 		ExternalTaskHandler handler = getExternalTaskHandler(availableTasks);
-		handler.executeTask(occurrence,taskService,task);
+		handler.executeUserTask(occurrence,taskService,task);
 	}
 	
 	//Iniciar o processo
@@ -70,7 +70,7 @@ public class FixwoJbpm {
 		for (ProcessInstance pi : processInstances) {
 			//RuleFlowProcessInstance rfpi = (RuleFlowProcessInstance)pi;
 			WorkflowProcessInstance wpi = (WorkflowProcessInstance)pi;
-			long idVariable = (long) wpi.getVariable("id");
+			long idVariable = (Long) wpi.getVariable("id");
 			if(idVariable == id){
 				selectedFP = wpi;
 			}
